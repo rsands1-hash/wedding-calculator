@@ -722,6 +722,228 @@ details.push(`• ${payment.label} (${payment.date.toLocaleDateString('en-US', {
 }
 return details.join('\n');
 };
+const generateBookingDetailsHTML = () => {
+const accentColor = '#d4a373';
+const darkColor = '#2c3e50';
+const textColor = '#444';
+const greenColor = '#27ae60';
+const redColor = '#c0392b';
+const sectionTitle = (title) => `<h3 style="color:${darkColor};font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid ${accentColor};padding-bottom:8px;margin:24px 0 12px 0;">${title}</h3>`;
+const bullet = (text) => `<div style="padding:4px 0 4px 12px;color:${textColor};font-size:14px;">&#8226;&nbsp; ${text}</div>`;
+const info = (label, value) => `<div style="padding:4px 0;font-size:14px;"><span style="color:#888;">${label}:</span> <span style="color:${darkColor};font-weight:600;">${value}</span></div>`;
+const green = (text) => `<span style="color:${greenColor};font-weight:600;">${text}</span>`;
+const red = (text) => `<span style="color:${redColor};font-weight:600;">${text}</span>`;
+const bold = (text) => `<strong>${text}</strong>`;
+let totalAmount = 0;
+if (activeTab === 'photography') totalAmount = calculateCollectionsTotal;
+else if (activeTab === 'videography') totalAmount = calculateVideoTotal;
+else if (activeTab === 'alacarte') totalAmount = calculateAlaCarteTotal;
+const packageType = activeTab === 'photography' ? 'Wedding Photography' : activeTab === 'videography' ? 'Wedding Videography' : 'À La Carte';
+let body = '';
+if (activeTab === 'photography' && selectedCollection) {
+body += sectionTitle('Package Details');
+body += info('Package', collections[selectedCollection].name);
+body += info('Base Price', `$${collections[selectedCollection].price.toLocaleString()}`);
+body += sectionTitle('Included in Package');
+collections[selectedCollection].items.forEach(item => {
+if (!removedItems.includes(item.name)) {
+const displayName = item.id === 'online_gallery' ? getOnlineGalleryText(selectedCollection) : item.name;
+body += bullet(displayName);
+}
+});
+if (removedItems.length > 0) {
+body += sectionTitle('Items Removed');
+collections[selectedCollection].items.forEach(item => {
+if (removedItems.includes(item.name) && item.value > 0) {
+body += bullet(`${item.name} ${red('(-$' + item.value + ')')}`);
+}
+});
+}
+const activeAddOns = photographyAddOns.filter(a => a.qty > 0);
+if (activeAddOns.length > 0) {
+body += sectionTitle('Add-Ons');
+activeAddOns.forEach(addon => {
+if (addon.id === 'second_photographer') {
+body += bullet(`2nd Photographer (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else if (addon.id === 'bridal_shower') {
+body += bullet(`Bridal Shower Coverage (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else if (addon.id === 'rehearsal_dinner') {
+body += bullet(`Rehearsal Dinner Coverage (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else {
+body += bullet(`${addon.name} (×${addon.qty}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+}
+});
+}
+if (photoTabExtraPhoto > 0 || photoTabExtraVideo > 0) {
+body += sectionTitle('Additional Coverage');
+if (photoTabExtraPhoto > 0) {
+body += bullet(`Additional Photography (${photoTabExtraPhoto} ${photoTabExtraPhoto === 1 ? 'hour' : 'hours'}): ${bold('$' + (photoTabExtraPhoto * 300).toLocaleString())}`);
+}
+if (photoTabExtraVideo > 0) {
+body += bullet(`Additional Videography (${photoTabExtraVideo} ${photoTabExtraVideo === 1 ? 'hour' : 'hours'}): ${bold('$' + (photoTabExtraVideo * 300).toLocaleString())}`);
+}
+}
+const activeDiscounts = Object.entries(discounts).filter(([key, value]) => value);
+if (activeDiscounts.length > 0 || hasConsultation || followsInstagram) {
+body += sectionTitle('Discounts Applied');
+activeDiscounts.forEach(([key]) => {
+body += bullet(`${discountLabels[key]} Discount: ${green('-$50')}`);
+});
+if (hasConsultation) body += bullet(`Consultation Discount: ${green('-$100')}`);
+if (followsInstagram) body += bullet(`Instagram Follow Discount: ${green('-$25')}`);
+}
+body += sectionTitle('Payment Information');
+body += info('Payment Method', paymentMethod === 'cash' ? 'Cash' : paymentMethod === 'credit' ? 'Credit Card' : paymentMethod === 'zelle' ? 'Zelle' : paymentMethod === 'venmo' ? 'Venmo' : paymentMethod === 'paypal' ? 'PayPal Gift' : 'Check');
+if (paymentMethod === 'cash') body += bullet(`Cash Discount: ${green('-$50')}`);
+if (paymentMethod === 'credit') body += bullet(`Credit Card Fee (5%): ${red('+$' + ((calculateCollectionsTotal / 1.05) * 0.05).toFixed(2))}`);
+if (weddingDate) {
+body += info('Wedding Date', new Date(weddingDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+const schedule = collectionsPaymentSchedule;
+if (schedule) {
+body += info('Payment Plan', schedule.type);
+body += sectionTitle('Payment Schedule');
+body += bullet(`Retainer (Due at signing): ${bold('$1,000.00')}`);
+if (schedule.isMonthly) {
+body += bullet(`${schedule.payments[0].count} monthly payments of ${bold('$' + schedule.payments[0].amount.toFixed(2))}`);
+} else {
+schedule.payments.forEach(payment => {
+body += bullet(`${payment.label} (${payment.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}): ${bold('$' + payment.amount.toFixed(2))}`);
+});
+}
+}
+}
+} else if (activeTab === 'videography' && selectedVideoCollection) {
+const videoCollection = videographyCollections[selectedVideoCollection];
+body += sectionTitle('Package Details');
+body += info('Package', videoCollection.name);
+body += info('Coverage', `${videoCollection.hours} Hours of Videography @ $300/hour`);
+body += info('Base Price', `$${videoCollection.price.toLocaleString()}`);
+body += sectionTitle('Included in Package');
+videoCollection.items.forEach(item => { body += bullet(item); });
+const activeVideoAddOns = videographyAddOns.filter(a => a.qty > 0);
+if (activeVideoAddOns.length > 0) {
+body += sectionTitle('Add-Ons');
+activeVideoAddOns.forEach(addon => {
+if (addon.id === 'second_photographer') {
+body += bullet(`2nd Photographer (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else if (addon.id === 'bridal_shower') {
+body += bullet(`Bridal Shower Coverage (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else if (addon.id === 'rehearsal_dinner') {
+body += bullet(`Rehearsal Dinner Coverage (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else {
+body += bullet(`${addon.name} (×${addon.qty}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+}
+});
+}
+if (videoTabExtraPhoto > 0 || videoTabExtraVideo > 0) {
+body += sectionTitle('Additional Coverage');
+if (videoTabExtraPhoto > 0) body += bullet(`Additional Photography (${videoTabExtraPhoto} ${videoTabExtraPhoto === 1 ? 'hour' : 'hours'}): ${bold('$' + (videoTabExtraPhoto * 300).toLocaleString())}`);
+if (videoTabExtraVideo > 0) body += bullet(`Additional Videography (${videoTabExtraVideo} ${videoTabExtraVideo === 1 ? 'hour' : 'hours'}): ${bold('$' + (videoTabExtraVideo * 300).toLocaleString())}`);
+}
+const activeDiscounts = Object.entries(videoDiscounts).filter(([key, value]) => value);
+if (activeDiscounts.length > 0 || videoHasConsultation || videoFollowsInstagram) {
+body += sectionTitle('Discounts Applied');
+activeDiscounts.forEach(([key]) => { body += bullet(`${discountLabels[key]} Discount: ${green('-$50')}`); });
+if (videoHasConsultation) body += bullet(`Consultation Discount: ${green('-$100')}`);
+if (videoFollowsInstagram) body += bullet(`Instagram Follow Discount: ${green('-$25')}`);
+}
+body += sectionTitle('Payment Information');
+body += info('Payment Method', videoPaymentMethod === 'cash' ? 'Cash' : videoPaymentMethod === 'credit' ? 'Credit Card' : videoPaymentMethod === 'zelle' ? 'Zelle' : videoPaymentMethod === 'venmo' ? 'Venmo' : videoPaymentMethod === 'paypal' ? 'PayPal Gift' : 'Check');
+if (videoPaymentMethod === 'cash') body += bullet(`Cash Discount: ${green('-$50')}`);
+if (videoPaymentMethod === 'credit') body += bullet(`Credit Card Fee (5%): ${red('+$' + ((calculateVideoTotal / 1.05) * 0.05).toFixed(2))}`);
+if (videoWeddingDate) {
+body += info('Wedding Date', new Date(videoWeddingDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+const schedule = videoPaymentSchedule;
+if (schedule) {
+body += info('Payment Plan', schedule.type);
+body += sectionTitle('Payment Schedule');
+body += bullet(`Retainer (Due at signing): ${bold('$1,000.00')}`);
+if (schedule.isMonthly) {
+body += bullet(`${schedule.payments[0].count} monthly payments of ${bold('$' + schedule.payments[0].amount.toFixed(2))}`);
+} else {
+schedule.payments.forEach(payment => {
+body += bullet(`${payment.label} (${payment.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}): ${bold('$' + payment.amount.toFixed(2))}`);
+});
+}
+}
+}
+} else if (activeTab === 'alacarte') {
+body += sectionTitle('Package Details');
+body += info('Photography Coverage', `${alaCarteHours} Hours @ $300/hr`);
+body += info('Coverage Total', `$${(alaCarteHours * 300).toLocaleString()}`);
+body += sectionTitle('Included');
+body += bullet('Online Gallery');
+body += bullet('Printing Rights');
+body += bullet('High-resolution logo free images');
+const albums = [];
+if (alaCarteAlbum8x8 > 0) albums.push(`8x8 Album (×${alaCarteAlbum8x8}): ${bold('$' + (alaCarteAlbum8x8 * 300).toLocaleString())}`);
+if (alaCarteAlbum10x10 > 0) albums.push(`10x10 Album (×${alaCarteAlbum10x10}): ${bold('$' + (alaCarteAlbum10x10 * 400).toLocaleString())}`);
+if (alaCarteAlbum12x12 > 0) albums.push(`12x12 Album (×${alaCarteAlbum12x12}): ${bold('$' + (alaCarteAlbum12x12 * 500).toLocaleString())}`);
+if (alaCarteParentAlbum > 0) albums.push(`Parent Album (×${alaCarteParentAlbum}): ${bold('$' + (alaCarteParentAlbum * 500).toLocaleString())}`);
+if (albums.length > 0) {
+body += sectionTitle('Albums');
+albums.forEach(album => { body += bullet(album); });
+}
+const activeAddOns = alaCarteAddOns.filter(a => a.qty > 0);
+if (activeAddOns.length > 0) {
+body += sectionTitle('Extra Services');
+activeAddOns.forEach(addon => {
+if (addon.id === 'second_photographer') {
+body += bullet(`2nd Photographer (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else if (addon.id === 'bridal_shower') {
+body += bullet(`Bridal Shower Coverage (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else if (addon.id === 'rehearsal_dinner') {
+body += bullet(`Rehearsal Dinner Coverage (${addon.qty} ${addon.qty === 1 ? 'hour' : 'hours'}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+} else {
+body += bullet(`${addon.name} (×${addon.qty}): ${bold('$' + (addon.price * addon.qty).toLocaleString())}`);
+}
+});
+}
+const activeDiscounts = Object.entries(alaCarteDiscounts).filter(([key, value]) => value);
+if (activeDiscounts.length > 0 || alaCarteHasConsultation || alaCarteFollowsInstagram) {
+body += sectionTitle('Discounts Applied');
+activeDiscounts.forEach(([key]) => { body += bullet(`${discountLabels[key]} Discount: ${green('-$50')}`); });
+if (alaCarteHasConsultation) body += bullet(`Consultation Discount: ${green('-$100')}`);
+if (alaCarteFollowsInstagram) body += bullet(`Instagram Follow Discount: ${green('-$25')}`);
+}
+body += sectionTitle('Payment Information');
+body += info('Payment Method', alaCartePaymentMethod === 'cash' ? 'Cash' : alaCartePaymentMethod === 'credit' ? 'Credit Card' : alaCartePaymentMethod === 'zelle' ? 'Zelle' : alaCartePaymentMethod === 'venmo' ? 'Venmo' : alaCartePaymentMethod === 'paypal' ? 'PayPal Gift' : 'Check');
+if (alaCartePaymentMethod === 'cash') body += bullet(`Cash Discount: ${green('-$50')}`);
+if (alaCartePaymentMethod === 'credit') body += bullet(`Credit Card Fee (5%): ${red('+$' + ((calculateAlaCarteTotal / 1.05) * 0.05).toFixed(2))}`);
+if (alaCarteWeddingDate) {
+body += info('Wedding Date', new Date(alaCarteWeddingDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+const schedule = alaCartePaymentSchedule;
+if (schedule) {
+body += info('Payment Plan', schedule.type);
+body += sectionTitle('Payment Schedule');
+body += bullet(`Retainer (Due at signing): ${bold('$1,000.00')}`);
+if (schedule.isMonthly) {
+body += bullet(`${schedule.payments[0].count} monthly payments of ${bold('$' + schedule.payments[0].amount.toFixed(2))}`);
+} else {
+schedule.payments.forEach(payment => {
+body += bullet(`${payment.label} (${payment.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}): ${bold('$' + payment.amount.toFixed(2))}`);
+});
+}
+}
+}
+}
+return `<div style="font-family:Georgia,'Times New Roman',serif;max-width:600px;margin:0 auto;background:#ffffff;">
+<div style="background:#2c3e50;padding:30px;text-align:center;">
+<h1 style="color:#ffffff;font-size:24px;margin:0 0 8px 0;font-weight:300;letter-spacing:2px;">Your Wedding Quote</h1>
+<p style="color:${accentColor};font-size:16px;margin:0;font-weight:600;">${packageType}</p>
+</div>
+<div style="padding:24px 32px;background:#ffffff;">
+${body}
+<div style="margin-top:32px;padding:20px;background:#2c3e50;text-align:center;border-radius:8px;">
+<p style="color:${accentColor};font-size:13px;margin:0 0 4px 0;text-transform:uppercase;letter-spacing:2px;">Estimated Total</p>
+<p style="color:#ffffff;font-size:28px;font-weight:700;margin:0;">$${totalAmount.toFixed(2)}</p>
+</div>
+</div>
+<div style="padding:20px;text-align:center;background:#faf8f5;">
+<p style="color:#888;font-size:13px;margin:0;">This quote is an estimate and subject to change. Please contact us to finalize your booking.</p>
+</div>
+</div>`;
+};
 const handleSubmitBooking = async (e) => {
 e.preventDefault();
 if (!clientName || !clientEmail) {
@@ -763,29 +985,17 @@ formspreeSuccess = true;
 console.error('Formspree error:', formspreeError);
 }
 try {
-const tempForm = document.createElement('form');
-tempForm.style.display = 'none';
-const fields = {
-client_name: clientName,
-client_email: clientEmail,
-booking_details: bookingDetails,
-total_amount: `$${totalAmount.toFixed(2)}`
-};
-Object.keys(fields).forEach(key => {
-const input = document.createElement('input');
-input.type = 'hidden';
-input.name = key;
-input.value = fields[key];
-tempForm.appendChild(input);
-});
-document.body.appendChild(tempForm);
-await emailjs.sendForm(
+await emailjs.send(
 'service_whnw3qc',
 'template_t7qi78s',
-tempForm,
+{
+client_name: clientName,
+client_email: clientEmail,
+booking_details: generateBookingDetailsHTML(),
+total_amount: `$${totalAmount.toFixed(2)}`
+},
 'UEpeWGxTgUNtX0MG3'
 );
-document.body.removeChild(tempForm);
 emailjsSuccess = true;
 } catch (emailjsError) {
 console.error('EmailJS error:', emailjsError);
