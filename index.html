@@ -221,7 +221,6 @@ html, body {
   border-radius: 34px;
   background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
   transition: all 0.3s ease;
-  width: calc(33.333% - 8px);
 }
 .tab-header-sm {
   height: 50px;
@@ -282,7 +281,7 @@ html, body {
 }
 .col-card.col-active {
   border-color: #a78bfa;
-  box-shadow: 0 0 22px rgba(167, 139, 250, 0.25);
+  box-shadow: 0 0 16px rgba(167, 139, 250, 0.7);
 }
 .col-card-name {
   font-size: 24px;
@@ -310,7 +309,7 @@ html, body {
   -webkit-text-fill-color: transparent;
 }
 .col-card-badge {
-  font-size: 15px;
+  font-size: 17px;
   color: #888;
   margin-bottom: 16px;
   padding-bottom: 16px;
@@ -345,7 +344,7 @@ html, body {
 .col-card-features li {
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 17px;
   color: #555;
   margin-bottom: 8px;
   line-height: 1.4;
@@ -353,7 +352,7 @@ html, body {
 .col-card-features li .col-check {
   flex-shrink: 0;
   margin-right: 8px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
   background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
   -webkit-background-clip: text;
@@ -454,16 +453,16 @@ const CASH_DISCLAIMER = '*To qualify for the $50 cash discount, your entire bala
 
 const getAddonImg = (id) => id === 'engagement_30min' ? IMG.eng30 : id === 'engagement_session' ? IMG.eng60 : id === 'bridal_shower' ? IMG.bridal : IMG.rehearsal;
 const addonDescs = {
-  engagement_30min: 'A quick portrait session to celebrate your engagement.',
-  engagement_session: 'A full session with outfit and location changes.',
-  bridal_shower: 'Capture the fun and love at your bridal shower.',
-  rehearsal_dinner: 'Document the toasts and memories the night before.'
+  engagement_30min: 'A quick and fun portrait session to celebrate your engagement together.',
+  engagement_session: 'A full portrait session with time for outfit changes and multiple locations.',
+  bridal_shower: 'Capture all the fun, laughter, and love shared at your bridal shower celebration.',
+  rehearsal_dinner: 'Document the toasts, laughter, and memories the night before your wedding.'
 };
 const albumDescs = {
   'album_8x8': 'A beautifully crafted keepsake of your favorite moments.',
-  'album_10x10': 'A premium album with more room to tell your story.',
+  'album_10x10': 'A premium album with more room to showcase your favorite moments.',
   'album_12x12': 'Our largest album for the most comprehensive wedding story.',
-  'parent_album': 'A duplicate album perfect for gifting to family.'
+  'parent_album': 'A carbon copy of your wedding album. The perfect keepsake gift for family.'
 };
 
 const getAlbumImg = (id) => id === 'album_8x8' || id === '8x8 Album' ? IMG.alb8 : id === 'album_10x10' || id === '10x10 Album' ? IMG.alb10 : id === 'album_12x12' || id === '12x12 Album' ? IMG.alb12 : IMG.parent;
@@ -694,24 +693,24 @@ const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymen
   </div>
 );
 
-const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus, disableMinus, useSmBreakpoint, showHrs, includedContent, imgOffset, imgSize}) => {
+const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus, disableMinus, showHrs, includedContent, imgOffset, imgSize}) => {
   const active = qty > 0;
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const sc = active ? 'text-green-700' : 'text-stone-500';
   const displayQty = showHrs ? `${qty} hrs` : qty;
   return (
     <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pb-8 px-8 overflow-hidden`}>
-      <img src={imgSrc} alt={label} className="object-contain" style={{width: '17rem', height: '17rem', marginTop: '-10px', marginBottom: '-5px', transform: `${imgSize ? `scale(${imgSize})` : ''} ${imgOffset ? `translateY(${imgOffset})` : ''}`.trim() || 'none'}} />
-      <p className={`text-lg md:text-xl font-bold ${ac} mb-0.5`}>{label}</p>
+      <img src={imgSrc} alt={label} className="object-contain" style={{width: '14rem', height: '14rem', marginTop: '-10px', marginBottom: '-5px', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))', transform: `${imgSize ? `scale(${imgSize})` : ''} ${imgOffset ? `translateY(${imgOffset})` : ''}`.trim() || 'none'}} />
+      <p className={`text-xl md:text-2xl font-bold ${ac} mb-0.5`}>{label}</p>
       {sublabel && <p className={`text-sm md:text-base ${sc}`}>{sublabel}</p>}
-      <p className={`text-lg ${ac} mb-1`}>{price}</p>
-      {desc && <p className="text-sm text-stone-400 italic mb-3">{desc}</p>}
-      <div className="flex items-center gap-3">
+      <p className={`text-2xl ${ac} font-bold mb-6 mt-3`}>{price}</p>
+      {desc && <p className="text-lg text-stone-500 italic text-center">{desc}</p>}
+      <div className="flex items-center gap-3 mt-auto pt-6">
         <button onClick={onMinus} disabled={disableMinus} className="te-btn"><Minus className="te-icon" /></button>
-        <span className={`${showHrs ? 'w-16' : 'w-8'} text-center ${showHrs ? 'font-bold text-xl' : 'font-medium text-lg'} whitespace-nowrap ${ac}`}>{displayQty}</span>
+        <span className={`${showHrs ? 'w-16' : 'w-8'} text-center font-bold text-xl whitespace-nowrap ${ac}`}>{displayQty}</span>
         <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
       </div>
-      {includedContent}
+      {includedContent && <div className="mt-8">{includedContent}</div>}
     </div>
   );
 };
@@ -722,17 +721,17 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, maxQty, desc}) => {
   const priceStr = `$${addon.price.toLocaleString()}${addon.suffix ? addon.suffix.replace('hour', 'hr') : '.00'}`;
   return (
     <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-3 pb-8 px-8`}>
-      <img src={imgSrc} alt={addon.name} className="object-contain mb-1" style={{width: '17rem', height: '17rem'}} />
-      <p className={`text-lg md:text-xl font-bold ${ac} mb-1`}>{addon.name}</p>
-      <p className={`text-lg ${ac} mb-1`}>{priceStr}</p>
-      {desc && <p className="text-sm text-stone-400 italic mb-3">{desc}</p>}
-      <div className="flex items-center gap-3">
+      <img src={imgSrc} alt={addon.name} className="object-contain mb-1" style={{width: '14rem', height: '14rem', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
+      <p className={`text-xl md:text-2xl font-bold ${ac} mb-0.5 whitespace-pre-line`}>{addon.name}</p>
+      <p className={`text-2xl ${ac} font-bold mb-6 mt-3`}>{priceStr}</p>
+      {desc && <p className="text-lg text-stone-500 italic text-center">{desc}</p>}
+      <div className="flex items-center gap-3 mt-auto pt-6">
         <button onClick={onMinus} disabled={addon.qty === 0} className="te-btn"><Minus className="te-icon" /></button>
-        <span className={`w-8 text-center font-medium text-lg whitespace-nowrap ${ac}`}>{addon.qty}</span>
+        <span className={`w-8 text-center font-bold text-xl whitespace-nowrap ${ac}`}>{addon.qty}</span>
         <button onClick={onPlus} disabled={addon.qty >= maxQty} className="te-btn"><Plus className="te-icon" /></button>
       </div>
       {addon.description && (
-        <div className="text-base text-stone-600 space-y-1 mt-3 text-center">
+        <div className="text-base text-stone-600 space-y-1 mt-8 text-center">
           {addon.description.split('\n').map((line, idx) => (<p key={idx}>{line}</p>))}
         </div>
       )}
@@ -740,7 +739,7 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, maxQty, desc}) => {
   );
 };
 
-const AlbumRow = ({album, onMinus, onPlus, useSmBreakpoint, desc}) => {
+const AlbumRow = ({album, onMinus, onPlus, desc}) => {
   const active = (album.qty !== undefined ? album.qty : album.state) > 0;
   const qty = album.qty !== undefined ? album.qty : album.state;
   const ac = active ? 'text-green-700' : 'text-stone-800';
@@ -749,15 +748,15 @@ const AlbumRow = ({album, onMinus, onPlus, useSmBreakpoint, desc}) => {
   const priceStr = `$${album.price.toLocaleString ? album.price.toLocaleString() : album.price}.00`;
   return (
     <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-3 pb-8 px-8`}>
-      <img src={imgSrc} alt={album.name} className="object-contain mb-1" style={{width: '17rem', height: '17rem'}} />
-      <p className={`text-lg md:text-xl font-bold ${ac} mb-0.5`}>{album.name}</p>
+      <img src={imgSrc} alt={album.name} className="object-contain mb-1" style={{width: '14rem', height: '14rem', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
+      <p className={`text-xl md:text-2xl font-bold ${ac} mb-0.5`}>{album.name}</p>
       {album.pages && <p className={`text-base md:text-lg ${sc}`}>{album.pages}</p>}
       {album.subtext && <p className={`text-base md:text-lg ${sc}`}>{album.subtext}</p>}
-      <p className={`text-lg ${ac} mb-1 mt-1`}>{priceStr}</p>
-      {desc && <p className="text-sm text-stone-400 italic mb-3">{desc}</p>}
-      <div className="flex items-center gap-3">
+      <p className={`text-2xl ${ac} font-bold mb-6 mt-3`}>{priceStr}</p>
+      {desc && <p className="text-lg text-stone-500 italic text-center">{desc}</p>}
+      <div className="flex items-center gap-3 mt-auto pt-6">
         <button onClick={onMinus} disabled={qty === 0} className="te-btn"><Minus className="te-icon" /></button>
-        <span className={`w-8 text-center font-medium text-lg ${ac}`}>{qty}</span>
+        <span className={`w-8 text-center font-bold text-xl ${ac}`}>{qty}</span>
         <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
       </div>
     </div>
@@ -777,8 +776,8 @@ silver: {name: 'Silver Collection', hours: 8, price: 2400, badge: 'Perfect for 1
 gold: {name: 'Gold Collection', hours: 10, price: 3000, badge: 'Most Popular Package', items: ['3-4 Minute Highlight Reel', '1-1.5 Hour Feature Film']},
 platinum: {name: 'Platinum Collection', hours: 12, price: 3600, badge: 'Perfect for 150+ Guests', items: ['3-4 Minute Highlight Reel', '1-1.5 Hour Feature Film']}
 };
-const albumOptions = [{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, qty: 0}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, qty: 0}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, qty: 0}, {id: 'parent_album', name: 'Parent Album', subtext: '(carbon copy of your wedding album)', price: 500, qty: 0}];
-const addOns = [{id: 'second_photographer', name: '2nd Photographer', price: 150, qty: 0, suffix: '/hour', description: 'You will receive 50-75 extra images per hour of 2nd photographer coverage'}, {id: 'engagement_30min', name: '30 Minute Engagement Session', price: 300, qty: 0, description: 'Included: Online Gallery + Printing Rights'}, {id: 'engagement_session', name: '1 Hour Engagement Session', price: 600, qty: 0, description: 'Included: Online Gallery + Printing Rights'}, {id: 'bridal_shower', name: 'Bridal Shower Coverage', price: 300, qty: 0, suffix: '/hour', description: 'Included: Online Gallery + Printing Rights'}, {id: 'rehearsal_dinner', name: 'Rehearsal Dinner Coverage', price: 300, qty: 0, suffix: '/hour', description: 'Included: Online Gallery + Printing Rights'}];
+const albumOptions = [{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, qty: 0}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, qty: 0}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, qty: 0}, {id: 'parent_album', name: 'Parent Album', subtext: '(copy of your wedding album)', price: 500, qty: 0}];
+const addOns = [{id: 'second_photographer', name: '2nd Photographer', price: 150, qty: 0, suffix: '/hour', description: 'You will receive 50-75 extra images per hour of 2nd photographer coverage'}, {id: 'engagement_30min', name: '30 Minute\nEngagement Session', price: 300, qty: 0, description: 'Includes: Online Gallery + Printing Rights'}, {id: 'engagement_session', name: '1 Hour\nEngagement Session', price: 600, qty: 0, description: 'Includes: Online Gallery + Printing Rights'}, {id: 'bridal_shower', name: 'Bridal Shower Coverage', price: 300, qty: 0, suffix: '/hour', description: 'Includes: Online Gallery + Printing Rights'}, {id: 'rehearsal_dinner', name: 'Rehearsal Dinner Coverage', price: 300, qty: 0, suffix: '/hour', description: 'Includes: Online Gallery + Printing Rights'}];
 const discountLabels = {
 law_enforcement: 'Police Officer',
 fire_fighter: 'Fire Fighter',
@@ -1668,7 +1667,8 @@ disabled={isSubmitting}
 <div className="flex justify-center mb-8 px-2">
 <div className="tab-header">
 <div className="tab-slider" style={{
-  left: activeTab === 'photography' ? '6px' : activeTab === 'videography' ? 'calc(33.333% + 1px)' : 'calc(66.666% - 4px)',
+  left: activeTab === 'photography' ? '6px' : activeTab === 'videography' ? '33.333%' : '66.666%',
+  right: activeTab === 'photography' ? '66.666%' : activeTab === 'videography' ? '33.333%' : '6px',
 }}></div>
 <button onClick={() => setActiveTab('photography')} className={`tab-label ${activeTab === 'photography' ? 'tab-active' : ''}`}>Photography</button>
 <button onClick={() => setActiveTab('videography')} className={`tab-label ${activeTab === 'videography' ? 'tab-active' : ''}`}>Videography</button>
@@ -1702,24 +1702,24 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 <div className="space-y-10">
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
-<div className="grid grid-cols-2 gap-3">
+<div className="grid grid-cols-2 gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + 1)} disableMinus={photoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Extra time to film every chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} disableMinus={photoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="A second angle to ensure no moment goes unseen." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', 1)} disableMinus={photoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', 1)} disableMinus={photoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Same-day social media ready clips, behind-the-scenes content, and live stream your ceremony on Instagram." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} disableMinus={photoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} disableMinus={photoTabContentCreator === 0} />
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
-<div className="grid grid-cols-2 gap-3">
+<div className="grid grid-cols-2 gap-8">
 {photographyAlbums.map(album => (<AlbumRow key={album.id} album={album} desc={albumDescs[album.id]} onMinus={() => handlePhotographyAlbumChange(album.id, -1)} onPlus={() => handlePhotographyAlbumChange(album.id, 1)} />))}
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
-<div className="grid grid-cols-2 gap-3">
+<div className="grid grid-cols-2 gap-8">
 {photographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
@@ -1786,18 +1786,18 @@ return (
 <div className="space-y-10">
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
-<div className="grid grid-cols-2 gap-3">
+<div className="grid grid-cols-2 gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraPhoto(prev => prev + 1)} disableMinus={videoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Extra time to film every chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} disableMinus={videoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} disableMinus={videoTabExtraVideo === 0} />
 {videoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="A second angle to ensure no moment goes unseen." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', 1)} disableMinus={videoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', 1)} disableMinus={videoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Same-day social media ready clips, behind-the-scenes content, and live stream your ceremony on Instagram." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} disableMinus={videoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} disableMinus={videoTabContentCreator === 0} />
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
-<div className="grid grid-cols-2 gap-3">
+<div className="grid grid-cols-2 gap-8">
 {videographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
@@ -1822,8 +1822,8 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <div className="space-y-10">
 <div className="border border-stone-200 rounded-lg p-5">
 <h4 className="text-lg md:text-xl font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Coverage Time</h4>
-<div className="grid grid-cols-2 gap-3">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} useSmBreakpoint showHrs includedContent={
+<div className="grid grid-cols-2 gap-8">
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} showHrs includedContent={
 <div className="mt-3 w-full">
 <div className="bg-white p-3 rounded border border-stone-200">
 <p className="text-sm text-stone-700 font-medium mb-1">✓  Included:</p>
@@ -1835,7 +1835,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 </div>
 } />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - 1))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + 1)} disableMinus={alaCarteVideoHours === 0} useSmBreakpoint showHrs includedContent={
+<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - 1))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + 1)} disableMinus={alaCarteVideoHours === 0} showHrs includedContent={
 <div className="mt-3 w-full">
 <div className="bg-white p-3 rounded border border-stone-200">
 <p className="text-sm text-stone-700 font-medium mb-1">✓  Included:</p>
@@ -1847,20 +1847,20 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 } />
 {alaCarteSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="A second angle to ensure no moment goes unseen." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', 1)} disableMinus={alaCarteSecondPhotog.qty === 0} useSmBreakpoint showHrs />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', 1)} disableMinus={alaCarteSecondPhotog.qty === 0} showHrs />
 )}
-<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Same-day social media ready clips, behind-the-scenes content, and live stream your ceremony on Instagram." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} useSmBreakpoint showHrs />
+<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs />
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
-<div className="grid grid-cols-2 gap-3">
-{[{name: '8x8 Album', pages: '(30 Pages)', price: 300, state: alaCarteAlbum8x8, setState: setAlaCarteAlbum8x8}, {name: '10x10 Album', pages: '(40 Pages)', price: 400, state: alaCarteAlbum10x10, setState: setAlaCarteAlbum10x10}, {name: '12x12 Album', pages: '(50 Pages)', price: 500, state: alaCarteAlbum12x12, setState: setAlaCarteAlbum12x12}, {name: 'Parent Album', pages: '', subtext: '(carbon copy of your wedding album)', price: 500, state: alaCarteParentAlbum, setState: setAlaCarteParentAlbum}].map((album, idx) => (<AlbumRow key={idx} album={album} desc={albumDescs[album.id]} onMinus={() => album.setState(Math.max(0, album.state - 1))} onPlus={() => album.setState(album.state + 1)} useSmBreakpoint />))}
+<div className="grid grid-cols-2 gap-8">
+{[{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, state: alaCarteAlbum8x8, setState: setAlaCarteAlbum8x8}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, state: alaCarteAlbum10x10, setState: setAlaCarteAlbum10x10}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, state: alaCarteAlbum12x12, setState: setAlaCarteAlbum12x12}, {id: 'parent_album', name: 'Parent Album', pages: '', subtext: '(copy of your wedding album)', price: 500, state: alaCarteParentAlbum, setState: setAlaCarteParentAlbum}].map((album, idx) => (<AlbumRow key={idx} album={album} desc={albumDescs[album.id]} onMinus={() => album.setState(Math.max(0, album.state - 1))} onPlus={() => album.setState(album.state + 1)} />))}
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
-<div className="grid grid-cols-2 gap-3">
+<div className="grid grid-cols-2 gap-8">
 {alaCarteAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
