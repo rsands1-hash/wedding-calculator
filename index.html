@@ -8,15 +8,29 @@
 <body>
 <!-- Wedding Pricing Calculator for Showit -->
 <style>
-html, body {
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html {
   margin: 0 !important;
   padding: 0 !important;
   height: auto !important;
+  overflow: hidden !important;
+}
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  height: auto !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+  max-height: none !important;
 }
 #wedding-pricing-root {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
+  overflow: hidden !important;
+  display: flow-root;
 }
 .investment-sticky {
   position: relative !important;
@@ -2279,11 +2293,32 @@ ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-p
 <script>
 function sendHeight() {
   var root = document.getElementById('wedding-pricing-root');
+  // Reset height to measure natural content size
   root.style.height = 'auto';
+  root.style.overflow = 'hidden';
   void root.offsetHeight;
-  var h = root.scrollHeight;
-  h = Math.ceil(h);
+  // Measure using multiple methods and take the smallest
+  var rect = root.getBoundingClientRect();
+  var rectH = Math.ceil(rect.height);
+  var scrollH = root.scrollHeight;
+  var offsetH = root.offsetHeight;
+  // Find the actual bottom of the last visible child
+  var children = root.children;
+  var lastChildBottom = 0;
+  if (children.length > 0) {
+    for (var i = 0; i < children.length; i++) {
+      var childRect = children[i].getBoundingClientRect();
+      var childBottom = childRect.bottom - rect.top;
+      if (childBottom > lastChildBottom) lastChildBottom = childBottom;
+    }
+  }
+  var childH = Math.ceil(lastChildBottom);
+  // Use the child-based measurement as primary (most reliable)
+  // Fall back to the smallest of other methods
+  var h = childH > 0 ? childH : Math.min(rectH, scrollH, offsetH);
   window.parent.postMessage({calcHeight: h}, '*');
+  // Lock the root to exact content height
+  root.style.height = h + 'px';
 }
 window.addEventListener('load', function() {
   sendHeight();
