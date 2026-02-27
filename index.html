@@ -189,17 +189,17 @@ html, body {
 }
 /* Sliding Tabs */
 .tab-header {
-  height: 75px;
+  height: 85px;
   display: flex;
   align-items: center;
   border: 1px solid #ccc;
-  border-radius: 40px;
+  border-radius: 44px;
   position: relative;
   background: #fff;
   width: 100%;
   max-width: 48rem;
   margin: 0 auto;
-  padding: 6px;
+  padding: 10px;
 }
 .tab-header .tab-label {
   height: 100%;
@@ -225,8 +225,8 @@ html, body {
 }
 .tab-header .tab-slider {
   position: absolute;
-  top: 6px;
-  bottom: 6px;
+  top: 10px;
+  bottom: 10px;
   border-radius: 34px;
   background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
   transition: all 0.3s ease;
@@ -496,7 +496,7 @@ const AnimCheckbox = ({checked, onChange, children}) => (
 );
 
 const ServiceCredits = ({discounts, toggleDiscount, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-lg shadow-lg p-4 md:p-6 flex-1" : "lg:hidden bg-white rounded-lg shadow-lg p-4 md:p-6"}>
+  <div className={isDesktop ? "bg-white rounded-2xl shadow-lg p-6 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl shadow-lg p-6 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Service Credits</h3>
     <p className="text-sm text-stone-600 mb-4 italic">As a small thank you to those who dedicate their lives to serving our community, we're honored to offer these credits toward your wedding photography.</p>
     <div className="space-y-4">
@@ -511,7 +511,7 @@ const ServiceCredits = ({discounts, toggleDiscount, isDesktop}) => (
 );
 
 const UnlockCredits = ({hasConsultation, setHasConsultation, followsInstagram, setFollowsInstagram, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-lg shadow-lg p-4 md:p-6 flex-1" : "lg:hidden bg-white rounded-lg shadow-lg p-4 md:p-6"}>
+  <div className={isDesktop ? "bg-white rounded-2xl shadow-lg p-6 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl shadow-lg p-6 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Unlock More Credits</h3>
     <p className="text-sm text-stone-600 mb-4 italic">Want to save even more? We've got a couple easy ways for you to unlock extra credits toward your package!</p>
     <div className="space-y-4">
@@ -524,7 +524,7 @@ const UnlockCredits = ({hasConsultation, setHasConsultation, followsInstagram, s
 );
 
 const PaymentOptionsSection = ({paymentMethod, setPaymentMethod, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-lg shadow-lg p-4 md:p-6 flex-1" : "lg:hidden bg-white rounded-lg shadow-lg p-4 md:p-6"}>
+  <div className={isDesktop ? "bg-white rounded-2xl shadow-lg p-6 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl shadow-lg p-6 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Payment Options</h3>
     <div className="space-y-4">
       <div className="space-y-2">
@@ -620,7 +620,7 @@ const WeddingCalendar = ({weddingDate, setWeddingDate}) => {
 };
 
 const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymentPlan, radioName, isDesktop, schedule, retainerAmount}) => (
-  <div className={isDesktop ? "bg-white rounded-lg shadow-lg p-4 md:p-6 flex-1" : "lg:hidden bg-white rounded-lg shadow-lg p-4 md:p-6"}>
+  <div className={isDesktop ? "bg-white rounded-2xl shadow-lg p-6 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl shadow-lg p-6 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4 flex items-center gap-2"><Calendar className="w-5 h-5" />Choose Your Payment Plan</h3>
     <div className="space-y-4">
       <div>
@@ -1676,8 +1676,8 @@ disabled={isSubmitting}
 <div className="flex justify-center mb-8 px-2">
 <div className="tab-header">
 <div className="tab-slider" style={{
-  left: activeTab === 'photography' ? '6px' : activeTab === 'videography' ? '33.333%' : '66.666%',
-  right: activeTab === 'photography' ? '66.666%' : activeTab === 'videography' ? '33.333%' : '6px',
+  left: activeTab === 'photography' ? '10px' : activeTab === 'videography' ? '33.333%' : '66.666%',
+  right: activeTab === 'photography' ? '66.666%' : activeTab === 'videography' ? '33.333%' : '10px',
 }}></div>
 <button onClick={() => setActiveTab('photography')} className={`tab-label ${activeTab === 'photography' ? 'tab-active' : ''}`}>Photography</button>
 <button onClick={() => setActiveTab('videography')} className={`tab-label ${activeTab === 'videography' ? 'tab-active' : ''}`}>Videography</button>
@@ -1685,9 +1685,9 @@ disabled={isSubmitting}
 </div>
 </div>
 <div className="flex flex-col lg:flex-row gap-8">
-<div className="lg:w-[65%] space-y-6">
+<div className="lg:w-[65%] space-y-8">
 {activeTab === 'photography' && (<>
-<div className="rounded-lg p-4 md:p-6" style={{background: 'transparent'}}>
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose a Photography Collection</h2>
 <div className="grid grid-cols-2 gap-8 mb-8 mt-6 px-1">
 {Object.entries(collections).map(([key, collection]) => (
@@ -1706,7 +1706,7 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 ))}
 </div>
 </div>
-<div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose Your Add-Ons</h2>
 <div className="space-y-10">
 <div>
@@ -1739,7 +1739,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 </div>
 {selectedCollection && (<>
-<div className="lg:hidden bg-white rounded-lg shadow-lg p-4 md:p-6">
+<div className="lg:hidden bg-white rounded-2xl shadow-lg p-6 md:p-8">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
 <div className="space-y-3">
 {collections[selectedCollection].items.map((item, idx) => {
@@ -1773,7 +1773,7 @@ return (
 </>)}
 </>)}
 {activeTab === 'videography' && (<>
-<div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose a Videography Collection</h2>
 <div className="grid grid-cols-2 gap-8 mb-8 mt-6 px-1">
 {Object.entries(videographyCollections).map(([key, collection]) => (
@@ -1790,7 +1790,7 @@ return (
 ))}
 </div>
 </div>
-<div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose Your Add-Ons</h2>
 <div className="space-y-10">
 <div>
@@ -1825,7 +1825,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </>)}
 </>)}
 {activeTab === 'alacarte' && (<>
-<div className="bg-white rounded-lg shadow-lg p-4 md:p-6">
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans text-stone-800 mb-4">Build Your Custom Package</h2>
 <p className="text-stone-600 mb-6">Create your perfect coverage starting at $300/hour with a 4 hour minimum</p>
 <div className="space-y-10">
@@ -1886,10 +1886,10 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <PaymentPlanSection weddingDate={alaCarteWeddingDate} setWeddingDate={setAlaCarteWeddingDate} paymentPlan={alaCartePaymentPlan} setPaymentPlan={setAlaCartePaymentPlan} radioName="alacarte-payment-plan-mobile" isDesktop={false} schedule={alaCartePaymentSchedule} retainerAmount={(alaCarteHours > 0 && alaCarteVideoHours > 0) ? 2000 : 1000} />
 </>)}
 </div>
-<div className="lg:w-[35%] space-y-6">
+<div className="lg:w-[35%] space-y-8">
 {activeTab === 'photography' && (<>
 {selectedCollection && (<>
-<div className="hidden lg:block bg-white rounded-lg shadow-lg p-4 md:p-6">
+<div className="hidden lg:block bg-white rounded-2xl shadow-lg p-6 md:p-8">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
 <div className="space-y-3">
 {collections[selectedCollection].items.map((item, idx) => {
@@ -1923,7 +1923,7 @@ return (
 <PaymentPlanSection weddingDate={weddingDate} setWeddingDate={setWeddingDate} paymentPlan={paymentPlan} setPaymentPlan={setPaymentPlan} radioName="payment-plan" isDesktop={true} schedule={collectionsPaymentSchedule} retainerAmount={photoTabExtraVideo > 0 ? 2000 : 1000} />
 </div>
 </>)}
-<div className="bg-white rounded-lg shadow-lg p-4 md:p-6 investment-sticky">
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 {selectedCollection ? (<div className="space-y-4 mb-6">
 <div className="pb-4 border-b border-stone-200">
@@ -2053,7 +2053,7 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 <PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan" isDesktop={true} schedule={videoPaymentSchedule} retainerAmount={1000} />
 </div>
 </>)}
-<div className="bg-white rounded-lg shadow-lg p-4 md:p-6 investment-sticky">
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 {selectedVideoCollection ? (<div className="space-y-4 mb-6">
 <div className="pb-4 border-b border-stone-200">
@@ -2154,7 +2154,7 @@ videoPaymentSchedule.payments.map((payment, idx) => (
 <PaymentOptionsSection paymentMethod={alaCartePaymentMethod} setPaymentMethod={setAlaCartePaymentMethod} isDesktop={true} />
 <PaymentPlanSection weddingDate={alaCarteWeddingDate} setWeddingDate={setAlaCarteWeddingDate} paymentPlan={alaCartePaymentPlan} setPaymentPlan={setAlaCartePaymentPlan} radioName="alacarte-payment-plan" isDesktop={true} schedule={alaCartePaymentSchedule} retainerAmount={(alaCarteHours > 0 && alaCarteVideoHours > 0) ? 2000 : 1000} />
 </div>
-<div className="bg-white rounded-lg shadow-lg p-4 md:p-6 investment-sticky">
+<div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 <div className="space-y-4 mb-6">
 {alaCarteHours > 0 && (<div className="pb-4 border-b border-stone-200">
