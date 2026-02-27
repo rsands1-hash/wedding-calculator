@@ -11,26 +11,21 @@
 *, *::before, *::after {
   box-sizing: border-box;
 }
-html {
+html, body {
   margin: 0 !important;
   padding: 0 !important;
-  height: auto !important;
-  overflow: hidden !important;
-}
-body {
-  margin: 0 !important;
-  padding: 0 !important;
-  height: auto !important;
-  overflow: hidden !important;
+  height: 1px !important;
+  overflow: visible !important;
   min-height: 0 !important;
-  max-height: none !important;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 #wedding-pricing-root {
   margin: 0 !important;
   padding: 0 !important;
   width: 100% !important;
-  overflow: hidden !important;
-  display: flow-root;
+  position: relative;
 }
 .investment-sticky {
   position: relative !important;
@@ -1605,7 +1600,7 @@ return (
 <div className="bg-stone-100 py-12 px-4">
 {showModal && ReactDOM.createPortal(
 <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem'}}>
-<div className="bg-white rounded-lg shadow-2xl max-w-md w-full p-6 relative" style={{maxHeight: '90vh', overflowY: 'auto'}}>
+<div className="rounded-lg shadow-2xl max-w-md w-full p-6 relative" style={{maxHeight: '90vh', overflowY: 'auto', backgroundColor: '#dad7d9'}}>
 <button onClick={closeModal} className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 transition-colors">
 <X className="w-6 h-6" />
 </button>
@@ -2293,32 +2288,13 @@ ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-p
 <script>
 function sendHeight() {
   var root = document.getElementById('wedding-pricing-root');
-  // Reset height to measure natural content size
-  root.style.height = 'auto';
-  root.style.overflow = 'hidden';
-  void root.offsetHeight;
-  // Measure using multiple methods and take the smallest
-  var rect = root.getBoundingClientRect();
-  var rectH = Math.ceil(rect.height);
-  var scrollH = root.scrollHeight;
-  var offsetH = root.offsetHeight;
-  // Find the actual bottom of the last visible child
-  var children = root.children;
-  var lastChildBottom = 0;
-  if (children.length > 0) {
-    for (var i = 0; i < children.length; i++) {
-      var childRect = children[i].getBoundingClientRect();
-      var childBottom = childRect.bottom - rect.top;
-      if (childBottom > lastChildBottom) lastChildBottom = childBottom;
-    }
-  }
-  var childH = Math.ceil(lastChildBottom);
-  // Use the child-based measurement as primary (most reliable)
-  // Fall back to the smallest of other methods
-  var h = childH > 0 ? childH : Math.min(rectH, scrollH, offsetH);
+  // Measure the actual React content child, NOT the root
+  // This avoids mobile browsers inflating the root/body to viewport height
+  var content = root.firstElementChild;
+  if (!content) return;
+  var h = Math.ceil(content.getBoundingClientRect().height);
+  if (h < 10) return; // not yet rendered
   window.parent.postMessage({calcHeight: h}, '*');
-  // Lock the root to exact content height
-  root.style.height = h + 'px';
 }
 window.addEventListener('load', function() {
   sendHeight();
