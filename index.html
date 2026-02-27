@@ -2280,13 +2280,9 @@ ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-p
 function sendHeight() {
   var root = document.getElementById('wedding-pricing-root');
   root.style.height = 'auto';
-  document.body.style.height = 'auto';
-  document.documentElement.style.height = 'auto';
   void root.offsetHeight;
   var h = root.scrollHeight;
   h = Math.ceil(h);
-  document.body.style.height = h + 'px';
-  document.documentElement.style.height = h + 'px';
   window.parent.postMessage({calcHeight: h}, '*');
 }
 window.addEventListener('load', function() {
