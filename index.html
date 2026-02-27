@@ -708,9 +708,9 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
       <p className={`text-lg ${ac} mb-1`}>{price}</p>
       {desc && <p className="text-sm text-stone-400 italic mb-3">{desc}</p>}
       <div className="flex items-center gap-3">
-        <button onClick={onMinus} disabled={disableMinus} className={`te-btn ${active ? 'te-green-dark' : ''}`}><span className="te-hover"><div /></span><Minus className="te-icon" /></button>
+        <button onClick={onMinus} disabled={disableMinus} className="te-btn"><Minus className="te-icon" /></button>
         <span className={`${showHrs ? 'w-16' : 'w-8'} text-center ${showHrs ? 'font-bold text-xl' : 'font-medium text-lg'} whitespace-nowrap ${ac}`}>{displayQty}</span>
-        <button onClick={onPlus} className={`te-btn ${active ? 'te-green-dark' : ''}`}><span className="te-hover"><div /></span><Plus className="te-icon" /></button>
+        <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
       </div>
       {includedContent}
     </div>
@@ -728,9 +728,9 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, maxQty, desc}) => {
       <p className={`text-lg ${ac} mb-1`}>{priceStr}</p>
       {desc && <p className="text-sm text-stone-400 italic mb-3">{desc}</p>}
       <div className="flex items-center gap-3">
-        <button onClick={onMinus} disabled={addon.qty === 0} className={`te-btn ${active ? 'te-green-dark' : ''}`}><span className="te-hover"><div /></span><Minus className="te-icon" /></button>
+        <button onClick={onMinus} disabled={addon.qty === 0} className="te-btn"><Minus className="te-icon" /></button>
         <span className={`w-8 text-center font-medium text-lg whitespace-nowrap ${ac}`}>{addon.qty}</span>
-        <button onClick={onPlus} disabled={addon.qty >= maxQty} className={`te-btn ${active ? 'te-green-dark' : ''}`}><span className="te-hover"><div /></span><Plus className="te-icon" /></button>
+        <button onClick={onPlus} disabled={addon.qty >= maxQty} className="te-btn"><Plus className="te-icon" /></button>
       </div>
       {addon.description && (
         <div className="text-base text-stone-600 space-y-1 mt-3 text-center">
@@ -757,9 +757,9 @@ const AlbumRow = ({album, onMinus, onPlus, useSmBreakpoint, desc}) => {
       <p className={`text-lg ${ac} mb-1 mt-1`}>{priceStr}</p>
       {desc && <p className="text-sm text-stone-400 italic mb-3">{desc}</p>}
       <div className="flex items-center gap-3">
-        <button onClick={onMinus} disabled={qty === 0} className={`te-btn ${active ? 'te-green-dark' : ''}`}><span className="te-hover"><div /></span><Minus className="te-icon" /></button>
+        <button onClick={onMinus} disabled={qty === 0} className="te-btn"><Minus className="te-icon" /></button>
         <span className={`w-8 text-center font-medium text-lg ${ac}`}>{qty}</span>
-        <button onClick={onPlus} className={`te-btn ${active ? 'te-green-dark' : ''}`}><span className="te-hover"><div /></span><Plus className="te-icon" /></button>
+        <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
       </div>
     </div>
   );
