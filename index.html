@@ -14,9 +14,10 @@
 html, body {
   margin: 0 !important;
   padding: 0 !important;
-  height: 1px !important;
-  overflow: visible !important;
+  height: auto !important;
   min-height: 0 !important;
+  max-height: none !important;
+  overflow: hidden !important;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -26,6 +27,7 @@ html, body {
   padding: 0 !important;
   width: 100% !important;
   position: relative;
+  float: left;
 }
 .investment-sticky {
   position: relative !important;
@@ -1717,7 +1719,7 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 {photoSecondPhotog && (
 <CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', 1)} disableMinus={photoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} disableMinus={photoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} disableMinus={photoTabContentCreator === 0} />
 </div>
 </div>
 <div>
@@ -1801,7 +1803,7 @@ return (
 {videoSecondPhotog && (
 <CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', 1)} disableMinus={videoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} disableMinus={videoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} disableMinus={videoTabContentCreator === 0} />
 </div>
 </div>
 <div>
@@ -1858,7 +1860,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 {alaCarteSecondPhotog && (
 <CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', 1)} disableMinus={alaCarteSecondPhotog.qty === 0} showHrs />
 )}
-<CoverageRow imgSrc={IMG.content} imgSize="1.15" imgOffset="20px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs />
+<CoverageRow imgSrc={IMG.content} label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs />
 </div>
 </div>
 <div>
@@ -2285,15 +2287,42 @@ alaCartePaymentSchedule.payments.map((payment, idx) => (
 ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-pricing-root'));
 </script>
 
+<div id="debug-bar" style="position:fixed;bottom:0;left:0;right:0;background:red;color:white;font-size:14px;padding:6px 12px;z-index:99999;font-family:monospace;"></div>
 <script>
 function sendHeight() {
   var root = document.getElementById('wedding-pricing-root');
-  // Measure the actual React content child, NOT the root
-  // This avoids mobile browsers inflating the root/body to viewport height
   var content = root.firstElementChild;
   if (!content) return;
-  var h = Math.ceil(content.getBoundingClientRect().height);
-  if (h < 10) return; // not yet rendered
+
+  // Method 1: child getBoundingClientRect
+  var childRect = Math.ceil(content.getBoundingClientRect().height);
+  // Method 2: child offsetHeight
+  var childOffset = content.offsetHeight;
+  // Method 3: root scrollHeight
+  var rootScroll = root.scrollHeight;
+  // Method 4: body scrollHeight
+  var bodyScroll = document.body.scrollHeight;
+  // Method 5: walk all children and find the actual bottom
+  var allChildren = content.querySelectorAll('*');
+  var maxBottom = 0;
+  var contentTop = content.getBoundingClientRect().top;
+  for (var i = allChildren.length - 1; i >= Math.max(0, allChildren.length - 50); i--) {
+    var r = allChildren[i].getBoundingClientRect();
+    if (r.height > 0) {
+      var b = r.bottom - contentTop;
+      if (b > maxBottom) maxBottom = b;
+    }
+  }
+  var walkH = Math.ceil(maxBottom);
+
+  // Use the smallest reasonable value
+  var candidates = [childRect, childOffset, rootScroll, walkH].filter(function(v) { return v > 100; });
+  var h = Math.min.apply(null, candidates);
+
+  // Debug output
+  var db = document.getElementById('debug-bar');
+  if (db) db.textContent = 'child:' + childRect + ' offset:' + childOffset + ' rootScroll:' + rootScroll + ' body:' + bodyScroll + ' walk:' + walkH + ' SENT:' + h;
+
   window.parent.postMessage({calcHeight: h}, '*');
 }
 window.addEventListener('load', function() {
