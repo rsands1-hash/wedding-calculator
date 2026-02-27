@@ -8,26 +8,14 @@
 <body>
 <!-- Wedding Pricing Calculator for Showit -->
 <style>
-*, *::before, *::after {
-  box-sizing: border-box;
-}
 html, body {
-  margin: 0 !important;
-  padding: 0 !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  overflow: hidden !important;
-  -webkit-text-size-adjust: 100%;
-  -moz-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  margin: 0;
+  padding: 0;
 }
 #wedding-pricing-root {
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100% !important;
-  position: relative;
-  float: left;
+  margin: 0;
+  padding: 0;
+  width: 100%;
 }
 .investment-sticky {
   position: relative !important;
@@ -2287,49 +2275,15 @@ alaCartePaymentSchedule.payments.map((payment, idx) => (
 ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-pricing-root'));
 </script>
 
-<div id="debug-bar" style="position:fixed;bottom:0;left:0;right:0;background:red;color:white;font-size:14px;padding:6px 12px;z-index:99999;font-family:monospace;"></div>
 <script>
 function sendHeight() {
   var root = document.getElementById('wedding-pricing-root');
-  var content = root.firstElementChild;
-  if (!content) return;
-
-  // Method 1: child getBoundingClientRect
-  var childRect = Math.ceil(content.getBoundingClientRect().height);
-  // Method 2: child offsetHeight
-  var childOffset = content.offsetHeight;
-  // Method 3: root scrollHeight
-  var rootScroll = root.scrollHeight;
-  // Method 4: body scrollHeight
-  var bodyScroll = document.body.scrollHeight;
-  // Method 5: walk all children and find the actual bottom
-  var allChildren = content.querySelectorAll('*');
-  var maxBottom = 0;
-  var contentTop = content.getBoundingClientRect().top;
-  for (var i = allChildren.length - 1; i >= Math.max(0, allChildren.length - 50); i--) {
-    var r = allChildren[i].getBoundingClientRect();
-    if (r.height > 0) {
-      var b = r.bottom - contentTop;
-      if (b > maxBottom) maxBottom = b;
-    }
-  }
-  var walkH = Math.ceil(maxBottom);
-
-  // Use the smallest reasonable value
-  var candidates = [childRect, childOffset, rootScroll, walkH].filter(function(v) { return v > 100; });
-  var h = Math.min.apply(null, candidates);
-
-  // Debug output
-  var db = document.getElementById('debug-bar');
-  if (db) db.textContent = 'child:' + childRect + ' offset:' + childOffset + ' rootScroll:' + rootScroll + ' body:' + bodyScroll + ' walk:' + walkH + ' SENT:' + h;
-
+  var h = root.scrollHeight;
   window.parent.postMessage({calcHeight: h}, '*');
 }
 window.addEventListener('load', function() {
   sendHeight();
   setInterval(sendHeight, 300);
-  var observer = new MutationObserver(function() { setTimeout(sendHeight, 0); });
-  observer.observe(document.getElementById('wedding-pricing-root'), {childList: true, subtree: true});
 });
 </script>
 </body>
