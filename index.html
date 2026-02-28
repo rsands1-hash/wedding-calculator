@@ -11,6 +11,7 @@
 html, body {
   margin: 0;
   padding: 0;
+  background: #e7e4e6;
 }
 #wedding-pricing-root {
   margin: 0;
@@ -2550,28 +2551,20 @@ ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-p
   }
 
   function measure() {
-    var content = document.getElementById('wedding-pricing-root').firstElementChild;
-    if (content) sendHeight(content.scrollHeight);
+    var root = document.getElementById('wedding-pricing-root');
+    if (root) sendHeight(root.scrollHeight);
   }
 
-  // Use ResizeObserver (supported on all modern browsers including mobile Safari 13.4+)
+  // Use ResizeObserver on the root element itself
   if (typeof ResizeObserver !== 'undefined') {
-    var ro = new ResizeObserver(function(entries) {
-      for (var i = 0; i < entries.length; i++) {
-        var entry = entries[i];
-        // borderBoxSize is most accurate
-        if (entry.borderBoxSize && entry.borderBoxSize.length > 0) {
-          sendHeight(entry.borderBoxSize[0].blockSize);
-        } else {
-          sendHeight(entry.target.scrollHeight);
-        }
-      }
+    var ro = new ResizeObserver(function() {
+      measure();
     });
 
     window.addEventListener('load', function() {
-      var content = document.getElementById('wedding-pricing-root').firstElementChild;
-      if (content) {
-        ro.observe(content);
+      var root = document.getElementById('wedding-pricing-root');
+      if (root) {
+        ro.observe(root);
         measure(); // initial measurement
       }
     });
