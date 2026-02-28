@@ -38,11 +38,11 @@ html, body {
   position: relative;
   top: 0;
   left: 0;
-  height: 1.3em;
-  width: 1.3em;
-  min-width: 1.3em;
-  font-size: 1.25rem;
-  background-color: #d6d3d1;
+  height: 1.6em;
+  width: 1.6em;
+  min-width: 1.6em;
+  font-size: 1.35rem;
+  background-color: rgba(214, 211, 209, 0.75);
   border-radius: 50%;
   transition: 300ms;
 }
@@ -84,7 +84,7 @@ html, body {
   cursor: pointer;
   border: 1px solid #e8e8e8;
   transition: all 0.3s;
-  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+  box-shadow: 0 6px 12px #c5c5c5, 0 -6px 12px #ffffff;
   color: #090909;
   font-weight: bold;
   font-size: 1.2rem;
@@ -92,7 +92,7 @@ html, body {
 }
 .te-btn:active {
   color: #666;
-  box-shadow: inset 4px 4px 12px #c5c5c5, inset -4px -4px 12px #ffffff;
+  box-shadow: inset 0 4px 12px #c5c5c5, inset 0 -4px 12px #ffffff;
 }
 .te-btn:disabled {
   cursor: not-allowed;
@@ -109,6 +109,33 @@ html, body {
 @media (min-width: 768px) {
   .te-btn { width: 3em; height: 3em; }
   .te-icon { width: 20px; height: 20px; }
+}
+/* Reset Button */
+.te-reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3em 1.2em;
+  border-radius: 999px;
+  background: #e8e8e8;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  box-shadow: 0 4px 8px #c5c5c5, 0 -4px 8px #ffffff;
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.03em;
+  margin-top: 0.5rem;
+}
+.te-reset:active {
+  box-shadow: inset 0 3px 8px #c5c5c5, inset 0 -3px 8px #ffffff;
+}
+@media (min-width: 768px) {
+  .te-reset {
+    font-size: 0.8rem;
+    padding: 0.35em 1.4em;
+  }
 }
 /* Line Item Icons */
 .line-icon {
@@ -315,9 +342,48 @@ html, body {
   box-shadow: 0 0 22px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes glowColorSpin {
+  0% { --glow-angle: 0deg; opacity: 0.3; }
+  80% { opacity: 1; }
+  100% { --glow-angle: 360deg; opacity: 0.3; }
+}
 .col-card.col-active {
-  border-color: #a78bfa;
-  box-shadow: 0 0 16px rgba(167, 139, 250, 0.7);
+  position: relative;
+  border-color: transparent;
+  box-shadow: none;
+  overflow: visible;
+  z-index: 1;
+  background: transparent;
+}
+.col-card.col-active::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 104%;
+  height: 106%;
+  border-radius: 1.2em;
+  background: conic-gradient(from var(--glow-angle), rgb(65, 88, 208), rgb(200, 80, 192), rgb(255, 170, 50), rgb(255, 220, 80), rgb(200, 80, 192), rgb(174, 130, 255), rgb(65, 88, 208));
+  filter: blur(12px);
+  z-index: -2;
+  animation: glowColorSpin 6.5s linear infinite;
+}
+.col-card.col-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  border-radius: 16px;
+  z-index: -1;
 }
 .col-card-name {
   font-size: 16px;
@@ -332,10 +398,11 @@ html, body {
   }
 }
 .col-active .col-card-name {
-  background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
+  background: conic-gradient(from var(--glow-angle), rgb(65, 88, 208), rgb(200, 80, 192), rgb(255, 170, 50), rgb(255, 220, 80), rgb(200, 80, 192), rgb(174, 130, 255), rgb(65, 88, 208));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: glowColorSpin 6.5s linear infinite;
 }
 .col-card-price {
   font-size: 28px;
@@ -351,10 +418,11 @@ html, body {
   }
 }
 .col-active .col-card-price {
-  background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
+  background: conic-gradient(from var(--glow-angle), rgb(65, 88, 208), rgb(200, 80, 192), rgb(255, 170, 50), rgb(255, 220, 80), rgb(200, 80, 192), rgb(174, 130, 255), rgb(65, 88, 208));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  animation: glowColorSpin 6.5s linear infinite;
 }
 .col-card-badge {
   font-size: 12px;
@@ -413,9 +481,9 @@ html, body {
 }
 @media (min-width: 768px) {
   .col-card-features li {
-    font-size: 17px;
-    margin-bottom: 8px;
-    line-height: 1.4;
+    font-size: 14px;
+    margin-bottom: 6px;
+    line-height: 1.3;
   }
 }
 .col-card-features li .col-check {
@@ -430,8 +498,8 @@ html, body {
 }
 @media (min-width: 768px) {
   .col-card-features li .col-check {
-    margin-right: 8px;
-    font-size: 18px;
+    margin-right: 6px;
+    font-size: 15px;
   }
 }
 /* Toggle Slider */
@@ -767,11 +835,12 @@ const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymen
   </div>
 );
 
-const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus, disableMinus, showHrs, includedContent, imgOffset, imgSize}) => {
+const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus, onReset, disableMinus, showHrs, includedContent, imgOffset, imgSize}) => {
   const active = qty > 0;
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const sc = active ? 'text-green-700' : 'text-stone-500';
   const displayQty = showHrs ? `${qty} hrs` : qty;
+  const showReset = qty > 0 && onReset;
   return (
     <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pb-5 px-5 md:pb-8 md:px-8 overflow-hidden`}>
       <img src={imgSrc} alt={label} className="object-contain line-icon" style={{marginTop: '-5px', marginBottom: '-3px', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))', transform: `${imgSize ? `scale(${imgSize})` : ''} ${imgOffset ? `translateY(${imgOffset})` : ''}`.trim() || 'none'}} />
@@ -779,30 +848,37 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
       {sublabel && <p className={`text-xs md:text-base ${sc}`}>{sublabel}</p>}
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{price}</p>
       {desc && <p className="text-sm md:text-lg text-stone-500 italic text-center">{desc}</p>}
-      <div className="flex items-center gap-2 md:gap-3 mt-auto pt-3 md:pt-6">
-        <button onClick={onMinus} disabled={disableMinus} className="te-btn"><Minus className="te-icon" /></button>
-        <span className={`${showHrs ? 'w-16' : 'w-8'} text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{displayQty}</span>
-        <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
+      <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
+        <div className="flex items-center gap-2 md:gap-3">
+          <button onClick={onMinus} disabled={disableMinus} className="te-btn"><Minus className="te-icon" /></button>
+          <span className={`${showHrs ? 'w-16' : 'w-8'} text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{displayQty}</span>
+          <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
+        </div>
+        {showReset && <button onClick={onReset} className="te-reset">reset</button>}
       </div>
       {includedContent && <div className="mt-8">{includedContent}</div>}
     </div>
   );
 };
 
-const AddonRow = ({addon, imgSrc, onMinus, onPlus, maxQty, desc}) => {
+const AddonRow = ({addon, imgSrc, onMinus, onPlus, onReset, maxQty, desc}) => {
   const active = addon.qty > 0;
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const priceStr = `$${addon.price.toLocaleString()}${addon.suffix ? addon.suffix.replace('hour', 'hr') : '.00'}`;
+  const showReset = addon.qty > 0 && onReset;
   return (
     <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={addon.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5 whitespace-pre-line`}>{addon.name}</p>
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{priceStr}</p>
       {desc && <p className="text-sm md:text-lg text-stone-500 italic text-center">{desc}</p>}
-      <div className="flex items-center gap-2 md:gap-3 mt-auto pt-3 md:pt-6">
-        <button onClick={onMinus} disabled={addon.qty === 0} className="te-btn"><Minus className="te-icon" /></button>
-        <span className={`w-8 text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{addon.qty}</span>
-        <button onClick={onPlus} disabled={addon.qty >= maxQty} className="te-btn"><Plus className="te-icon" /></button>
+      <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
+        <div className="flex items-center gap-2 md:gap-3">
+          <button onClick={onMinus} disabled={addon.qty === 0} className="te-btn"><Minus className="te-icon" /></button>
+          <span className={`w-8 text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{addon.qty}</span>
+          <button onClick={onPlus} disabled={addon.qty >= maxQty} className="te-btn"><Plus className="te-icon" /></button>
+        </div>
+        {showReset && <button onClick={onReset} className="te-reset">reset</button>}
       </div>
       {addon.description && (
         <div className="text-xs md:text-base text-stone-600 space-y-1 mt-4 md:mt-8 text-center">
@@ -813,13 +889,14 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, maxQty, desc}) => {
   );
 };
 
-const AlbumRow = ({album, onMinus, onPlus, desc}) => {
+const AlbumRow = ({album, onMinus, onPlus, onReset, desc}) => {
   const active = (album.qty !== undefined ? album.qty : album.state) > 0;
   const qty = album.qty !== undefined ? album.qty : album.state;
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const sc = active ? 'text-green-700' : 'text-stone-500';
   const imgSrc = getAlbumImg(album.id || album.name);
   const priceStr = `$${album.price.toLocaleString ? album.price.toLocaleString() : album.price}.00`;
+  const showReset = qty > 0 && onReset;
   return (
     <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={album.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
@@ -828,10 +905,13 @@ const AlbumRow = ({album, onMinus, onPlus, desc}) => {
       {album.subtext && <p className={`text-xs md:text-lg ${sc}`}>{album.subtext}</p>}
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{priceStr}</p>
       {desc && <p className="text-sm md:text-lg text-stone-500 italic text-center">{desc}</p>}
-      <div className="flex items-center gap-2 md:gap-3 mt-auto pt-3 md:pt-6">
-        <button onClick={onMinus} disabled={qty === 0} className="te-btn"><Minus className="te-icon" /></button>
-        <span className={`w-8 text-center font-bold text-base md:text-xl ${ac}`}>{qty}</span>
-        <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
+      <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
+        <div className="flex items-center gap-2 md:gap-3">
+          <button onClick={onMinus} disabled={qty === 0} className="te-btn"><Minus className="te-icon" /></button>
+          <span className={`w-8 text-center font-bold text-base md:text-xl ${ac}`}>{qty}</span>
+          <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
+        </div>
+        {showReset && <button onClick={onReset} className="te-reset">reset</button>}
       </div>
     </div>
   );
@@ -1776,18 +1856,18 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + 1)} disableMinus={photoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} disableMinus={photoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + 1)} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
+<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', 1)} disableMinus={photoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', 1)} onReset={() => handlePhotographyAddOnChange('second_photographer', -photoSecondPhotog.qty)} disableMinus={photoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} disableMinus={photoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-{photographyAlbums.map(album => (<AlbumRow key={album.id} album={album} desc={albumDescs[album.id]} onMinus={() => handlePhotographyAlbumChange(album.id, -1)} onPlus={() => handlePhotographyAlbumChange(album.id, 1)} />))}
+{photographyAlbums.map(album => (<AlbumRow key={album.id} album={album} desc={albumDescs[album.id]} onMinus={() => handlePhotographyAlbumChange(album.id, -1)} onPlus={() => handlePhotographyAlbumChange(album.id, 1)} onReset={() => handlePhotographyAlbumChange(album.id, -album.qty)} />))}
 </div>
 </div>
 <div>
@@ -1796,7 +1876,7 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 {photographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
-return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handlePhotographyAddOnChange(addon.id, -1)} onPlus={() => handlePhotographyAddOnChange(addon.id, 1)} maxQty={maxQty} />);
+return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handlePhotographyAddOnChange(addon.id, -1)} onPlus={() => handlePhotographyAddOnChange(addon.id, 1)} onReset={() => handlePhotographyAddOnChange(addon.id, -addon.qty)} maxQty={maxQty} />);
 })}
 </div>
 </div>
@@ -1860,12 +1940,12 @@ return (
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraPhoto(prev => prev + 1)} disableMinus={videoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} disableMinus={videoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraPhoto(prev => prev + 1)} onReset={() => setVideoTabExtraPhoto(0)} disableMinus={videoTabExtraPhoto === 0} />
+<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
 {videoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', 1)} disableMinus={videoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', 1)} onReset={() => handleVideographyAddOnChange('second_photographer', -videoSecondPhotog.qty)} disableMinus={videoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} disableMinus={videoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
 </div>
 </div>
 <div>
@@ -1874,7 +1954,7 @@ return (
 {videographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
-return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handleVideographyAddOnChange(addon.id, -1)} onPlus={() => handleVideographyAddOnChange(addon.id, 1)} maxQty={maxQty} />);
+return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handleVideographyAddOnChange(addon.id, -1)} onPlus={() => handleVideographyAddOnChange(addon.id, 1)} onReset={() => handleVideographyAddOnChange(addon.id, -addon.qty)} maxQty={maxQty} />);
 })}
 
 </div>
@@ -1896,7 +1976,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <div className="border border-stone-200 rounded-lg p-5">
 <h4 className="text-lg md:text-xl font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Coverage Time</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} showHrs includedContent={
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} showHrs onReset={() => setAlaCarteHours(0)} includedContent={
 <div className="mt-3 w-full">
 <div className="bg-white p-3 rounded border border-stone-200">
 <p className="text-sm text-stone-700 font-medium mb-1">✓  Included:</p>
@@ -1908,7 +1988,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 </div>
 } />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - 1))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + 1)} disableMinus={alaCarteVideoHours === 0} showHrs includedContent={
+<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - 1))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + 1)} disableMinus={alaCarteVideoHours === 0} showHrs onReset={() => setAlaCarteVideoHours(0)} includedContent={
 <div className="mt-3 w-full">
 <div className="bg-white p-3 rounded border border-stone-200">
 <p className="text-sm text-stone-700 font-medium mb-1">✓  Included:</p>
@@ -1920,15 +2000,15 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 } />
 {alaCarteSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', 1)} disableMinus={alaCarteSecondPhotog.qty === 0} showHrs />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', 1)} disableMinus={alaCarteSecondPhotog.qty === 0} showHrs onReset={() => handleAlaCarteAddOnChange('second_photographer', -alaCarteSecondPhotog.qty)} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs />
+<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs onReset={() => setAlaCarteContentCreator(0)} />
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-{[{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, state: alaCarteAlbum8x8, setState: setAlaCarteAlbum8x8}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, state: alaCarteAlbum10x10, setState: setAlaCarteAlbum10x10}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, state: alaCarteAlbum12x12, setState: setAlaCarteAlbum12x12}, {id: 'parent_album', name: 'Parent Album', pages: '', subtext: '(copy of your wedding album)', price: 500, state: alaCarteParentAlbum, setState: setAlaCarteParentAlbum}].map((album, idx) => (<AlbumRow key={idx} album={album} desc={albumDescs[album.id]} onMinus={() => album.setState(Math.max(0, album.state - 1))} onPlus={() => album.setState(album.state + 1)} />))}
+{[{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, state: alaCarteAlbum8x8, setState: setAlaCarteAlbum8x8}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, state: alaCarteAlbum10x10, setState: setAlaCarteAlbum10x10}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, state: alaCarteAlbum12x12, setState: setAlaCarteAlbum12x12}, {id: 'parent_album', name: 'Parent Album', pages: '', subtext: '(copy of your wedding album)', price: 500, state: alaCarteParentAlbum, setState: setAlaCarteParentAlbum}].map((album, idx) => (<AlbumRow key={idx} album={album} desc={albumDescs[album.id]} onMinus={() => album.setState(Math.max(0, album.state - 1))} onPlus={() => album.setState(album.state + 1)} onReset={() => album.setState(0)} />))}
 </div>
 </div>
 <div>
@@ -1937,7 +2017,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 {alaCarteAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
-return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handleAlaCarteAddOnChange(addon.id, -1)} onPlus={() => handleAlaCarteAddOnChange(addon.id, 1)} maxQty={maxQty} />);
+return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handleAlaCarteAddOnChange(addon.id, -1)} onPlus={() => handleAlaCarteAddOnChange(addon.id, 1)} onReset={() => handleAlaCarteAddOnChange(addon.id, -addon.qty)} maxQty={maxQty} />);
 })}
 
 </div>
