@@ -342,20 +342,13 @@ html, body {
   box-shadow: 0 0 22px rgba(0, 0, 0, 0.12);
   transform: translateY(-2px);
 }
-@property --glow-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-@keyframes glowColorSpin {
-  0% { --glow-angle: 0deg; opacity: 0.3; }
-  80% { opacity: 1; }
-  100% { --glow-angle: 360deg; opacity: 0.3; }
+@keyframes glowDrift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 .col-card.col-active {
   position: relative;
   border-color: transparent;
-  box-shadow: none;
   overflow: visible;
   z-index: 1;
   background: transparent;
@@ -363,16 +356,17 @@ html, body {
 .col-card.col-active::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 104%;
-  height: 106%;
-  border-radius: 1.2em;
-  background: conic-gradient(from var(--glow-angle), rgb(65, 88, 208), rgb(200, 80, 192), rgb(255, 170, 50), rgb(255, 220, 80), rgb(200, 80, 192), rgb(174, 130, 255), rgb(65, 88, 208));
-  filter: blur(12px);
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2adad, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #d8b4fe, #fbc4e0, #f2adad, #c4b5fd);
+  background-size: 300% 100%;
+  border-radius: 20px;
   z-index: -2;
-  animation: glowColorSpin 6.5s linear infinite;
+  filter: blur(12px);
+  opacity: 0.7;
+  animation: glowDrift 20s linear infinite;
 }
 .col-card.col-active::after {
   content: '';
@@ -398,11 +392,12 @@ html, body {
   }
 }
 .col-active .col-card-name {
-  background: conic-gradient(from var(--glow-angle), rgb(65, 88, 208), rgb(200, 80, 192), rgb(255, 170, 50), rgb(255, 220, 80), rgb(200, 80, 192), rgb(174, 130, 255), rgb(65, 88, 208));
+  background: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2adad, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #d8b4fe, #fbc4e0, #f2adad, #c4b5fd);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glowColorSpin 6.5s linear infinite;
+  animation: glowDrift 20s linear infinite;
 }
 .col-card-price {
   font-size: 28px;
@@ -418,11 +413,12 @@ html, body {
   }
 }
 .col-active .col-card-price {
-  background: conic-gradient(from var(--glow-angle), rgb(65, 88, 208), rgb(200, 80, 192), rgb(255, 170, 50), rgb(255, 220, 80), rgb(200, 80, 192), rgb(174, 130, 255), rgb(65, 88, 208));
+  background: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2adad, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #d8b4fe, #fbc4e0, #f2adad, #c4b5fd);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glowColorSpin 6.5s linear infinite;
+  animation: glowDrift 20s linear infinite;
 }
 .col-card-badge {
   font-size: 12px;
@@ -449,7 +445,7 @@ html, body {
   color: #fff;
   cursor: pointer;
   margin-top: 8px;
-  background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
+  background: linear-gradient(145deg, #d5c4e8 0%, #a8b8d8 100%);
   transition: transform 0.3s ease;
 }
 @media (min-width: 768px) {
@@ -463,7 +459,9 @@ html, body {
   transform: scale(0.97);
 }
 .col-card.col-active .col-card-btn {
-  background: linear-gradient(145deg, #c084fc 0%, #6366f1 100%);
+  background: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2adad, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #d8b4fe, #fbc4e0, #f2adad, #c4b5fd);
+  background-size: 300% 300%;
+  animation: glowDrift 20s linear infinite;
 }
 .col-card-features {
   list-style: none;
@@ -476,13 +474,13 @@ html, body {
   align-items: center;
   font-size: 11px;
   color: #555;
-  margin-bottom: 4px;
+  margin-bottom: 12px;
   line-height: 1.3;
 }
 @media (min-width: 768px) {
   .col-card-features li {
     font-size: 14px;
-    margin-bottom: 6px;
+    margin-bottom: 14px;
     line-height: 1.3;
   }
 }
@@ -835,6 +833,7 @@ const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymen
   </div>
 );
 
+
 const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus, onReset, disableMinus, showHrs, includedContent, imgOffset, imgSize}) => {
   const active = qty > 0;
   const ac = active ? 'text-green-700' : 'text-stone-800';
@@ -848,6 +847,7 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
       {sublabel && <p className={`text-xs md:text-base ${sc}`}>{sublabel}</p>}
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{price}</p>
       {desc && <p className="text-sm md:text-lg text-stone-500 italic text-center">{desc}</p>}
+      {includedContent && <div className="mt-4">{includedContent}</div>}
       <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
         <div className="flex items-center gap-2 md:gap-3">
           <button onClick={onMinus} disabled={disableMinus} className="te-btn"><Minus className="te-icon" /></button>
@@ -856,7 +856,6 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
         </div>
         {showReset && <button onClick={onReset} className="te-reset">reset</button>}
       </div>
-      {includedContent && <div className="mt-8">{includedContent}</div>}
     </div>
   );
 };
@@ -924,6 +923,18 @@ premium: {name: 'Premium Collection', price: 4000, badge: 'Perfect for 100-150 G
 signature: {name: 'Signature Collection', price: 5500, badge: 'Includes 2nd Photographer!', items: [{name: '10 Hours of Photography Coverage', value: 0, removable: false}, {name: '1 Hour Engagement Session', value: 600, removable: true, id: 'engagement'}, {name: '10x10 Album (50 Pages)', value: 400, removable: true}, {name: '2nd Photographer (10 Hrs)', value: 1500, removable: true, id: 'second_photographer'}, {name: 'Online Gallery (2)', value: 0, removable: false, id: 'online_gallery'}, {name: 'Printing Rights', value: 0, removable: false}]},
 prestige: {name: 'Prestige Collection', price: 6500, badge: 'Perfect for 200+ Guests', items: [{name: '12 Hours of Photography Coverage', value: 0, removable: false}, {name: '1 Hour Engagement Session', value: 600, removable: true, id: 'engagement'}, {name: '12x12 Album (60 Pages)', value: 500, removable: true}, {name: '2nd Photographer (12 Hrs)', value: 1800, removable: true, id: 'second_photographer'}, {name: 'Online Gallery (2)', value: 0, removable: false, id: 'online_gallery'}, {name: 'Printing Rights', value: 0, removable: false}]}
 };
+const collectionSelectedMsg = {
+  essential: '✓ Let\'s Do This!',
+  premium: '✓ Love It!',
+  signature: '✓ Fan Favorite!',
+  prestige: '✓ The Full Dream!'
+};
+const videoSelectedMsg = {
+  bronze: '✓ Great Start!',
+  silver: '✓ Love It!',
+  gold: '✓ Amazing Choice!',
+  platinum: '✓ The Full Experience!'
+};
 const videographyCollections = {
 bronze: {name: 'Bronze Collection', hours: 6, price: 1800, badge: 'Perfect for 50-100 Guests', items: ['3-4 Minute Highlight Reel', '1-1.5 Hour Feature Film']},
 silver: {name: 'Silver Collection', hours: 8, price: 2400, badge: 'Perfect for 100-150 Guests', items: ['3-4 Minute Highlight Reel', '1-1.5 Hour Feature Film']},
@@ -942,8 +953,8 @@ teacher: 'Teacher',
 clergy: 'Clergy Member'
 };
 const [activeTab, setActiveTab] = useState('photography');
-const [selectedCollection, setSelectedCollection] = useState('essential');
-const [selectedVideoCollection, setSelectedVideoCollection] = useState('bronze');
+const [selectedCollection, setSelectedCollection] = useState(null);
+const [selectedVideoCollection, setSelectedVideoCollection] = useState(null);
 const [photographyAddOns, setPhotographyAddOns] = useState(addOns);
 const [photographyAlbums, setPhotographyAlbums] = useState(albumOptions);
 const [videographyAddOns, setVideographyAddOns] = useState(addOns);
@@ -1845,33 +1856,32 @@ const displayName = item.id === 'online_gallery' ? 'Online Gallery (2)' : item.n
 return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayName}</span></li>);
 })}
 </ul>
-<button className="col-card-btn">{selectedCollection === key ? 'Remove from Cart' : 'Add to Cart'}</button>
+<button className="col-card-btn">{selectedCollection === key ? collectionSelectedMsg[key] : 'Choose This Collection'}</button>
 </div>
 ))}
 </div>
 </div>
 <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose Your Add-Ons</h2>
 <div className="space-y-10">
 <div>
-<h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Additional Coverage Time</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + 1)} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
 <CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', 1)} onReset={() => handlePhotographyAddOnChange('second_photographer', -photoSecondPhotog.qty)} disableMinus={photoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
 </div>
 </div>
 <div>
-<h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Wedding Albums</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {photographyAlbums.map(album => (<AlbumRow key={album.id} album={album} desc={albumDescs[album.id]} onMinus={() => handlePhotographyAlbumChange(album.id, -1)} onPlus={() => handlePhotographyAlbumChange(album.id, 1)} onReset={() => handlePhotographyAlbumChange(album.id, -album.qty)} />))}
 </div>
 </div>
 <div>
-<h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Other Services</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {photographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
@@ -1882,7 +1892,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 </div>
 </div>
-{selectedCollection && (<>
+{selectedCollection && (
 <div className="lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
 <div className="space-y-3">
@@ -1910,11 +1920,11 @@ return (
 </div>
 <p className="text-xs text-stone-500 mt-4 italic">Toggle off albums or engagement sessions to reduce your investment.</p>
 </div>
+)}
 <ServiceCredits discounts={discounts} toggleDiscount={toggleDiscount} isDesktop={false} />
 <UnlockCredits hasConsultation={hasConsultation} setHasConsultation={setHasConsultation} followsInstagram={followsInstagram} setFollowsInstagram={setFollowsInstagram} isDesktop={false} />
 <PaymentOptionsSection paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} isDesktop={false} />
 <PaymentPlanSection weddingDate={weddingDate} setWeddingDate={setWeddingDate} paymentPlan={paymentPlan} setPaymentPlan={setPaymentPlan} radioName="payment-plan-mobile" isDesktop={false} schedule={collectionsPaymentSchedule} retainerAmount={photoTabExtraVideo > 0 ? 2000 : 1000} />
-</>)}
 </>)}
 {activeTab === 'videography' && (<>
 <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
@@ -1929,27 +1939,26 @@ return (
 <li><span className="col-check">&#10003;</span><span>{collection.hours} Hours of Coverage</span></li>
 {collection.items.map((item, idx) => (<li key={idx}><span className="col-check">&#10003;</span><span>{item}</span></li>))}
 </ul>
-<button className="col-card-btn">{selectedVideoCollection === key ? 'Remove from Cart' : 'Add to Cart'}</button>
+<button className="col-card-btn">{selectedVideoCollection === key ? videoSelectedMsg[key] : 'Choose This Collection'}</button>
 </div>
 ))}
 </div>
 </div>
 <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose Your Add-Ons</h2>
 <div className="space-y-10">
 <div>
-<h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Additional Coverage Time</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraPhoto(prev => prev + 1)} onReset={() => setVideoTabExtraPhoto(0)} disableMinus={videoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
 {videoSecondPhotog && (
 <CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', 1)} onReset={() => handleVideographyAddOnChange('second_photographer', -videoSecondPhotog.qty)} disableMinus={videoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
 </div>
 </div>
 <div>
-<h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Other Services</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {videographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
@@ -1961,12 +1970,10 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 </div>
 </div>
-{selectedVideoCollection && (<>
 <ServiceCredits discounts={videoDiscounts} toggleDiscount={toggleVideoDiscount} isDesktop={false} />
 <UnlockCredits hasConsultation={videoHasConsultation} setHasConsultation={setVideoHasConsultation} followsInstagram={videoFollowsInstagram} setFollowsInstagram={setVideoFollowsInstagram} isDesktop={false} />
 <PaymentOptionsSection paymentMethod={videoPaymentMethod} setPaymentMethod={setVideoPaymentMethod} isDesktop={false} />
 <PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan-mobile" isDesktop={false} schedule={videoPaymentSchedule} retainerAmount={1000} />
-</>)}
 </>)}
 {activeTab === 'alacarte' && (<>
 <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
@@ -1974,45 +1981,42 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <p className="text-stone-600 mb-6">Create your perfect coverage starting at $300/hour with a 4 hour minimum</p>
 <div className="space-y-10">
 <div className="border border-stone-200 rounded-lg p-5">
-<h4 className="text-lg md:text-xl font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Coverage Time</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Coverage Time</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} showHrs onReset={() => setAlaCarteHours(0)} includedContent={
-<div className="mt-3 w-full">
-<div className="bg-white p-3 rounded border border-stone-200">
-<p className="text-sm text-stone-700 font-medium mb-1">✓  Included:</p>
-<ul className="text-sm text-stone-600 space-y-1">
-<li>• Online Gallery</li>
-<li>• Logo Free / Print Ready Images</li>
-<li>• Printing Rights</li>
+<div className="mt-3 w-full text-center">
+<p className="text-base md:text-lg text-stone-700 font-semibold mb-1">Includes:</p>
+<ul className="text-base md:text-lg text-stone-600 space-y-1">
+<li>Logo Free Images</li>
+<li>Online Gallery</li>
+<li>Printing Rights</li>
 </ul>
-</div>
 </div>
 } />
-<CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - 1))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + 1)} disableMinus={alaCarteVideoHours === 0} showHrs onReset={() => setAlaCarteVideoHours(0)} includedContent={
-<div className="mt-3 w-full">
-<div className="bg-white p-3 rounded border border-stone-200">
-<p className="text-sm text-stone-700 font-medium mb-1">✓  Included:</p>
-<ul className="text-sm text-stone-600 space-y-1">
-<li>• 3-4 Minute Highlight Reel</li>
-<li>• 1-1.5 Hour Feature Film</li>
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - 1))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + 1)} disableMinus={alaCarteVideoHours === 0} showHrs onReset={() => setAlaCarteVideoHours(0)} includedContent={
+<div className="mt-3 w-full text-center">
+<p className="text-base md:text-lg text-stone-700 font-semibold mb-1">Includes:</p>
+<ul className="text-base md:text-lg text-stone-600 space-y-1">
+<li>Multi-Camera + Drone</li>
+<li>3-4 Minute Highlight Reel</li>
+<li>1 Hour+ Feature Film</li>
 </ul>
-</div>
 </div>
 } />
 {alaCarteSecondPhotog && (
 <CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', 1)} disableMinus={alaCarteSecondPhotog.qty === 0} showHrs onReset={() => handleAlaCarteAddOnChange('second_photographer', -alaCarteSecondPhotog.qty)} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="6px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs onReset={() => setAlaCarteContentCreator(0)} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs onReset={() => setAlaCarteContentCreator(0)} />
 </div>
 </div>
 <div>
-<h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Wedding Albums</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {[{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, state: alaCarteAlbum8x8, setState: setAlaCarteAlbum8x8}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, state: alaCarteAlbum10x10, setState: setAlaCarteAlbum10x10}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, state: alaCarteAlbum12x12, setState: setAlaCarteAlbum12x12}, {id: 'parent_album', name: 'Parent Album', pages: '', subtext: '(copy of your wedding album)', price: 500, state: alaCarteParentAlbum, setState: setAlaCarteParentAlbum}].map((album, idx) => (<AlbumRow key={idx} album={album} desc={albumDescs[album.id]} onMinus={() => album.setState(Math.max(0, album.state - 1))} onPlus={() => album.setState(album.state + 1)} onReset={() => album.setState(0)} />))}
 </div>
 </div>
 <div>
-<h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
+<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Other Services</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {alaCarteAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
@@ -2032,7 +2036,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 <div className="lg:w-[35%] space-y-4 md:space-y-8">
 {activeTab === 'photography' && (<>
-{selectedCollection && (<>
+{selectedCollection && (
 <div className="hidden lg:block bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
 <div className="space-y-3">
@@ -2060,13 +2064,13 @@ return (
 </div>
 <p className="text-xs text-stone-500 mt-4 italic">Toggle off albums or engagement sessions to reduce your investment.</p>
 </div>
+)}
 <div className="hidden lg:flex lg:flex-col lg:gap-6">
 <ServiceCredits discounts={discounts} toggleDiscount={toggleDiscount} isDesktop={true} />
 <UnlockCredits hasConsultation={hasConsultation} setHasConsultation={setHasConsultation} followsInstagram={followsInstagram} setFollowsInstagram={setFollowsInstagram} isDesktop={true} />
 <PaymentOptionsSection paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} isDesktop={true} />
 <PaymentPlanSection weddingDate={weddingDate} setWeddingDate={setWeddingDate} paymentPlan={paymentPlan} setPaymentPlan={setPaymentPlan} radioName="payment-plan" isDesktop={true} schedule={collectionsPaymentSchedule} retainerAmount={photoTabExtraVideo > 0 ? 2000 : 1000} />
 </div>
-</>)}
 <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 {selectedCollection ? (<div className="space-y-4 mb-6">
@@ -2189,14 +2193,12 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 </div>
 </>)}
 {activeTab === 'videography' && (<>
-{selectedVideoCollection && (<>
 <div className="hidden lg:flex lg:flex-col lg:gap-6">
 <ServiceCredits discounts={videoDiscounts} toggleDiscount={toggleVideoDiscount} isDesktop={true} />
 <UnlockCredits hasConsultation={videoHasConsultation} setHasConsultation={setVideoHasConsultation} followsInstagram={videoFollowsInstagram} setFollowsInstagram={setVideoFollowsInstagram} isDesktop={true} />
 <PaymentOptionsSection paymentMethod={videoPaymentMethod} setPaymentMethod={setVideoPaymentMethod} isDesktop={true} />
 <PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan" isDesktop={true} schedule={videoPaymentSchedule} retainerAmount={1000} />
 </div>
-</>)}
 <div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 {selectedVideoCollection ? (<div className="space-y-4 mb-6">
