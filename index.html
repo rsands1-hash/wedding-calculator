@@ -538,6 +538,110 @@ html, body {
 .tog-slider:active .tog-knob {
   transform: translateX(0);
 }
+.refresh-btn {
+  all: unset;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
+  border-radius: 100em;
+  background-color: rgba(120, 120, 130, 0.55);
+  font-size: 12px;
+  box-shadow:
+    -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
+    0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
+}
+.refresh-btn::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: calc(100% + 0.3em);
+  height: calc(100% + 0.3em);
+  top: -0.15em;
+  left: -0.15em;
+  border-radius: inherit;
+  background: linear-gradient(-135deg, rgba(5, 5, 5, 0.5), transparent 20%, transparent 100%);
+  filter: blur(0.0125em);
+  opacity: 0.25;
+  mix-blend-mode: multiply;
+}
+.refresh-btn .rb-outer {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  transition: box-shadow 300ms ease;
+  will-change: box-shadow;
+  box-shadow:
+    0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
+    0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
+    0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
+}
+.refresh-btn:hover .rb-outer {
+  box-shadow:
+    0 0 0 0 rgba(5, 5, 5, 1),
+    0 0 0 0 rgba(5, 5, 5, 0.5),
+    0 0 0 0 rgba(5, 5, 5, 0.25);
+}
+.refresh-btn .rb-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 0.7em 1.4em;
+  background-image: linear-gradient(135deg, rgba(230, 230, 230, 1), rgba(180, 180, 180, 1));
+  transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
+  will-change: box-shadow, clip-path, background-image, transform;
+  overflow: clip;
+  clip-path: inset(0 0 0 0 round 100em);
+  box-shadow:
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
+    0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
+    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+    -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+}
+.refresh-btn:hover .rb-inner {
+  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
+  box-shadow:
+    0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
+    -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
+    0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+    0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
+    0 0 0 0 inset rgba(255, 255, 255, 1),
+    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+    -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
+}
+.refresh-btn .rb-inner span {
+  position: relative;
+  z-index: 4;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  font-size: 11px;
+  color: rgba(0, 0, 0, 0);
+  background-image: linear-gradient(135deg, rgba(25, 25, 25, 1), rgba(75, 75, 75, 1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: transform 250ms ease;
+  display: block;
+  will-change: transform;
+  text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.refresh-btn:hover .rb-inner span {
+  transform: scale(0.975);
+}
+.refresh-btn:active .rb-inner {
+  transform: scale(0.975);
+}
+@media (min-width: 768px) {
+  .refresh-btn { font-size: 14px; }
+  .refresh-btn .rb-inner span { font-size: 14px; }
+}
 </style>
 <!-- CONTAINER - Shows immediately while scripts load -->
 <div id="wedding-pricing-root" class="calculator-wrapper">
@@ -1828,7 +1932,7 @@ disabled={isSubmitting}
 </div>, document.body
 )}
 <div className="max-w-7xl mx-auto">
-<div className="flex justify-center mb-4 md:mb-8 px-2">
+<div className="flex justify-center items-center gap-3 mb-4 md:mb-8 px-2">
 <div className="tab-header">
 <div className="tab-slider" style={{
   left: activeTab === 'photography' ? 'var(--tab-pad, 6px)' : activeTab === 'videography' ? '33.333%' : '66.666%',
@@ -1838,6 +1942,7 @@ disabled={isSubmitting}
 <button onClick={() => setActiveTab('videography')} className={`tab-label ${activeTab === 'videography' ? 'tab-active' : ''}`}><span className="hidden md:inline">Videography</span><span className="md:hidden">Video</span></button>
 <button onClick={() => setActiveTab('alacarte')} className={`tab-label ${activeTab === 'alacarte' ? 'tab-active' : ''}`}><span className="hidden md:inline">À La Carte</span><span className="md:hidden">Custom</span></button>
 </div>
+<button className="refresh-btn" onClick={resetCalculator}><div className="rb-outer"><div className="rb-inner"><span>Refresh</span></div></div></button>
 </div>
 <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
 <div className="lg:w-[65%] space-y-4 md:space-y-8">
