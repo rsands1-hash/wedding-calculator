@@ -11,13 +11,11 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
 }
 #wedding-pricing-root {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow: hidden;
 }
 .investment-sticky {
   position: relative !important;
@@ -2354,16 +2352,61 @@ ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-p
 </script>
 
 <script>
-function sendHeight() {
-  var content = document.getElementById('wedding-pricing-root').firstElementChild;
-  if (!content) return;
-  var h = Math.ceil(content.getBoundingClientRect().height) + 2;
-  window.parent.postMessage({calcHeight: h}, '*');
-}
-window.addEventListener('load', function() {
-  sendHeight();
-  setInterval(sendHeight, 500);
-});
+(function() {
+  var lastHeight = 0;
+
+  function sendHeight(h) {
+    h = Math.ceil(h);
+    if (h === lastHeight || h < 10) return;
+    lastHeight = h;
+    window.parent.postMessage({calcHeight: h}, '*');
+  }
+
+  function measure() {
+    var content = document.getElementById('wedding-pricing-root').firstElementChild;
+    if (content) sendHeight(content.scrollHeight);
+  }
+
+  // Use ResizeObserver (supported on all modern browsers including mobile Safari 13.4+)
+  if (typeof ResizeObserver !== 'undefined') {
+    var ro = new ResizeObserver(function(entries) {
+      for (var i = 0; i < entries.length; i++) {
+        var entry = entries[i];
+        // borderBoxSize is most accurate
+        if (entry.borderBoxSize && entry.borderBoxSize.length > 0) {
+          sendHeight(entry.borderBoxSize[0].blockSize);
+        } else {
+          sendHeight(entry.target.scrollHeight);
+        }
+      }
+    });
+
+    window.addEventListener('load', function() {
+      var content = document.getElementById('wedding-pricing-root').firstElementChild;
+      if (content) {
+        ro.observe(content);
+        measure(); // initial measurement
+      }
+    });
+  } else {
+    // Fallback for older browsers
+    window.addEventListener('load', function() {
+      measure();
+      setInterval(measure, 500);
+    });
+  }
+
+  // Also measure on tab changes and any DOM updates (catches React re-renders)
+  window.addEventListener('load', function() {
+    var root = document.getElementById('wedding-pricing-root');
+    if (root) {
+      var mo = new MutationObserver(function() {
+        setTimeout(measure, 50);
+      });
+      mo.observe(root, {childList: true, subtree: true, attributes: true});
+    }
+  });
+})();
 </script>
 </body>
 </html>
