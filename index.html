@@ -219,7 +219,7 @@ html, body {
   flex: 1;
   display: flex;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   position: relative;
   align-items: center;
@@ -301,7 +301,7 @@ html, body {
 .col-card {
   background: #fff;
   border-radius: 16px;
-  padding: 16px 12px;
+  padding: 24px 20px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.06);
   text-align: center;
   cursor: pointer;
@@ -310,7 +310,7 @@ html, body {
 }
 @media (min-width: 768px) {
   .col-card {
-    padding: 24px 20px;
+    padding: 28px 24px;
   }
 }
 .col-card:hover {
@@ -1747,9 +1747,9 @@ disabled={isSubmitting}
   left: activeTab === 'photography' ? 'var(--tab-pad, 6px)' : activeTab === 'videography' ? '33.333%' : '66.666%',
   right: activeTab === 'photography' ? '66.666%' : activeTab === 'videography' ? '33.333%' : 'var(--tab-pad, 6px)',
 }}></div>
-<button onClick={() => setActiveTab('photography')} className={`tab-label ${activeTab === 'photography' ? 'tab-active' : ''}`}>Photography</button>
-<button onClick={() => setActiveTab('videography')} className={`tab-label ${activeTab === 'videography' ? 'tab-active' : ''}`}>Videography</button>
-<button onClick={() => setActiveTab('alacarte')} className={`tab-label ${activeTab === 'alacarte' ? 'tab-active' : ''}`}>À La Carte</button>
+<button onClick={() => setActiveTab('photography')} className={`tab-label ${activeTab === 'photography' ? 'tab-active' : ''}`}><span className="hidden md:inline">Photography</span><span className="md:hidden">Photo</span></button>
+<button onClick={() => setActiveTab('videography')} className={`tab-label ${activeTab === 'videography' ? 'tab-active' : ''}`}><span className="hidden md:inline">Videography</span><span className="md:hidden">Video</span></button>
+<button onClick={() => setActiveTab('alacarte')} className={`tab-label ${activeTab === 'alacarte' ? 'tab-active' : ''}`}><span className="hidden md:inline">À La Carte</span><span className="md:hidden">Custom</span></button>
 </div>
 </div>
 <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
@@ -2357,12 +2357,12 @@ ReactDOM.render(<WeddingPricingCalculator />, document.getElementById('wedding-p
 function sendHeight() {
   var content = document.getElementById('wedding-pricing-root').firstElementChild;
   if (!content) return;
-  var h = content.offsetHeight;
+  var h = Math.ceil(content.getBoundingClientRect().height) + 2;
   window.parent.postMessage({calcHeight: h}, '*');
 }
 window.addEventListener('load', function() {
   sendHeight();
-  setInterval(sendHeight, 300);
+  setInterval(sendHeight, 500);
 });
 </script>
 </body>
