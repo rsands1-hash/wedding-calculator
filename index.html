@@ -564,7 +564,7 @@ const AnimCheckbox = ({checked, onChange, children}) => (
 );
 
 const ServiceCredits = ({discounts, toggleDiscount, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8"}>
+  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Service Credits</h3>
     <p className="text-sm text-stone-600 mb-4 italic">As a small thank you to those who dedicate their lives to serving our community, we're honored to offer these credits toward your wedding photography.</p>
     <div className="space-y-4">
@@ -579,7 +579,7 @@ const ServiceCredits = ({discounts, toggleDiscount, isDesktop}) => (
 );
 
 const UnlockCredits = ({hasConsultation, setHasConsultation, followsInstagram, setFollowsInstagram, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8"}>
+  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Unlock More Credits</h3>
     <p className="text-sm text-stone-600 mb-4 italic">Want to save even more? We've got a couple easy ways for you to unlock extra credits toward your package!</p>
     <div className="space-y-4">
@@ -592,7 +592,7 @@ const UnlockCredits = ({hasConsultation, setHasConsultation, followsInstagram, s
 );
 
 const PaymentOptionsSection = ({paymentMethod, setPaymentMethod, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8"}>
+  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Payment Options</h3>
     <div className="space-y-4">
       <div className="space-y-2">
@@ -688,7 +688,7 @@ const WeddingCalendar = ({weddingDate, setWeddingDate}) => {
 };
 
 const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymentPlan, radioName, isDesktop, schedule, retainerAmount}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8"}>
+  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
     <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4 flex items-center gap-2"><Calendar className="w-5 h-5" />Choose Your Payment Plan</h3>
     <div className="space-y-4">
       <div>
@@ -776,7 +776,7 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
   const sc = active ? 'text-green-700' : 'text-stone-500';
   const displayQty = showHrs ? `${qty} hrs` : qty;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pb-4 px-4 md:pb-8 md:px-8 overflow-hidden`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pb-5 px-5 md:pb-8 md:px-8 overflow-hidden`}>
       <img src={imgSrc} alt={label} className="object-contain line-icon" style={{marginTop: '-5px', marginBottom: '-3px', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))', transform: `${imgSize ? `scale(${imgSize})` : ''} ${imgOffset ? `translateY(${imgOffset})` : ''}`.trim() || 'none'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5`}>{label}</p>
       {sublabel && <p className={`text-xs md:text-base ${sc}`}>{sublabel}</p>}
@@ -797,7 +797,7 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, maxQty, desc}) => {
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const priceStr = `$${addon.price.toLocaleString()}${addon.suffix ? addon.suffix.replace('hour', 'hr') : '.00'}`;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-4 px-4 md:pt-3 md:pb-8 md:px-8`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={addon.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5 whitespace-pre-line`}>{addon.name}</p>
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{priceStr}</p>
@@ -824,7 +824,7 @@ const AlbumRow = ({album, onMinus, onPlus, desc}) => {
   const imgSrc = getAlbumImg(album.id || album.name);
   const priceStr = `$${album.price.toLocaleString ? album.price.toLocaleString() : album.price}.00`;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-4 px-4 md:pt-3 md:pb-8 md:px-8`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={album.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5`}>{album.name}</p>
       {album.pages && <p className={`text-xs md:text-lg ${sc}`}>{album.pages}</p>}
@@ -1665,7 +1665,7 @@ setAlaCarteWeddingDate('');
 setAlaCartePaymentPlan('15_days');
 };
 return (
-<div className="py-6 px-2 md:py-12 md:px-4" style={{background: 'transparent'}}>
+<div className="py-6 px-4 md:py-12 md:px-4" style={{background: 'transparent'}}>
 {showModal && ReactDOM.createPortal(
 <div style={{position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, backgroundColor: 'rgba(0, 0, 0, 0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem'}}>
 <div className="max-w-md w-full p-6 relative" style={{maxHeight: '90vh', overflowY: 'auto', backgroundColor: 'transparent'}}>
@@ -1755,9 +1755,9 @@ disabled={isSubmitting}
 <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
 <div className="lg:w-[65%] space-y-4 md:space-y-8">
 {activeTab === 'photography' && (<>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose a Photography Collection</h2>
-<div className="grid grid-cols-2 gap-3 md:gap-8 mb-4 md:mb-8 mt-6 px-1">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 mb-4 md:mb-8 mt-6 px-1">
 {Object.entries(collections).map(([key, collection]) => (
 <div key={key} onClick={() => handleCollectionSelect(key)} className={`col-card ${selectedCollection === key ? 'col-active' : ''}`}>
 <div className="col-card-name">{collection.name}</div>
@@ -1774,12 +1774,12 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 ))}
 </div>
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose Your Add-Ons</h2>
 <div className="space-y-10">
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + 1)} disableMinus={photoTabExtraPhoto === 0} />
 <CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
@@ -1790,13 +1790,13 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {photographyAlbums.map(album => (<AlbumRow key={album.id} album={album} desc={albumDescs[album.id]} onMinus={() => handlePhotographyAlbumChange(album.id, -1)} onPlus={() => handlePhotographyAlbumChange(album.id, 1)} />))}
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {photographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
@@ -1807,7 +1807,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 </div>
 {selectedCollection && (<>
-<div className="lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8">
+<div className="lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
 <div className="space-y-3">
 {collections[selectedCollection].items.map((item, idx) => {
@@ -1841,9 +1841,9 @@ return (
 </>)}
 </>)}
 {activeTab === 'videography' && (<>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose a Videography Collection</h2>
-<div className="grid grid-cols-2 gap-3 md:gap-8 mb-4 md:mb-8 mt-6 px-1">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 mb-4 md:mb-8 mt-6 px-1">
 {Object.entries(videographyCollections).map(([key, collection]) => (
 <div key={key} onClick={() => handleVideoCollectionSelect(key)} className={`col-card ${selectedVideoCollection === key ? 'col-active' : ''}`}>
 <div className="col-card-name">{collection.name}</div>
@@ -1858,12 +1858,12 @@ return (
 ))}
 </div>
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose Your Add-Ons</h2>
 <div className="space-y-10">
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Additional Coverage Time</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraPhoto(prev => prev + 1)} disableMinus={videoTabExtraPhoto === 0} />
 <CoverageRow imgSrc={IMG.video} label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} disableMinus={videoTabExtraVideo === 0} />
 {videoSecondPhotog && (
@@ -1874,7 +1874,7 @@ return (
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {videographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
@@ -1893,13 +1893,13 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </>)}
 </>)}
 {activeTab === 'alacarte' && (<>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h2 className="text-xl md:text-2xl font-sans text-stone-800 mb-4">Build Your Custom Package</h2>
 <p className="text-stone-600 mb-6">Create your perfect coverage starting at $300/hour with a 4 hour minimum</p>
 <div className="space-y-10">
 <div className="border border-stone-200 rounded-lg p-5">
 <h4 className="text-lg md:text-xl font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Coverage Time</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} showHrs includedContent={
 <div className="mt-3 w-full">
 <div className="bg-white p-3 rounded border border-stone-200">
@@ -1931,13 +1931,13 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Wedding Albums</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {[{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, state: alaCarteAlbum8x8, setState: setAlaCarteAlbum8x8}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, state: alaCarteAlbum10x10, setState: setAlaCarteAlbum10x10}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, state: alaCarteAlbum12x12, setState: setAlaCarteAlbum12x12}, {id: 'parent_album', name: 'Parent Album', pages: '', subtext: '(copy of your wedding album)', price: 500, state: alaCarteParentAlbum, setState: setAlaCarteParentAlbum}].map((album, idx) => (<AlbumRow key={idx} album={album} desc={albumDescs[album.id]} onMinus={() => album.setState(Math.max(0, album.state - 1))} onPlus={() => album.setState(album.state + 1)} />))}
 </div>
 </div>
 <div>
 <h4 className="text-base md:text-lg font-sans font-bold text-stone-900 mb-4 pb-2 border-b-2 border-stone-300">Other Services</h4>
-<div className="grid grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {alaCarteAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
@@ -1957,7 +1957,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <div className="lg:w-[35%] space-y-4 md:space-y-8">
 {activeTab === 'photography' && (<>
 {selectedCollection && (<>
-<div className="hidden lg:block bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8">
+<div className="hidden lg:block bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
 <div className="space-y-3">
 {collections[selectedCollection].items.map((item, idx) => {
@@ -1991,7 +1991,7 @@ return (
 <PaymentPlanSection weddingDate={weddingDate} setWeddingDate={setWeddingDate} paymentPlan={paymentPlan} setPaymentPlan={setPaymentPlan} radioName="payment-plan" isDesktop={true} schedule={collectionsPaymentSchedule} retainerAmount={photoTabExtraVideo > 0 ? 2000 : 1000} />
 </div>
 </>)}
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8 investment-sticky">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 {selectedCollection ? (<div className="space-y-4 mb-6">
 <div className="pb-4 border-b border-stone-200">
@@ -2121,7 +2121,7 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 <PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan" isDesktop={true} schedule={videoPaymentSchedule} retainerAmount={1000} />
 </div>
 </>)}
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8 investment-sticky">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 {selectedVideoCollection ? (<div className="space-y-4 mb-6">
 <div className="pb-4 border-b border-stone-200">
@@ -2222,7 +2222,7 @@ videoPaymentSchedule.payments.map((payment, idx) => (
 <PaymentOptionsSection paymentMethod={alaCartePaymentMethod} setPaymentMethod={setAlaCartePaymentMethod} isDesktop={true} />
 <PaymentPlanSection weddingDate={alaCarteWeddingDate} setWeddingDate={setAlaCarteWeddingDate} paymentPlan={alaCartePaymentPlan} setPaymentPlan={setAlaCartePaymentPlan} radioName="alacarte-payment-plan" isDesktop={true} schedule={alaCartePaymentSchedule} retainerAmount={(alaCarteHours > 0 && alaCarteVideoHours > 0) ? 2000 : 1000} />
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-3 md:p-8 investment-sticky">
+<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
 <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
 <div className="space-y-4 mb-6">
 {alaCarteHours > 0 && (<div className="pb-4 border-b border-stone-200">
