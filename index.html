@@ -73,6 +73,48 @@ html, body {
   75% { box-shadow: 0 0 0 10px #16a34a60; }
   100% { box-shadow: 0 0 0 13px #16a34a30; rotate: 0; }
 }
+/* Animated Radio (Payment Schedule) */
+.anim-radio { display: flex; align-items: center; gap: 0.75rem; cursor: pointer; }
+.anim-radio input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
+.anim-radio .radiomark {
+  --clr: #6d28d9;
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 1.6em;
+  width: 1.6em;
+  min-width: 1.6em;
+  font-size: 1.35rem;
+  background-color: rgba(214, 211, 209, 0.75);
+  border-radius: 50%;
+  transition: 300ms;
+}
+.anim-radio input:checked ~ .radiomark {
+  background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
+  border-radius: .5rem;
+  animation: radio-pulse 500ms ease-in-out;
+}
+.anim-radio .radiomark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.anim-radio input:checked ~ .radiomark:after { display: block; }
+.anim-radio .radiomark:after {
+  left: 50%;
+  top: 45%;
+  width: 0.25em;
+  height: 0.5em;
+  border: solid #fff;
+  border-width: 0 0.15em 0.15em 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+@keyframes radio-pulse {
+  0% { box-shadow: 0 0 0 #a78bfa90; rotate: 20deg; }
+  50% { rotate: -20deg; }
+  75% { box-shadow: 0 0 0 10px #a78bfa60; }
+  100% { box-shadow: 0 0 0 13px #a78bfa30; rotate: 0; }
+}
 /* Plus/Minus Buttons */
 .te-btn {
   display: inline-flex;
@@ -346,6 +388,25 @@ html, body {
   0% { background-position: 0% 50%; }
   100% { background-position: 200% 50%; }
 }
+.month-btn {
+  background: #fff;
+  color: #777;
+  border: none;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+.month-btn:nth-child(3n) {
+  border-right: none;
+}
+.month-btn:nth-child(n+10) {
+  border-bottom: none;
+}
+.month-btn.month-btn-active {
+  background: linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%);
+  color: #fff;
+}
 .col-card.col-active {
   position: relative;
   border-color: transparent;
@@ -472,14 +533,16 @@ html, body {
 .col-card-features li {
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 13px;
   color: #555;
   margin-bottom: 12px;
   line-height: 1.3;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 @media (min-width: 768px) {
   .col-card-features li {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 14px;
     line-height: 1.3;
   }
@@ -546,7 +609,7 @@ html, body {
   position: relative;
   border-radius: 100em;
   background-color: rgba(120, 120, 130, 0.55);
-  font-size: 12px;
+  font-size: 15px;
   box-shadow:
     -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
     0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
@@ -640,8 +703,8 @@ html, body {
   transform: scale(0.975);
 }
 @media (min-width: 768px) {
-  .refresh-btn { display: block; font-size: 14px; }
-  .refresh-btn .rb-inner span { font-size: 14px; }
+  .refresh-btn { display: block; font-size: 17.5px; }
+  .refresh-btn .rb-inner span { font-size: 17.5px; }
 }
 </style>
 <!-- CONTAINER - Shows immediately while scripts load -->
@@ -676,6 +739,10 @@ const Plus = ({ className }) => <svg className={className} width="24" height="24
 const Minus = ({ className }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>;
 const Calendar = ({ className }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>;
 const X = ({ className }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
+const Shield = ({ className }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
+const Sparkles = ({ className }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8z"/></svg>;
+const Wallet = ({ className }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><circle cx="17" cy="14" r="1.5" fill="currentColor" stroke="none"/></svg>;
+const Gem = ({ className }) => <svg className={className} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="12" y1="22" x2="8" y2="9"/><line x1="12" y1="22" x2="16" y2="9"/><line x1="6" y1="3" x2="8" y2="9"/><line x1="18" y1="3" x2="16" y2="9"/></svg>;
 
 const IMG = {
   photo: 'https://static.showit.co/file/5fWMmNfZMkFqvYROPoYu7A/293041/photo-coverage.png',
@@ -692,7 +759,7 @@ const IMG = {
   content: 'https://static.showit.co/file/AYHOBmdx1ikAIW9YG2HYJg/293041/content-creator.png'
 };
 
-const PAY_METHODS = [{value: 'cash', label: 'Cash (Save $50)'}, {value: 'zelle', label: 'Zelle'}, {value: 'venmo', label: 'Venmo'}, {value: 'paypal', label: 'PayPal Gift'}, {value: 'credit', label: 'Credit Card (+5% fee)'}, {value: 'check', label: 'Check'}];
+const PAY_METHODS = [{value: 'cash', label: 'Cash', note: '(Save $50)'}, {value: 'zelle', label: 'Zelle'}, {value: 'venmo', label: 'Venmo'}, {value: 'paypal', label: 'PayPal Gift'}, {value: 'credit', label: 'Credit Card', note: '(+5% fee)'}, {value: 'check', label: 'Check'}];
 
 const CASH_DISCLAIMER = '*To qualify for the $50 cash discount, your entire balance must be paid in physical cash within 14 days of signing your contract. Digital payments such as Venmo, Zelle, and PayPal do not qualify.';
 
@@ -732,14 +799,17 @@ const AnimCheckbox = ({checked, onChange, children}) => (
 );
 
 const ServiceCredits = ({discounts, toggleDiscount, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
-    <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Service Credits</h3>
-    <p className="text-sm text-stone-600 mb-4 italic">As a small thank you to those who dedicate their lives to serving our community, we're honored to offer these credits toward your wedding photography.</p>
-    <div className="space-y-4">
-      <div className="space-y-2">
+  <div className={isDesktop ? "bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8"}>
+    <div className="flex items-center gap-3 mb-4">
+      <img src="https://static.showit.co/file/NArGw95RaAiEJj5S2p6SyA/293041/credits.png" alt="credits" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />
+      <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Service Credits</h3>
+    </div>
+    <p className="text-sm md:text-base text-stone-600 mb-4 italic">As a small thank you to those who dedicate their lives to serving our community, we're honored to offer these credits toward your wedding photography.</p>
+    <div className="space-y-4" style={{marginTop: '15px'}}>
+      <div style={{display: 'flex', flexDirection: 'column', gap: '18px'}}>
         <p className="text-stone-700 font-medium mb-3">Select up to two{isDesktop ? ' ' : <br />}(one per partner):</p>
         {[{key:'law_enforcement',label:'Police Officer'},{key:'fire_fighter',label:'Fire Fighter'},{key:'emt',label:'EMT'},{key:'nurse',label:'Nurse'},{key:'military',label:'Military Service Member'},{key:'teacher',label:'Teacher'},{key:'clergy',label:'Clergy Member'}].map(d => (
-          <AnimCheckbox key={d.key} checked={discounts[d.key]} onChange={() => toggleDiscount(d.key)}><span className={`${isDesktop ? 'text-sm sm:text-base' : 'text-sm'} ${discounts[d.key] ? 'text-green-700' : 'text-stone-700'}`}>{d.label} ($50 Credit)</span></AnimCheckbox>
+          <AnimCheckbox key={d.key} checked={discounts[d.key]} onChange={() => toggleDiscount(d.key)}><span style={{fontSize: '17px'}} className={discounts[d.key] ? 'text-green-700' : 'text-stone-700'}><span className="font-bold">{d.label}</span> ($50 Credit)</span></AnimCheckbox>
         ))}
       </div>
     </div>
@@ -747,28 +817,33 @@ const ServiceCredits = ({discounts, toggleDiscount, isDesktop}) => (
 );
 
 const UnlockCredits = ({hasConsultation, setHasConsultation, followsInstagram, setFollowsInstagram, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
-    <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Unlock More Credits</h3>
-    <p className="text-sm text-stone-600 mb-4 italic">Want to save even more? We've got a couple easy ways for you to unlock extra credits toward your package!</p>
-    <div>
-      <AnimCheckbox checked={hasConsultation} onChange={(val) => setHasConsultation(val)}><span className={`${isDesktop ? 'text-sm sm:text-base' : 'text-sm'} ${hasConsultation ? 'text-green-700' : 'text-stone-700'}`}>Book a Consultation{isDesktop ? ' ' : <br />}($100 Credit)</span></AnimCheckbox>
-      <p className="text-xs text-stone-500 ml-11 italic mt-1">Let's chat! Schedule a quick phone or video call and earn $100 toward your package.</p>
+  <div className={isDesktop ? "bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8"}>
+    <div className="flex items-center gap-3 mb-4">
+      <img src="https://static.showit.co/file/oSrIOpGKGgGvXVnMdQL-AQ/293041/key.png" alt="key" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />
+      <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Unlock More Credits</h3>
+    </div>
+    <p className="text-sm md:text-base text-stone-600 mb-4 italic">Want to save even more? We've got a couple easy ways for you to unlock extra credits toward your package!</p>
+    <div style={{marginTop: '15px'}}>
+      <AnimCheckbox checked={hasConsultation} onChange={(val) => setHasConsultation(val)}><span style={{fontSize: '17px'}} className={hasConsultation ? 'text-green-700' : 'text-stone-700'}><span className="font-bold">Book a Consultation</span>{isDesktop ? ' ' : <br />}($100 Credit)</span></AnimCheckbox>
+      <p className="text-sm md:text-base text-stone-500 ml-11 italic" style={{marginTop: '-1px'}}>Let's chat! Schedule a quick phone or video call and earn $100 toward your package.</p>
       <div className="mt-4">
-      <AnimCheckbox checked={followsInstagram} onChange={(val) => setFollowsInstagram(val)}><span className={`${isDesktop ? 'text-sm sm:text-base' : 'text-sm'} ${followsInstagram ? 'text-green-700' : 'text-stone-700'}`}>Follow on Instagram{isDesktop ? ' ' : <br />}($25 Credit)</span></AnimCheckbox>
+      <AnimCheckbox checked={followsInstagram} onChange={(val) => setFollowsInstagram(val)}><span style={{fontSize: '17px'}} className={followsInstagram ? 'text-green-700' : 'text-stone-700'}><span className="font-bold">Follow on Instagram</span>{isDesktop ? ' ' : <br />}($25 Credit)</span></AnimCheckbox>
       </div>
-      <p className="text-xs text-stone-500 ml-11 italic mt-1">Give us a follow @ryansandsphotography and let us know—you'll get $25 off!</p>
+      <p className="text-sm md:text-base text-stone-500 ml-11 italic" style={{marginTop: '-1px'}}>Follow me on IG @ryansandsphotography and earn yourself a cool $25 credit.</p>
     </div>
   </div>
 );
 
 const PaymentOptionsSection = ({paymentMethod, setPaymentMethod, isDesktop}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
-    <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Payment Options</h3>
+  <div className={isDesktop ? "bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8"}>
+    <div className="flex items-center gap-3 mb-4">
+      <img src="https://static.showit.co/file/kN5dwSDD1VZ2PRPu6NhYKQ/293041/credit-card.png" alt="credit card" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />
+      <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Payment Method</h3>
+    </div>
     <div className="space-y-4">
       <div className="space-y-2">
-        <p className="text-stone-700 font-medium">Payment Method:</p>
-        {PAY_METHODS.map(method => (<AnimCheckbox key={method.value} checked={paymentMethod === method.value} onChange={() => setPaymentMethod(method.value)}><span className={`${isDesktop ? '' : 'text-sm'} ${paymentMethod === method.value ? 'text-green-700' : 'text-stone-700'}`}>{method.label}</span></AnimCheckbox>))}
-        <p className="text-xs text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>
+        {PAY_METHODS.map(method => (<AnimCheckbox key={method.value} checked={paymentMethod === method.value} onChange={() => setPaymentMethod(method.value)}><span style={{fontSize: '17px'}} className={paymentMethod === method.value ? 'text-green-700' : 'text-stone-700'}><span className="font-bold">{method.label}</span>{method.note ? ` ${method.note}` : ''}</span></AnimCheckbox>))}
+        <p className="text-sm md:text-base text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>
       </div>
     </div>
   </div>
@@ -780,6 +855,7 @@ const WeddingCalendar = ({weddingDate, setWeddingDate}) => {
   const [viewYear, setViewYear] = useState(parsedDate ? parsedDate.getFullYear() : today.getFullYear());
   const [viewMonth, setViewMonth] = useState(parsedDate ? parsedDate.getMonth() : today.getMonth());
   const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const monthShort = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const dayNames = ['Su','Mo','Tu','We','Th','Fr','Sa'];
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
   const firstDay = new Date(viewYear, viewMonth, 1).getDay();
@@ -817,16 +893,18 @@ const WeddingCalendar = ({weddingDate, setWeddingDate}) => {
         <button onClick={() => setViewYear(2027)} className={`tab-label-sm ${viewYear === 2027 ? 'tab-active' : ''}`}>2027</button>
         <button onClick={() => setViewYear(2028)} className={`tab-label-sm ${viewYear === 2028 ? 'tab-active' : ''}`}>2028</button>
       </div>
-      <div className="flex items-center justify-between mb-4 px-4 py-3" style={{borderRadius: '1.25rem', background: 'linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%)'}}>
-        <button onClick={prevMonth} className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors text-white" style={{fontSize: '1.75rem'}}>‹</button>
-        <div className="text-center">
-          <p className="text-lg md:text-xl font-bold text-white" style={{textShadow: '0 1px 3px rgba(0,0,0,0.2)'}}>{monthNames[viewMonth]}</p>
-        </div>
-        <button onClick={nextMonth} className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors text-white" style={{fontSize: '1.75rem'}}>›</button>
+      <div className="grid grid-cols-3 mb-4 mx-auto" style={{maxWidth: '20rem', borderRadius: '12px', overflow: 'hidden', border: '1px solid #ccc'}}>
+        {monthShort.map((name, idx) => (
+          <button key={name} onClick={() => setViewMonth(idx)}
+            className={`month-btn py-2.5 ${viewMonth === idx ? 'month-btn-active' : ''}`}
+            style={{fontSize: '17px'}}>
+            {name}
+          </button>
+        ))}
       </div>
       <div className="grid grid-cols-7 gap-1 mb-2">
         {dayNames.map(d => (
-          <div key={d} className="text-center text-xs md:text-sm font-medium text-stone-400 py-2">{d}</div>
+          <div key={d} className="text-center text-sm md:text-base font-bold py-2" style={{background: 'linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%)', WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>{d}</div>
         ))}
       </div>
       <div className="grid grid-cols-7 gap-1">
@@ -838,7 +916,7 @@ const WeddingCalendar = ({weddingDate, setWeddingDate}) => {
                   <HeartIcon>{day}</HeartIcon>
                 </button>
               ) : (
-                <button onClick={() => selectDay(day)} className={`w-full h-full rounded-full flex items-center justify-center transition-all text-sm md:text-base ${isToday(day) ? 'bg-stone-100 text-stone-800 font-semibold' : 'text-stone-700 hover:bg-green-50 hover:text-green-800'}`}>
+                <button onClick={() => selectDay(day)} className={`w-full h-full rounded-full flex items-center justify-center transition-all text-base md:text-lg font-bold ${isToday(day) ? 'bg-stone-100 text-stone-800' : 'text-stone-700 hover:bg-green-50 hover:text-green-800'}`}>
                   {day}
                 </button>
               )
@@ -858,8 +936,11 @@ const WeddingCalendar = ({weddingDate, setWeddingDate}) => {
 };
 
 const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymentPlan, radioName, isDesktop, schedule, retainerAmount}) => (
-  <div className={isDesktop ? "bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8"}>
-    <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4 flex items-center gap-2"><Calendar className="w-5 h-5" />Choose Your{isDesktop ? ' ' : <br />}Payment Plan</h3>
+  <div className={isDesktop ? "bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 flex-1" : "lg:hidden bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8"}>
+    <div className="flex items-center gap-3 mb-4">
+      <img src="https://static.showit.co/file/aPLMXJ_TUyQH5ii36mai5Q/293041/calendar.png" alt="calendar" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />
+      <h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Choose a Payment Plan</h3>
+    </div>
     <div className="space-y-4">
       <div>
         <label className="block text-stone-700 font-medium mb-3 text-center text-lg">Select Your Wedding Date</label>
@@ -871,59 +952,60 @@ const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymen
         <div className="space-y-3">
           <p className="text-stone-700 font-medium">Payment Schedule:</p>
           {[{value:'monthly',label:'Monthly Payments'},{value:'3_months',label:'Every 3 Months'},{value:'6_months',label:'Every 6 Months'},{value:'15_days',label:'15 Days Before Wedding'}].map(opt => (
-            <label key={opt.value} className="flex items-center gap-3 cursor-pointer">
-              <input type="radio" name={radioName} value={opt.value} checked={paymentPlan === opt.value} onChange={(e) => setPaymentPlan(e.target.value)} className="w-5 h-5" />
+            <label key={opt.value} className="anim-radio">
+              <input type="radio" name={radioName} value={opt.value} checked={paymentPlan === opt.value} onChange={(e) => setPaymentPlan(e.target.value)} />
+              <span className="radiomark"></span>
               <span className={`text-stone-700 ${isDesktop ? '' : 'text-sm'}`}>{opt.label}</span>
             </label>
           ))}
           {schedule && (
-            <div className="mt-4 rounded-2xl overflow-hidden" style={{background: 'linear-gradient(135deg, #eff6ff 0%, #f0f4ff 50%, #faf5ff 100%)', border: '1px solid #c7d2fe'}}>
-              <div className="px-4 py-3" style={{background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 40%, #6366f1 100%)'}}>
-                <p className="text-sm font-bold text-white tracking-wide text-center" style={{textShadow: '0 1px 2px rgba(0,0,0,0.15)'}}>{schedule.type}</p>
+            <div className="mt-4 rounded-2xl overflow-hidden" style={{background: '#f9f9f8', border: '1px solid #d6d3d1'}}>
+              <div className="px-4 py-3" style={{background: 'linear-gradient(145deg, #d5a3ff 0%, #77a5f8 100%)'}}>
+                <p className="text-base md:text-lg font-bold text-white tracking-wide text-center" style={{textShadow: '0 1px 2px rgba(0,0,0,0.15)'}}>{schedule.type}</p>
               </div>
               <div className="p-4 space-y-0">
                 {retainerAmount > 1000 ? (
                   <>
-                    <div className="flex justify-between items-center py-3 border-b border-indigo-100">
+                    <div className="flex justify-between items-center py-3 border-b border-stone-300">
                       <div>
-                        <p className="text-sm font-medium text-indigo-900">Photography Retainer</p>
-                        <p className="text-xs text-indigo-400">Due at signing</p>
+                        <p className="text-base md:text-lg font-semibold text-stone-800">Photography Retainer</p>
+                        <p className="text-sm md:text-base text-stone-500">Due at signing</p>
                       </div>
-                      <p className="text-base font-bold text-indigo-900">$1,000.00</p>
+                      <p className="text-lg md:text-xl font-bold text-stone-800">$1,000.00</p>
                     </div>
-                    <div className="flex justify-between items-center py-3 border-b border-indigo-100">
+                    <div className="flex justify-between items-center py-3 border-b border-stone-300">
                       <div>
-                        <p className="text-sm font-medium text-indigo-900">Videography Retainer</p>
-                        <p className="text-xs text-indigo-400">Due at signing</p>
+                        <p className="text-base md:text-lg font-semibold text-stone-800">Videography Retainer</p>
+                        <p className="text-sm md:text-base text-stone-500">Due at signing</p>
                       </div>
-                      <p className="text-base font-bold text-indigo-900">$1,000.00</p>
+                      <p className="text-lg md:text-xl font-bold text-stone-800">$1,000.00</p>
                     </div>
                   </>
                 ) : (
-                  <div className="flex justify-between items-center py-3 border-b border-indigo-100">
+                  <div className="flex justify-between items-center py-3 border-b border-stone-300">
                     <div>
-                      <p className="text-sm font-medium text-indigo-900">Retainer</p>
-                      <p className="text-xs text-indigo-400">Due at signing</p>
+                      <p className="text-base md:text-lg font-semibold text-stone-800">Retainer</p>
+                      <p className="text-sm md:text-base text-stone-500">Due at signing</p>
                     </div>
-                    <p className="text-base font-bold text-indigo-900">${retainerAmount.toLocaleString()}.00</p>
+                    <p className="text-lg md:text-xl font-bold text-stone-800">${retainerAmount.toLocaleString()}.00</p>
                   </div>
                 )}
                 {schedule.isMonthly ? (
                   <div className="flex justify-between items-center py-3">
                     <div>
-                      <p className="text-sm font-medium text-indigo-900">{schedule.payments[0].count} Monthly Payments</p>
-                      <p className="text-xs text-indigo-400">${schedule.payments[0].amount.toFixed(2)} per month</p>
+                      <p className="text-base md:text-lg font-semibold text-stone-800">{schedule.payments[0].count} Monthly Payments</p>
+                      <p className="text-sm md:text-base text-stone-500">${schedule.payments[0].amount.toFixed(2)} per month</p>
                     </div>
-                    <p className="text-base font-bold text-indigo-900">${(schedule.payments[0].amount * schedule.payments[0].count).toFixed(2)}</p>
+                    <p className="text-lg md:text-xl font-bold text-stone-800">${(schedule.payments[0].amount * schedule.payments[0].count).toFixed(2)}</p>
                   </div>
                 ) : (
                   schedule.payments.map((payment, idx) => (
-                    <div key={idx} className={`flex justify-between items-center py-3 ${idx < schedule.payments.length - 1 ? 'border-b border-indigo-100' : ''}`}>
+                    <div key={idx} className={`flex justify-between items-center py-3 ${idx < schedule.payments.length - 1 ? 'border-b border-stone-300' : ''}`}>
                       <div>
-                        <p className="text-sm font-medium text-indigo-900">{payment.label}</p>
-                        <p className="text-xs text-indigo-400">{payment.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                        <p className="text-base md:text-lg font-semibold text-stone-800">{payment.label}</p>
+                        <p className="text-sm md:text-base text-stone-500">{payment.date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}</p>
                       </div>
-                      <p className="text-base font-bold text-indigo-900">${payment.amount.toFixed(2)}</p>
+                      <p className="text-lg md:text-xl font-bold text-stone-800">${payment.amount.toFixed(2)}</p>
                     </div>
                   ))
                 )}
@@ -935,7 +1017,7 @@ const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymen
           )}
         </div>
       )}
-      {!weddingDate && (<p className="text-sm text-stone-500 italic text-center">Pick a date above to see payment plan options</p>)}
+      {!weddingDate && (<p className="text-sm md:text-base text-stone-500 italic text-center">Pick a date above to see payment plan options</p>)}
     </div>
   </div>
 );
@@ -946,9 +1028,8 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const sc = active ? 'text-green-700' : 'text-stone-500';
   const displayQty = showHrs ? `${qty} hrs` : qty;
-  const showReset = qty > 0 && onReset;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pb-5 px-5 md:pb-8 md:px-8 overflow-hidden`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pb-5 px-5 md:pb-8 md:px-8 overflow-hidden`}>
       <img src={imgSrc} alt={label} className="object-contain line-icon" style={{marginTop: '-5px', marginBottom: '-3px', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))', transform: `${imgSize ? `scale(${imgSize})` : ''} ${imgOffset ? `translateY(${imgOffset})` : ''}`.trim() || 'none'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5`}>{label}</p>
       {sublabel && <p className={`text-xs md:text-base ${sc}`}>{sublabel}</p>}
@@ -961,7 +1042,7 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
           <span className={`${showHrs ? 'w-16' : 'w-8'} text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{displayQty}</span>
           <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
         </div>
-        {showReset && <button onClick={onReset} className="te-reset">reset</button>}
+        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>reset</button>}
       </div>
     </div>
   );
@@ -971,9 +1052,8 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, onReset, maxQty, desc}) => {
   const active = addon.qty > 0;
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const priceStr = `$${addon.price.toLocaleString()}${addon.suffix ? addon.suffix.replace('hour', 'hr') : '.00'}`;
-  const showReset = addon.qty > 0 && onReset;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={addon.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5 whitespace-pre-line`}>{addon.name}</p>
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{priceStr}</p>
@@ -984,7 +1064,7 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, onReset, maxQty, desc}) => {
           <span className={`w-8 text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{addon.qty}</span>
           <button onClick={onPlus} disabled={addon.qty >= maxQty} className="te-btn"><Plus className="te-icon" /></button>
         </div>
-        {showReset && <button onClick={onReset} className="te-reset">reset</button>}
+        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>reset</button>}
       </div>
       {addon.description && (
         <div className="text-xs md:text-base text-stone-600 space-y-1 mt-4 md:mt-8 text-center">
@@ -1002,9 +1082,8 @@ const AlbumRow = ({album, onMinus, onPlus, onReset, desc}) => {
   const sc = active ? 'text-green-700' : 'text-stone-500';
   const imgSrc = getAlbumImg(album.id || album.name);
   const priceStr = `$${album.price.toLocaleString ? album.price.toLocaleString() : album.price}.00`;
-  const showReset = qty > 0 && onReset;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-100 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={album.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5`}>{album.name}</p>
       {album.pages && <p className={`text-xs md:text-lg ${sc}`}>{album.pages}</p>}
@@ -1017,7 +1096,7 @@ const AlbumRow = ({album, onMinus, onPlus, onReset, desc}) => {
           <span className={`w-8 text-center font-bold text-base md:text-xl ${ac}`}>{qty}</span>
           <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
         </div>
-        {showReset && <button onClick={onReset} className="te-reset">reset</button>}
+        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>reset</button>}
       </div>
     </div>
   );
@@ -1060,6 +1139,9 @@ teacher: 'Teacher',
 clergy: 'Clergy Member'
 };
 const [activeTab, setActiveTab] = useState('photography');
+const [photoExtrasTab, setPhotoExtrasTab] = useState('albums');
+const [alaCarteExtrasTab, setAlaCarteExtrasTab] = useState('albums');
+const [videoExtrasTab, setVideoExtrasTab] = useState('coverage');
 const [selectedCollection, setSelectedCollection] = useState(null);
 const [selectedVideoCollection, setSelectedVideoCollection] = useState(null);
 const [photographyAddOns, setPhotographyAddOns] = useState(addOns);
@@ -1821,7 +1903,8 @@ const photoSecondPhotog = photographyAddOns.find(a => a.id === 'second_photograp
 const videoSecondPhotog = videographyAddOns.find(a => a.id === 'second_photographer');
 const alaCarteSecondPhotog = alaCarteAddOns.find(a => a.id === 'second_photographer');
 const resetCalculator = () => {
-setSelectedCollection(null);
+setActiveTab('photography');
+setSelectedCollection('premium');
 setSelectedVideoCollection(null);
 setPhotographyAddOns(addOns.map(a => ({...a, qty: 0})));
 setPhotographyAlbums(albumOptions.map(a => ({...a, qty: 0})));
@@ -1950,8 +2033,8 @@ disabled={isSubmitting}
 <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
 <div className="lg:w-[65%] space-y-4 md:space-y-8">
 {activeTab === 'photography' && (<>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose a Photography Collection</h2>
+<div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/bnOCMC9XnbvrlasKA2Pm0Q/293041/collection.png" alt="collection" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Choose a Photography Collection</h2></div>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 mb-4 md:mb-8 mt-6 px-1">
 {Object.entries(collections).map(([key, collection]) => (
 <div key={key} onClick={() => handleCollectionSelect(key)} className={`col-card ${selectedCollection === key ? 'col-active' : ''}`}>
@@ -1969,10 +2052,8 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 ))}
 </div>
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<div className="space-y-10">
-<div>
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Additional Coverage Time</h4>
+<div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/Q86uOG_Zc1KRe2oQdXaRXA/293041/clock.png" alt="clock" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h4 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Additional Coverage Time</h4></div>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + 1)} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
 <CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
@@ -1982,14 +2063,20 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 <CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
 </div>
 </div>
-<div>
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Wedding Albums</h4>
+<div className="mt-6">
+<div className="flex" style={{marginBottom: '-1px', gap: '10px'}}>
+<button onClick={() => setPhotoExtrasTab('albums')} className="flex flex-1 items-center justify-center gap-3 px-5 py-3 font-bold text-xl md:text-2xl transition-all" style={{borderRadius: '1rem 1rem 0 0', background: photoExtrasTab === 'albums' ? '#fff' : '#f7f6f6', color: photoExtrasTab === 'albums' ? '#292524' : '#78716c'}}>
+<img src="https://static.showit.co/file/gWhA3U1p57GTjTp7KYkqKg/293041/album.png" alt="album" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />Wedding Albums</button>
+<button onClick={() => setPhotoExtrasTab('other')} className="flex flex-1 items-center justify-center gap-3 px-5 py-3 font-bold text-xl md:text-2xl transition-all" style={{borderRadius: '1rem 1rem 0 0', background: photoExtrasTab === 'other' ? '#fff' : '#f7f6f6', color: photoExtrasTab === 'other' ? '#292524' : '#78716c'}}>
+<img src="https://static.showit.co/file/eFfc8a1XACHVPrdxtk9HeA/293041/other.png" alt="other" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />Other Services</button>
+</div>
+<div className="bg-white rounded-b-2xl md:rounded-b-3xl shadow-lg p-5 md:p-8">
+{photoExtrasTab === 'albums' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {photographyAlbums.map(album => (<AlbumRow key={album.id} album={album} desc={albumDescs[album.id]} onMinus={() => handlePhotographyAlbumChange(album.id, -1)} onPlus={() => handlePhotographyAlbumChange(album.id, 1)} onReset={() => handlePhotographyAlbumChange(album.id, -album.qty)} />))}
 </div>
-</div>
-<div>
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Other Services</h4>
+)}
+{photoExtrasTab === 'other' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {photographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
@@ -1997,12 +2084,12 @@ const maxQty = isEngagement ? 1 : 999;
 return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handlePhotographyAddOnChange(addon.id, -1)} onPlus={() => handlePhotographyAddOnChange(addon.id, 1)} onReset={() => handlePhotographyAddOnChange(addon.id, -addon.qty)} maxQty={maxQty} />);
 })}
 </div>
-</div>
+)}
 </div>
 </div>
 {selectedCollection && (
-<div className="lg:hidden bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
+<div className="lg:hidden bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/r4PYmYryUNgjLeIHcjzVvA/293041/magic-wand.png" alt="magic wand" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Customize Your Package</h3></div>
 <div className="space-y-3">
 {collections[selectedCollection].items.map((item, idx) => {
 const isAlbum = item.name.includes('Album');
@@ -2026,7 +2113,7 @@ return (
 );
 })}
 </div>
-<p className="text-xs text-stone-500 mt-4 italic">Toggle off albums or engagement sessions to reduce your investment.</p>
+<p className="text-sm md:text-base text-stone-500 mt-4 italic">Toggle off albums or engagement sessions to reduce your investment.</p>
 </div>
 )}
 <ServiceCredits discounts={discounts} toggleDiscount={toggleDiscount} isDesktop={false} />
@@ -2035,8 +2122,8 @@ return (
 <PaymentPlanSection weddingDate={weddingDate} setWeddingDate={setWeddingDate} paymentPlan={paymentPlan} setPaymentPlan={setPaymentPlan} radioName="payment-plan-mobile" isDesktop={false} schedule={collectionsPaymentSchedule} retainerAmount={photoTabExtraVideo > 0 ? 2000 : 1000} />
 </>)}
 {activeTab === 'videography' && (<>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Choose a Videography Collection</h2>
+<div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/gnYIFVlYUgb2IUeLh2ri5A/293041/videography.png" alt="videography" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Choose a Videography Collection</h2></div>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 mb-4 md:mb-8 mt-6 px-1">
 {Object.entries(videographyCollections).map(([key, collection]) => (
 <div key={key} onClick={() => handleVideoCollectionSelect(key)} className={`col-card ${selectedVideoCollection === key ? 'col-active' : ''}`}>
@@ -2052,10 +2139,15 @@ return (
 ))}
 </div>
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<div className="space-y-10">
 <div>
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Additional Coverage Time</h4>
+<div className="flex" style={{marginBottom: '-1px', gap: '10px'}}>
+<button onClick={() => setVideoExtrasTab('coverage')} className="flex flex-1 items-center justify-center gap-3 px-5 py-3 font-bold text-xl md:text-2xl transition-all" style={{borderRadius: '1rem 1rem 0 0', background: videoExtrasTab === 'coverage' ? '#fff' : '#f7f6f6', color: videoExtrasTab === 'coverage' ? '#292524' : '#78716c'}}>
+<img src="https://static.showit.co/file/Q86uOG_Zc1KRe2oQdXaRXA/293041/clock.png" alt="clock" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />Additional Coverage</button>
+<button onClick={() => setVideoExtrasTab('other')} className="flex flex-1 items-center justify-center gap-3 px-5 py-3 font-bold text-xl md:text-2xl transition-all" style={{borderRadius: '1rem 1rem 0 0', background: videoExtrasTab === 'other' ? '#fff' : '#f7f6f6', color: videoExtrasTab === 'other' ? '#292524' : '#78716c'}}>
+<img src="https://static.showit.co/file/eFfc8a1XACHVPrdxtk9HeA/293041/other.png" alt="other" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />Other Services</button>
+</div>
+<div className="bg-white rounded-b-2xl md:rounded-b-3xl shadow-lg p-5 md:p-8">
+{videoExtrasTab === 'coverage' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraPhoto(prev => prev + 1)} onReset={() => setVideoTabExtraPhoto(0)} disableMinus={videoTabExtraPhoto === 0} />
 <CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
@@ -2064,18 +2156,16 @@ return (
 )}
 <CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
 </div>
-</div>
-<div>
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Other Services</h4>
+)}
+{videoExtrasTab === 'other' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {videographyAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
 return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handleVideographyAddOnChange(addon.id, -1)} onPlus={() => handleVideographyAddOnChange(addon.id, 1)} onReset={() => handleVideographyAddOnChange(addon.id, -addon.qty)} maxQty={maxQty} />);
 })}
-
 </div>
-</div>
+)}
 </div>
 </div>
 <ServiceCredits discounts={videoDiscounts} toggleDiscount={toggleVideoDiscount} isDesktop={false} />
@@ -2084,12 +2174,9 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan-mobile" isDesktop={false} schedule={videoPaymentSchedule} retainerAmount={1000} />
 </>)}
 {activeTab === 'alacarte' && (<>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<h2 className="text-xl md:text-2xl font-sans text-stone-800 mb-4">Build Your Custom Package</h2>
+<div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/LB0PBwkUcYlFGgQdar6cSQ/293041/tools.png" alt="tools" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Build Your Custom Package</h2></div>
 <p className="text-stone-600 mb-6">Create your perfect coverage starting at $300/hour with a 4 hour minimum</p>
-<div className="space-y-10">
-<div className="md:border md:border-stone-200 md:rounded-lg md:p-5">
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Coverage Time</h4>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} showHrs onReset={() => setAlaCarteHours(0)} includedContent={
 <div className="mt-3 w-full text-center">
@@ -2117,23 +2204,28 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs onReset={() => setAlaCarteContentCreator(0)} />
 </div>
 </div>
-<div>
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Wedding Albums</h4>
+<div className="mt-6">
+<div className="flex" style={{marginBottom: '-1px', gap: '10px'}}>
+<button onClick={() => setAlaCarteExtrasTab('albums')} className="flex flex-1 items-center justify-center gap-3 px-5 py-3 font-bold text-xl md:text-2xl transition-all" style={{borderRadius: '1rem 1rem 0 0', background: alaCarteExtrasTab === 'albums' ? '#fff' : '#f7f6f6', color: alaCarteExtrasTab === 'albums' ? '#292524' : '#78716c'}}>
+<img src="https://static.showit.co/file/gWhA3U1p57GTjTp7KYkqKg/293041/album.png" alt="album" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />Wedding Albums</button>
+<button onClick={() => setAlaCarteExtrasTab('other')} className="flex flex-1 items-center justify-center gap-3 px-5 py-3 font-bold text-xl md:text-2xl transition-all" style={{borderRadius: '1rem 1rem 0 0', background: alaCarteExtrasTab === 'other' ? '#fff' : '#f7f6f6', color: alaCarteExtrasTab === 'other' ? '#292524' : '#78716c'}}>
+<img src="https://static.showit.co/file/eFfc8a1XACHVPrdxtk9HeA/293041/other.png" alt="other" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} />Other Services</button>
+</div>
+<div className="bg-white rounded-b-2xl md:rounded-b-3xl shadow-lg p-5 md:p-8">
+{alaCarteExtrasTab === 'albums' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {[{id: 'album_8x8', name: '8x8 Album', pages: '(30 Pages)', price: 300, state: alaCarteAlbum8x8, setState: setAlaCarteAlbum8x8}, {id: 'album_10x10', name: '10x10 Album', pages: '(40 Pages)', price: 400, state: alaCarteAlbum10x10, setState: setAlaCarteAlbum10x10}, {id: 'album_12x12', name: '12x12 Album', pages: '(50 Pages)', price: 500, state: alaCarteAlbum12x12, setState: setAlaCarteAlbum12x12}, {id: 'parent_album', name: 'Parent Album', pages: '', subtext: '(copy of your wedding album)', price: 500, state: alaCarteParentAlbum, setState: setAlaCarteParentAlbum}].map((album, idx) => (<AlbumRow key={idx} album={album} desc={albumDescs[album.id]} onMinus={() => album.setState(Math.max(0, album.state - 1))} onPlus={() => album.setState(album.state + 1)} onReset={() => album.setState(0)} />))}
 </div>
-</div>
-<div>
-<h4 className="text-xl md:text-3xl font-sans font-bold text-stone-900 mb-5 pb-3 border-b-2 border-stone-300">Other Services</h4>
+)}
+{alaCarteExtrasTab === 'other' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 {alaCarteAddOns.filter(addon => addon.id !== 'second_photographer').map(addon => {
 const isEngagement = addon.id === 'engagement_30min' || addon.id === 'engagement_session';
 const maxQty = isEngagement ? 1 : 999;
 return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} desc={addonDescs[addon.id]} onMinus={() => handleAlaCarteAddOnChange(addon.id, -1)} onPlus={() => handleAlaCarteAddOnChange(addon.id, 1)} onReset={() => handleAlaCarteAddOnChange(addon.id, -addon.qty)} maxQty={maxQty} />);
 })}
-
 </div>
-</div>
+)}
 </div>
 </div>
 <ServiceCredits discounts={alaCarteDiscounts} toggleDiscount={toggleAlaCarteDiscount} isDesktop={false} />
@@ -2145,8 +2237,8 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <div className="lg:w-[35%] space-y-4 md:space-y-8">
 {activeTab === 'photography' && (<>
 {selectedCollection && (
-<div className="hidden lg:block bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8">
-<h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Customize Your Package</h3>
+<div className="hidden lg:block bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/r4PYmYryUNgjLeIHcjzVvA/293041/magic-wand.png" alt="magic wand" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Customize Your Package</h3></div>
 <div className="space-y-3">
 {collections[selectedCollection].items.map((item, idx) => {
 const isAlbum = item.name.includes('Album');
@@ -2170,7 +2262,7 @@ return (
 );
 })}
 </div>
-<p className="text-xs text-stone-500 mt-4 italic">Toggle off albums or engagement sessions to reduce your investment.</p>
+<p className="text-sm md:text-base text-stone-500 mt-4 italic">Toggle off albums or engagement sessions to reduce your investment.</p>
 </div>
 )}
 <div className="hidden lg:flex lg:flex-col lg:gap-6">
@@ -2179,8 +2271,8 @@ return (
 <PaymentOptionsSection paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} isDesktop={true} />
 <PaymentPlanSection weddingDate={weddingDate} setWeddingDate={setWeddingDate} paymentPlan={paymentPlan} setPaymentPlan={setPaymentPlan} radioName="payment-plan" isDesktop={true} schedule={collectionsPaymentSchedule} retainerAmount={photoTabExtraVideo > 0 ? 2000 : 1000} />
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
-<h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
+<div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 investment-sticky">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/ueHGE8iMCHrL5egxLgOVLQ/293041/cash.png" alt="cash" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Your Investment</h3></div>
 {selectedCollection ? (<div className="space-y-4 mb-6">
 <div className="pb-4 border-b border-stone-200">
 <p className="text-sm md:text-base text-stone-700 uppercase tracking-wider font-bold mb-2">{photoCol.name}</p>
@@ -2222,7 +2314,7 @@ return (<div key={addon.id} className="flex justify-between items-center text-sm
 {hasConsultation && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Consultation Discount</p><p>-$100</p></div>)}
 {followsInstagram && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Instagram Follow Discount</p><p>-$25</p></div>)}
 {paymentMethod === 'cash' && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Cash Discount</p><p>-$50</p></div>)}
-{paymentMethod === 'cash' && (<p className="text-xs text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>)}
+{paymentMethod === 'cash' && (<p className="text-sm md:text-base text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>)}
 {paymentMethod === 'credit' && (<div className="flex justify-between items-center text-sm md:text-base text-stone-600"><p>Credit Card Fee (5%)</p><p>+${((calculateCollectionsTotal / 1.05) * 0.05).toFixed(2)}</p></div>)}
 <div className="pt-4 border-t-2 border-stone-300">
 <div className="flex justify-between items-center">
@@ -2271,26 +2363,26 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 </div>
 )}
 {!collectionsPaymentSchedule && (
-<div className="bg-stone-100 p-4 rounded-lg mt-4">
-<p className="text-xs text-stone-600 mb-2">Booking Details:</p>
+<div className="bg-stone-50 p-4 rounded-lg mt-4">
+<p className="text-sm md:text-base text-stone-600 mb-2">Booking Details:</p>
 {paymentMethod === 'cash' ? (
 <>
-<p className="text-sm text-stone-700 mb-1">• Full balance of ${calculateCollectionsTotal.toFixed(2)} due at signing</p>
-<p className="text-xs text-stone-500 mt-1 italic">*Cash payment required for cash discount</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Full balance of ${calculateCollectionsTotal.toFixed(2)} due at signing</p>
+<p className="text-sm md:text-base text-stone-500 mt-1 italic">*Cash payment required for cash discount</p>
 </>
 ) : photoTabExtraVideo > 0 ? (
 <>
-<p className="text-sm text-stone-700 mb-1">• $1,000 Photography retainer required</p>
-<p className="text-sm text-stone-700 mb-1">• $1,000 Videography retainer required</p>
-<p className="text-sm text-stone-700 mb-1">• Remaining: ${(calculateCollectionsTotal - 2000).toFixed(2)}</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 Photography retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 Videography retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Remaining: ${(calculateCollectionsTotal - 2000).toFixed(2)}</p>
 </>
 ) : (
 <>
-<p className="text-sm text-stone-700 mb-1">• $1,000 non-refundable retainer required</p>
-<p className="text-sm text-stone-700 mb-1">• Remaining: ${(calculateCollectionsTotal - 1000).toFixed(2)}</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 non-refundable retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Remaining: ${(calculateCollectionsTotal - 1000).toFixed(2)}</p>
 </>
 )}
-<p className="text-xs text-stone-500 mt-2 italic">Tax included in your collection price</p>
+<p className="text-sm md:text-base text-stone-500 mt-2 italic">Tax included in your collection price</p>
 </div>
 )}
 <div className="flex flex-col items-center gap-4 mt-6">
@@ -2307,8 +2399,8 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 <PaymentOptionsSection paymentMethod={videoPaymentMethod} setPaymentMethod={setVideoPaymentMethod} isDesktop={true} />
 <PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan" isDesktop={true} schedule={videoPaymentSchedule} retainerAmount={1000} />
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
-<h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
+<div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 investment-sticky">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/ueHGE8iMCHrL5egxLgOVLQ/293041/cash.png" alt="cash" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Your Investment</h3></div>
 {selectedVideoCollection ? (<div className="space-y-4 mb-6">
 <div className="pb-4 border-b border-stone-200">
 <p className="text-sm md:text-base text-stone-700 uppercase tracking-wider font-bold mb-2">{videoCol.name}</p>
@@ -2342,7 +2434,7 @@ return (<div key={addon.id} className="flex justify-between items-center text-sm
 {videoHasConsultation && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Consultation Discount</p><p>-$100</p></div>)}
 {videoFollowsInstagram && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Instagram Follow Discount</p><p>-$25</p></div>)}
 {videoPaymentMethod === 'cash' && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Cash Discount</p><p>-$50</p></div>)}
-{videoPaymentMethod === 'cash' && (<p className="text-xs text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>)}
+{videoPaymentMethod === 'cash' && (<p className="text-sm md:text-base text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>)}
 {videoPaymentMethod === 'credit' && (<div className="flex justify-between items-center text-sm md:text-base text-stone-600"><p>Credit Card Fee (5%)</p><p>+${((calculateVideoTotal / 1.05) * 0.05).toFixed(2)}</p></div>)}
 <div className="pt-4 border-t-2 border-stone-300">
 <div className="flex justify-between items-center">
@@ -2378,20 +2470,20 @@ videoPaymentSchedule.payments.map((payment, idx) => (
 </div>
 )}
 {!videoPaymentSchedule && (
-<div className="bg-stone-100 p-4 rounded-lg mt-4">
-<p className="text-xs text-stone-600 mb-2">Booking Details:</p>
+<div className="bg-stone-50 p-4 rounded-lg mt-4">
+<p className="text-sm md:text-base text-stone-600 mb-2">Booking Details:</p>
 {videoPaymentMethod === 'cash' ? (
 <>
-<p className="text-sm text-stone-700 mb-1">• Full balance of ${calculateVideoTotal.toFixed(2)} due at signing</p>
-<p className="text-xs text-stone-500 mt-1 italic">*Cash payment required for cash discount</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Full balance of ${calculateVideoTotal.toFixed(2)} due at signing</p>
+<p className="text-sm md:text-base text-stone-500 mt-1 italic">*Cash payment required for cash discount</p>
 </>
 ) : (
 <>
-<p className="text-sm text-stone-700 mb-1">• $1,000 non-refundable retainer required</p>
-<p className="text-sm text-stone-700 mb-1">• Remaining: ${(calculateVideoTotal - 1000).toFixed(2)}</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 non-refundable retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Remaining: ${(calculateVideoTotal - 1000).toFixed(2)}</p>
 </>
 )}
-<p className="text-xs text-stone-500 mt-2 italic">Tax included in your collection price</p>
+<p className="text-sm md:text-base text-stone-500 mt-2 italic">Tax included in your collection price</p>
 </div>
 )}
 <div className="flex flex-col items-center gap-4 mt-6">
@@ -2408,8 +2500,8 @@ videoPaymentSchedule.payments.map((payment, idx) => (
 <PaymentOptionsSection paymentMethod={alaCartePaymentMethod} setPaymentMethod={setAlaCartePaymentMethod} isDesktop={true} />
 <PaymentPlanSection weddingDate={alaCarteWeddingDate} setWeddingDate={setAlaCarteWeddingDate} paymentPlan={alaCartePaymentPlan} setPaymentPlan={setAlaCartePaymentPlan} radioName="alacarte-payment-plan" isDesktop={true} schedule={alaCartePaymentSchedule} retainerAmount={(alaCarteHours > 0 && alaCarteVideoHours > 0) ? 2000 : 1000} />
 </div>
-<div className="bg-white rounded-xl md:rounded-2xl shadow-lg p-5 md:p-8 investment-sticky">
-<h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800 mb-4">Your Investment</h3>
+<div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 investment-sticky">
+<div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/ueHGE8iMCHrL5egxLgOVLQ/293041/cash.png" alt="cash" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Your Investment</h3></div>
 <div className="space-y-4 mb-6">
 {alaCarteHours > 0 && (<div className="pb-4 border-b border-stone-200">
 <div className="space-y-2">
@@ -2452,7 +2544,7 @@ return (<div key={addon.id} className="flex justify-between items-center text-sm
 {alaCarteHasConsultation && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Consultation Discount</p><p>-$100</p></div>)}
 {alaCarteFollowsInstagram && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Instagram Follow Discount</p><p>-$25</p></div>)}
 {alaCartePaymentMethod === 'cash' && (<div className="flex justify-between items-center text-sm md:text-base text-green-700"><p>Cash Discount</p><p>-$50</p></div>)}
-{alaCartePaymentMethod === 'cash' && (<p className="text-xs text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>)}
+{alaCartePaymentMethod === 'cash' && (<p className="text-sm md:text-base text-stone-500 mt-2 italic">{CASH_DISCLAIMER}</p>)}
 {alaCartePaymentMethod === 'credit' && (<div className="flex justify-between items-center text-sm md:text-base text-stone-600"><p>Credit Card Fee (5%)</p><p>+${((calculateAlaCarteTotal / 1.05) * 0.05).toFixed(2)}</p></div>)}
 <div className="pt-4 border-t-2 border-stone-300">
 <div className="flex justify-between items-center">
@@ -2501,26 +2593,26 @@ alaCartePaymentSchedule.payments.map((payment, idx) => (
 </div>
 )}
 {!alaCartePaymentSchedule && (
-<div className="bg-stone-100 p-4 rounded-lg mt-4">
-<p className="text-xs text-stone-600 mb-2">Booking Details:</p>
+<div className="bg-stone-50 p-4 rounded-lg mt-4">
+<p className="text-sm md:text-base text-stone-600 mb-2">Booking Details:</p>
 {alaCartePaymentMethod === 'cash' ? (
 <>
-<p className="text-sm text-stone-700 mb-1">• Full balance of ${calculateAlaCarteTotal.toFixed(2)} due at signing</p>
-<p className="text-xs text-stone-500 mt-1 italic">*Cash payment required for cash discount</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Full balance of ${calculateAlaCarteTotal.toFixed(2)} due at signing</p>
+<p className="text-sm md:text-base text-stone-500 mt-1 italic">*Cash payment required for cash discount</p>
 </>
 ) : alaCarteHours > 0 && alaCarteVideoHours > 0 ? (
 <>
-<p className="text-sm text-stone-700 mb-1">• $1,000 Photography retainer required</p>
-<p className="text-sm text-stone-700 mb-1">• $1,000 Videography retainer required</p>
-<p className="text-sm text-stone-700 mb-1">• Remaining: ${(calculateAlaCarteTotal - 2000).toFixed(2)}</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 Photography retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 Videography retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Remaining: ${(calculateAlaCarteTotal - 2000).toFixed(2)}</p>
 </>
 ) : (
 <>
-<p className="text-sm text-stone-700 mb-1">• $1,000 non-refundable retainer required</p>
-<p className="text-sm text-stone-700 mb-1">• Remaining: ${(calculateAlaCarteTotal - 1000).toFixed(2)}</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 non-refundable retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Remaining: ${(calculateAlaCarteTotal - 1000).toFixed(2)}</p>
 </>
 )}
-<p className="text-xs text-stone-500 mt-2 italic">Tax included in your collection price</p>
+<p className="text-sm md:text-base text-stone-500 mt-2 italic">Tax included in your collection price</p>
 </div>
 )}
 <div className="flex flex-col items-center gap-4 mt-6">
