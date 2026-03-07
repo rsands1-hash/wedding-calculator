@@ -381,8 +381,7 @@ html, body {
   }
 }
 .col-card:hover {
-  box-shadow: 0 0 22px rgba(0, 0, 0, 0.12);
-  transform: translateY(-2px);
+  box-shadow: 0 0 22px rgba(0, 0, 0, 0.35);
 }
 @keyframes glowDrift {
   0% { background-position: 0% 50%; }
@@ -496,33 +495,110 @@ html, body {
   }
 }
 .col-card-btn {
-  width: 100%;
-  border-radius: 25px;
-  border: none;
-  outline: none;
-  height: 36px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
+  all: unset;
+  display: inline-block;
   cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
+  border-radius: 100em;
+  background-color: rgba(120, 120, 130, 0.55);
+  font-size: 12px;
   margin-top: 8px;
-  background: linear-gradient(145deg, #d5c4e8 0%, #a8b8d8 100%);
-  transition: transform 0.3s ease;
+  box-shadow:
+    -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
+    0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
+}
+.col-card-btn::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: calc(100% + 0.3em);
+  height: calc(100% + 0.3em);
+  top: -0.15em;
+  left: -0.15em;
+  border-radius: inherit;
+  background: linear-gradient(-135deg, rgba(5, 5, 5, 0.5), transparent 20%, transparent 100%);
+  filter: blur(0.0125em);
+  opacity: 0.25;
+  mix-blend-mode: multiply;
+}
+.col-card-btn .rb-outer {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  transition: box-shadow 300ms ease;
+  will-change: box-shadow;
+  box-shadow:
+    0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
+    0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
+    0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
+}
+.col-card-btn:active .rb-outer {
+  box-shadow:
+    0 0 0 0 rgba(5, 5, 5, 1),
+    0 0 0 0 rgba(5, 5, 5, 0.5),
+    0 0 0 0 rgba(5, 5, 5, 0.25);
+}
+.col-card-btn .rb-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 0.7em 1.4em;
+  background-image: linear-gradient(135deg, rgba(245, 245, 245, 1), rgba(210, 210, 210, 1));
+  transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
+  will-change: box-shadow, clip-path, background-image, transform;
+  overflow: clip;
+  clip-path: inset(0 0 0 0 round 100em);
+  box-shadow:
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
+    0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
+    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+    -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+}
+.col-card-btn:hover .rb-inner {
+  background-image: linear-gradient(135deg, rgba(252, 252, 252, 1), rgba(225, 225, 225, 1));
+}
+.col-card-btn:active .rb-inner {
+  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
+  box-shadow:
+    0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
+    -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
+    0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+    0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
+    0 0 0 0 inset rgba(255, 255, 255, 1),
+    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+    -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
+}
+.col-card-btn .rb-inner span {
+  position: relative;
+  z-index: 4;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0);
+  background-image: linear-gradient(135deg, rgba(25, 25, 25, 1), rgba(75, 75, 75, 1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: transform 250ms ease;
+  display: block;
+  will-change: transform;
+  text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.col-card-btn:active .rb-inner span {
+  transform: scale(0.975);
 }
 @media (min-width: 768px) {
-  .col-card-btn {
-    height: 44px;
-    font-size: 16px;
-    margin-top: 12px;
-  }
-}
-.col-card-btn:hover {
-  transform: scale(0.97);
-}
-.col-card.col-active .col-card-btn {
-  background: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2a5b8, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #f5e6c0, #d8b4fe, #fbc4e0, #f2a5b8, #c4b5fd);
-  background-size: 300% 300%;
-  animation: glowDrift 20s linear infinite;
+  .col-card-btn { font-size: 16px; margin-top: 12px; }
+  .col-card-btn .rb-inner span { font-size: 16px; }
 }
 .col-card-features {
   list-style: none;
@@ -650,7 +726,7 @@ html, body {
   z-index: 1;
   border-radius: inherit;
   padding: 0.7em 1.4em;
-  background-image: linear-gradient(135deg, rgba(230, 230, 230, 1), rgba(180, 180, 180, 1));
+  background-image: linear-gradient(135deg, rgba(245, 245, 245, 1), rgba(210, 210, 210, 1));
   transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
   will-change: box-shadow, clip-path, background-image, transform;
   overflow: clip;
@@ -665,7 +741,7 @@ html, body {
     -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
 }
 .refresh-btn:hover .rb-inner {
-  background-image: linear-gradient(135deg, rgba(240, 240, 240, 1), rgba(195, 195, 195, 1));
+  background-image: linear-gradient(135deg, rgba(252, 252, 252, 1), rgba(225, 225, 225, 1));
 }
 .refresh-btn:active .rb-inner {
   clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
@@ -705,6 +781,117 @@ html, body {
 @media (min-width: 768px) {
   .refresh-btn { display: block; font-size: 17.5px; }
   .refresh-btn .rb-inner span { font-size: 17.5px; }
+}
+.halfhour-btn {
+  all: unset;
+  display: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
+  border-radius: 100em;
+  background-color: rgba(120, 120, 130, 0.55);
+  font-size: 15px;
+  box-shadow:
+    -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
+    0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
+  transition: box-shadow 300ms ease, transform 200ms ease;
+}
+.halfhour-btn::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  width: calc(100% + 0.3em);
+  height: calc(100% + 0.3em);
+  top: -0.15em;
+  left: -0.15em;
+  border-radius: inherit;
+  background: linear-gradient(-135deg, rgba(5, 5, 5, 0.5), transparent 20%, transparent 100%);
+  filter: blur(0.0125em);
+  opacity: 0.25;
+  mix-blend-mode: multiply;
+}
+.halfhour-btn .rb-outer {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  transition: box-shadow 300ms ease;
+  will-change: box-shadow;
+  box-shadow:
+    0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
+    0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
+    0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
+}
+.halfhour-btn .rb-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 0.7em 1.4em;
+  background-image: linear-gradient(135deg, rgba(245, 245, 245, 1), rgba(210, 210, 210, 1));
+  transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
+  will-change: box-shadow, clip-path, background-image, transform;
+  overflow: clip;
+  clip-path: inset(0 0 0 0 round 100em);
+  box-shadow:
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
+    0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
+    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+    -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+}
+.halfhour-btn:hover .rb-inner {
+  background-image: linear-gradient(135deg, rgba(252, 252, 252, 1), rgba(225, 225, 225, 1));
+}
+.halfhour-btn:active .rb-inner,
+.halfhour-btn.hb-pressed .rb-inner {
+  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
+  box-shadow:
+    0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
+    -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
+    0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+    0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
+    0 0 0 0 inset rgba(255, 255, 255, 1),
+    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+    -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
+}
+.halfhour-btn .rb-inner span {
+  position: relative;
+  z-index: 4;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -0.05em;
+  font-weight: 500;
+  font-size: 11px;
+  text-align: center;
+  min-width: 3.6em;
+  color: rgba(0, 0, 0, 0);
+  background-image: linear-gradient(135deg, rgba(25, 25, 25, 1), rgba(75, 75, 75, 1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: transform 250ms ease;
+  display: block;
+  will-change: transform;
+  text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.halfhour-btn:active .rb-inner span,
+.halfhour-btn.hb-pressed .rb-inner span {
+  transform: scale(0.975);
+}
+.halfhour-btn:active .rb-outer,
+.halfhour-btn.hb-pressed .rb-outer {
+  box-shadow:
+    0 0 0 0 rgba(5, 5, 5, 1),
+    0 0 0 0 rgba(5, 5, 5, 0.5),
+    0 0 0 0 rgba(5, 5, 5, 0.25);
+}
+@media (min-width: 768px) {
+  .halfhour-btn { display: block; font-size: 17.5px; }
+  .halfhour-btn .rb-inner span { font-size: 17.5px; }
 }
 </style>
 <!-- CONTAINER - Shows immediately while scripts load -->
@@ -1027,7 +1214,8 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
   const active = qty > 0;
   const ac = active ? 'text-green-700' : 'text-stone-800';
   const sc = active ? 'text-green-700' : 'text-stone-500';
-  const displayQty = showHrs ? `${qty} hrs` : qty;
+  const fmtQ = (n) => { if (n === 0) return 0; if (Number.isInteger(n)) return n; const w = Math.floor(n); return w > 0 ? w + '½' : '½'; };
+  const displayQty = showHrs ? `${fmtQ(qty)} hrs` : fmtQ(qty);
   return (
     <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pb-5 px-5 md:pb-8 md:px-8 overflow-hidden`}>
       <img src={imgSrc} alt={label} className="object-contain line-icon" style={{marginTop: '-5px', marginBottom: '-3px', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))', transform: `${imgSize ? `scale(${imgSize})` : ''} ${imgOffset ? `translateY(${imgOffset})` : ''}`.trim() || 'none'}} />
@@ -1039,7 +1227,7 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
       <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
         <div className="flex items-center gap-2 md:gap-3">
           <button onClick={onMinus} disabled={disableMinus} className="te-btn"><Minus className="te-icon" /></button>
-          <span className={`${showHrs ? 'w-16' : 'w-8'} text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{displayQty}</span>
+          <span className={`${showHrs ? 'w-20' : 'w-10'} text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{displayQty}</span>
           <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
         </div>
         {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>reset</button>}
@@ -1154,6 +1342,7 @@ const [videoTabExtraVideo, setVideoTabExtraVideo] = useState(0);
 const [photoTabContentCreator, setPhotoTabContentCreator] = useState(0);
 const [videoTabContentCreator, setVideoTabContentCreator] = useState(0);
 const [alaCarteContentCreator, setAlaCarteContentCreator] = useState(0);
+const [halfHourMode, setHalfHourMode] = useState(false);
 const [removedItems, setRemovedItems] = useState([]);
 const [alaCarteHours, setAlaCarteHours] = useState(0);
 const [alaCarteVideoHours, setAlaCarteVideoHours] = useState(0);
@@ -1317,6 +1506,14 @@ details.push(`• ${addon.name} (×${addon.qty}): $${(addon.price * addon.qty).t
 });
 details.push('');
 }
+const activeAlbums = photographyAlbums.filter(a => a.qty > 0);
+if (activeAlbums.length > 0) {
+details.push('ALBUMS:');
+activeAlbums.forEach(album => {
+details.push(`• ${album.name} (×${album.qty}): $${(album.price * album.qty).toLocaleString()}`);
+});
+details.push('');
+}
 if (photoTabExtraPhoto > 0 || photoTabExtraVideo > 0 || photoTabContentCreator > 0) {
 details.push('ADDITIONAL COVERAGE:');
 if (photoTabExtraPhoto > 0) {
@@ -1452,7 +1649,9 @@ details.push(`• ${payment.label} (${payment.date.toLocaleDateString('en-US', {
 }
 } else if (activeTab === 'alacarte') {
 details.push('À LA CARTE PACKAGE');
+if (alaCarteHours > 0) {
 details.push(`Photography Coverage: ${alaCarteHours} Hours @ $300/hr = $${(alaCarteHours * 300).toLocaleString()}`);
+}
 if (alaCarteVideoHours > 0) {
 details.push(`Videography Coverage: ${alaCarteVideoHours} Hours @ $300/hr = $${(alaCarteVideoHours * 300).toLocaleString()}`);
 }
@@ -1586,6 +1785,13 @@ body += bullet(`${addon.name} (×${addon.qty}): ${bold('$' + (addon.price * addo
 }
 });
 }
+const activeAlbumsHTML = photographyAlbums.filter(a => a.qty > 0);
+if (activeAlbumsHTML.length > 0) {
+body += sectionTitle('Albums');
+activeAlbumsHTML.forEach(album => {
+body += bullet(`${album.name} (×${album.qty}): ${bold('$' + (album.price * album.qty).toLocaleString())}`);
+});
+}
 if (photoTabExtraPhoto > 0 || photoTabExtraVideo > 0 || photoTabContentCreator > 0) {
 body += sectionTitle('Additional Coverage');
 if (photoTabExtraPhoto > 0) {
@@ -1685,10 +1891,11 @@ body += bullet(`${payment.label} (${payment.date.toLocaleDateString('en-US', { m
 }
 } else if (activeTab === 'alacarte') {
 body += sectionTitle('Package Details');
-body += info('Photography Coverage', `${alaCarteHours} Hours @ $300/hr`);
-body += info('Coverage Total', `$${(alaCarteHours * 300).toLocaleString()}`);
+if (alaCarteHours > 0) {
+body += info('Photography Coverage', `${alaCarteHours} Hours @ $300/hr = $${(alaCarteHours * 300).toLocaleString()}`);
+}
 if (alaCarteVideoHours > 0) {
-body += info('Videography Coverage', `${alaCarteVideoHours} Hours @ $300/hr`);
+body += info('Videography Coverage', `${alaCarteVideoHours} Hours @ $300/hr = $${(alaCarteVideoHours * 300).toLocaleString()}`);
 }
 if (alaCarteContentCreator > 0) {
 body += bullet(`Content Creator (${alaCarteContentCreator} ${alaCarteContentCreator === 1 ? 'hour' : 'hours'}): ${bold('$' + (alaCarteContentCreator * 150).toLocaleString())}`);
@@ -1895,7 +2102,7 @@ const alaCartePaymentSchedule = useMemo(() => {
 const retainerAmount = (alaCarteHours > 0 && alaCarteVideoHours > 0) ? 2000 : 1000; return calculatePaymentSchedule(calculateAlaCarteTotal, alaCarteWeddingDate, alaCartePaymentPlan, retainerAmount);
 }, [calculateAlaCarteTotal, alaCarteWeddingDate, alaCartePaymentPlan, alaCarteHours, alaCarteVideoHours]);
 const photoCol = selectedCollection ? collections[selectedCollection] : null;
-const photoCoverageItem = photoCol ? photoCol.items.find(item => item.name.includes('Hours of Photography')) : null;
+const photoCoverageItem = photoCol ? photoCol.items.find(item => item.name.includes('Hours Photo Coverage')) : null;
 const photoCoverageHours = photoCoverageItem ? parseInt(photoCoverageItem.name) : 0;
 const photoCoveragePrice = photoCol ? photoCol.price - photoCol.items.filter(item => item.value > 0).reduce((sum, item) => sum + item.value, 0) : 0;
 const videoCol = selectedVideoCollection ? videographyCollections[selectedVideoCollection] : null;
@@ -1940,6 +2147,7 @@ setAlaCarteHasConsultation(false);
 setAlaCarteFollowsInstagram(false);
 setAlaCarteWeddingDate('');
 setAlaCartePaymentPlan('15_days');
+setHalfHourMode(false);
 };
 return (
 <div className="py-6 px-4 md:py-12 md:px-4" style={{background: '#e7e4e6'}}>
@@ -2019,6 +2227,7 @@ disabled={isSubmitting}
 )}
 <div className="max-w-7xl mx-auto">
 <div className="relative flex justify-center items-center mb-4 md:mb-8 px-2">
+<div className="absolute left-0 flex items-center" style={{right: 'calc(50% + min(24rem, 50%))', justifyContent: 'center'}}><button className={`halfhour-btn ${halfHourMode ? 'hb-pressed' : ''}`} onClick={() => setHalfHourMode(!halfHourMode)}><div className="rb-outer"><div className="rb-inner"><span>{halfHourMode ? '+30 min' : '+1 hr'}</span></div></div></button></div>
 <div className="tab-header">
 <div className="tab-slider" style={{
   left: activeTab === 'photography' ? 'var(--tab-pad, 6px)' : activeTab === 'videography' ? '33.333%' : '66.666%',
@@ -2047,7 +2256,7 @@ const displayName = item.id === 'online_gallery' ? 'Online Gallery (2)' : item.n
 return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayName}</span></li>);
 })}
 </ul>
-<button className="col-card-btn">{selectedCollection === key ? collectionSelectedMsg[key] : 'Choose This Collection'}</button>
+<button className="col-card-btn"><div className="rb-outer"><div className="rb-inner"><span>{selectedCollection === key ? collectionSelectedMsg[key] : 'Choose This Collection'}</span></div></div></button>
 </div>
 ))}
 </div>
@@ -2055,12 +2264,12 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
 <div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/Q86uOG_Zc1KRe2oQdXaRXA/293041/clock.png" alt="clock" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h4 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Additional Coverage Time</h4></div>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + 1)} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabExtraVideo(prev => prev + 1)} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', 1)} onReset={() => handlePhotographyAddOnChange('second_photographer', -photoSecondPhotog.qty)} disableMinus={photoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', halfHourMode ? -0.5 : -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', halfHourMode ? 0.5 : 1)} onReset={() => handlePhotographyAddOnChange('second_photographer', -photoSecondPhotog.qty)} disableMinus={photoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setPhotoTabContentCreator(prev => prev + 1)} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabContentCreator(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
 </div>
 </div>
 <div className="mt-6">
@@ -2134,7 +2343,7 @@ return (
 <li><span className="col-check">&#10003;</span><span>{collection.hours} Hours Video Coverage</span></li>
 {collection.items.map((item, idx) => (<li key={idx}><span className="col-check">&#10003;</span><span>{item}</span></li>))}
 </ul>
-<button className="col-card-btn">{selectedVideoCollection === key ? videoSelectedMsg[key] : 'Choose This Collection'}</button>
+<button className="col-card-btn"><div className="rb-outer"><div className="rb-inner"><span>{selectedVideoCollection === key ? videoSelectedMsg[key] : 'Choose This Collection'}</span></div></div></button>
 </div>
 ))}
 </div>
@@ -2149,12 +2358,12 @@ return (
 <div className="bg-white rounded-b-2xl md:rounded-b-3xl shadow-lg p-5 md:p-8">
 {videoExtrasTab === 'coverage' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraPhoto(prev => prev + 1)} onReset={() => setVideoTabExtraPhoto(0)} disableMinus={videoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabExtraVideo(prev => prev + 1)} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabExtraPhoto(0)} disableMinus={videoTabExtraPhoto === 0} />
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
 {videoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', 1)} onReset={() => handleVideographyAddOnChange('second_photographer', -videoSecondPhotog.qty)} disableMinus={videoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', halfHourMode ? -0.5 : -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', halfHourMode ? 0.5 : 1)} onReset={() => handleVideographyAddOnChange('second_photographer', -videoSecondPhotog.qty)} disableMinus={videoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setVideoTabContentCreator(prev => prev + 1)} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabContentCreator(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
 </div>
 )}
 {videoExtrasTab === 'other' && (
@@ -2178,7 +2387,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/LB0PBwkUcYlFGgQdar6cSQ/293041/tools.png" alt="tools" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h2 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Build Your Custom Package</h2></div>
 <p className="text-stone-600 mb-6">Create your perfect coverage starting at $300/hour with a 4 hour minimum</p>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - 1))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + 1)} disableMinus={alaCarteHours === 0} showHrs onReset={() => setAlaCarteHours(0)} includedContent={
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" price="$300/hr (4 hr min)" qty={alaCarteHours} onMinus={() => setAlaCarteHours(alaCarteHours === 4 ? 0 : Math.max(4, alaCarteHours - (halfHourMode ? 0.5 : 1)))} onPlus={() => setAlaCarteHours(alaCarteHours === 0 ? 4 : alaCarteHours + (halfHourMode ? 0.5 : 1))} disableMinus={alaCarteHours === 0} showHrs onReset={() => setAlaCarteHours(0)} includedContent={
 <div className="mt-3 w-full text-center">
 <p className="text-base md:text-lg text-stone-700 font-semibold mb-1">Includes:</p>
 <ul className="text-base md:text-lg text-stone-600 space-y-1">
@@ -2188,7 +2397,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </ul>
 </div>
 } />
-<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - 1))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + 1)} disableMinus={alaCarteVideoHours === 0} showHrs onReset={() => setAlaCarteVideoHours(0)} includedContent={
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" price="$300/hr (4 hr min)" qty={alaCarteVideoHours} onMinus={() => setAlaCarteVideoHours(alaCarteVideoHours === 4 ? 0 : Math.max(4, alaCarteVideoHours - (halfHourMode ? 0.5 : 1)))} onPlus={() => setAlaCarteVideoHours(alaCarteVideoHours === 0 ? 4 : alaCarteVideoHours + (halfHourMode ? 0.5 : 1))} disableMinus={alaCarteVideoHours === 0} showHrs onReset={() => setAlaCarteVideoHours(0)} includedContent={
 <div className="mt-3 w-full text-center">
 <p className="text-base md:text-lg text-stone-700 font-semibold mb-1">Includes:</p>
 <ul className="text-base md:text-lg text-stone-600 space-y-1">
@@ -2199,9 +2408,9 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 </div>
 } />
 {alaCarteSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', 1)} disableMinus={alaCarteSecondPhotog.qty === 0} showHrs onReset={() => handleAlaCarteAddOnChange('second_photographer', -alaCarteSecondPhotog.qty)} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={alaCarteSecondPhotog.qty} onMinus={() => handleAlaCarteAddOnChange('second_photographer', halfHourMode ? -0.5 : -1)} onPlus={() => handleAlaCarteAddOnChange('second_photographer', halfHourMode ? 0.5 : 1)} disableMinus={alaCarteSecondPhotog.qty === 0} showHrs onReset={() => handleAlaCarteAddOnChange('second_photographer', -alaCarteSecondPhotog.qty)} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - 1))} onPlus={() => setAlaCarteContentCreator(prev => prev + 1)} disableMinus={alaCarteContentCreator === 0} showHrs onReset={() => setAlaCarteContentCreator(0)} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={alaCarteContentCreator} onMinus={() => setAlaCarteContentCreator(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setAlaCarteContentCreator(prev => prev + (halfHourMode ? 0.5 : 1))} disableMinus={alaCarteContentCreator === 0} showHrs onReset={() => setAlaCarteContentCreator(0)} />
 </div>
 </div>
 <div className="mt-6">
