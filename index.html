@@ -193,69 +193,163 @@ html, body {
 }
 /* Quote & Reset Buttons */
 .quote-btn, .reset-btn {
-  font: inherit;
-  width: 100%;
-  border: 0;
-  border-radius: 0.5em;
-  font-size: 1.15rem;
-  padding: 0.5em 1em;
-  font-weight: 600;
+  all: unset;
+  display: inline-block;
   cursor: pointer;
-  transition: 0.15s ease;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   position: relative;
-  overflow: hidden;
+  border-radius: 100em;
+  font-size: 28px;
 }
 .quote-btn::after, .reset-btn::after {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(255,255,255,0) 30%,
-    rgba(255,255,255,0.7) 50%,
-    rgba(255,255,255,0) 70%,
-    transparent 100%
-  );
-  transition: none;
+  z-index: 0;
+  width: calc(100% + 0.3em);
+  height: calc(100% + 0.3em);
+  top: -0.15em;
+  left: -0.15em;
+  border-radius: inherit;
+  filter: blur(0.0125em);
+  opacity: 0.25;
+  mix-blend-mode: multiply;
 }
-.quote-btn:hover::after, .reset-btn:hover::after {
-  animation: btn-shine 1.8s ease forwards;
+.quote-btn .rb-outer, .reset-btn .rb-outer {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  transition: box-shadow 300ms ease;
+  will-change: box-shadow;
 }
-@keyframes btn-shine {
-  0% { left: -100%; }
-  100% { left: 150%; }
+.quote-btn .rb-inner, .reset-btn .rb-inner {
+  position: relative;
+  z-index: 1;
+  border-radius: inherit;
+  padding: 0.7em 1.4em;
+  transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
+  will-change: box-shadow, clip-path, background-image, transform;
+  overflow: clip;
+  clip-path: inset(0 0 0 0 round 100em);
 }
+.quote-btn .rb-inner span, .reset-btn .rb-inner span {
+  position: relative;
+  z-index: 4;
+  font-family: "Inter", sans-serif;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  font-size: 18px;
+  display: block;
+  text-align: center;
+  min-width: 12em;
+  will-change: transform;
+  transition: transform 250ms ease;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  white-space: nowrap;
+}
+/* ===== GREEN QUOTE BUTTON ===== */
 .quote-btn {
-  background-color: #16a34a;
+  background-color: rgba(20, 110, 50, 0.65);
+  box-shadow:
+    -0.15em -0.15em 0.15em -0.075em rgba(5, 30, 5, 0.25),
+    0.0375em 0.0375em 0.0675em 0 rgba(5, 30, 5, 0.1);
+}
+.quote-btn::after {
+  background: linear-gradient(-135deg, rgba(5, 40, 5, 0.5), transparent 20%, transparent 100%);
+}
+.quote-btn .rb-outer {
+  box-shadow:
+    0 0.05em 0.05em -0.01em rgba(5, 40, 5, 1),
+    0 0.01em 0.01em -0.01em rgba(5, 30, 5, 0.5),
+    0.15em 0.3em 0.1em -0.01em rgba(5, 30, 5, 0.25);
+}
+.quote-btn:active .rb-outer {
+  box-shadow:
+    0 0 0 0 rgba(5, 40, 5, 1),
+    0 0 0 0 rgba(5, 30, 5, 0.5),
+    0 0 0 0 rgba(5, 30, 5, 0.25);
+}
+.quote-btn .rb-inner {
+  background-image: linear-gradient(135deg, rgba(60, 190, 100, 1), rgba(22, 140, 60, 1));
+  box-shadow:
+    0 0 0 0 inset rgba(5, 50, 15, 0.1),
+    -0.05em -0.05em 0.05em 0 inset rgba(5, 50, 15, 0.25),
+    0 0 0 0 inset rgba(5, 50, 15, 0.1),
+    0 0 0.05em 0.2em inset rgba(130, 255, 160, 0.2),
+    0.025em 0.05em 0.1em 0 inset rgba(150, 255, 180, 0.7),
+    0.12em 0.12em 0.12em inset rgba(130, 255, 160, 0.2),
+    -0.075em -0.25em 0.25em 0.1em inset rgba(5, 50, 15, 0.25);
+}
+.quote-btn:hover .rb-inner {
+  background-image: linear-gradient(135deg, rgba(80, 210, 120, 1), rgba(34, 160, 74, 1));
+}
+.quote-btn:active .rb-inner {
+  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
+  box-shadow:
+    0.1em 0.15em 0.05em 0 inset rgba(5, 50, 15, 0.75),
+    -0.025em -0.03em 0.05em 0.025em inset rgba(5, 50, 15, 0.5),
+    0.25em 0.25em 0.2em 0 inset rgba(5, 50, 15, 0.5),
+    0 0 0.05em 0.5em inset rgba(130, 255, 160, 0.1),
+    0 0 0 0 inset rgba(150, 255, 180, 0.7),
+    0.12em 0.12em 0.12em inset rgba(130, 255, 160, 0.15),
+    -0.075em -0.12em 0.2em 0.1em inset rgba(5, 50, 15, 0.25);
+}
+.quote-btn .rb-inner span {
   color: #ffffff;
-  text-shadow: 0 0.0625em 0 rgba(0,0,0,0.2);
-  box-shadow: inset 0 0.0625em 0 0 #22c55e, 0 0.0625em 0 0 #15803d,
-    0 0.125em 0 0 #14532d, 0 0.25em 0 0 #166534, 0 0.3125em 0 0 #15803d,
-    0 0.375em 0 0 #16a34a, 0 0.425em 0 0 #14532d, 0 0.425em 0.5em 0 #166534;
+  text-shadow: 0 0.05em 0.1em rgba(0, 50, 0, 0.3);
 }
-.quote-btn:active {
-  translate: 0 0.225em;
-  box-shadow: inset 0 0.03em 0 0 #22c55e, 0 0.03em 0 0 #15803d,
-    0 0.0625em 0 0 #14532d, 0 0.125em 0 0 #166534, 0 0.125em 0 0 #15803d,
-    0 0.2em 0 0 #16a34a, 0 0.225em 0 0 #14532d, 0 0.225em 0.375em 0 #166534;
-}
+/* ===== RED RESET BUTTON ===== */
 .reset-btn {
-  background-color: #ef4444;
-  color: #ffffff;
-  text-shadow: 0 0.0625em 0 rgba(0,0,0,0.2);
-  box-shadow: inset 0 0.0625em 0 0 #f87171, 0 0.0625em 0 0 #dc2626,
-    0 0.125em 0 0 #b91c1c, 0 0.25em 0 0 #991b1b, 0 0.3125em 0 0 #b91c1c,
-    0 0.375em 0 0 #dc2626, 0 0.425em 0 0 #991b1b, 0 0.425em 0.5em 0 #b91c1c;
+  background-color: rgba(140, 25, 25, 0.65);
+  box-shadow:
+    -0.15em -0.15em 0.15em -0.075em rgba(30, 5, 5, 0.25),
+    0.0375em 0.0375em 0.0675em 0 rgba(30, 5, 5, 0.1);
 }
-.reset-btn:active {
-  translate: 0 0.225em;
-  box-shadow: inset 0 0.03em 0 0 #f87171, 0 0.03em 0 0 #dc2626,
-    0 0.0625em 0 0 #b91c1c, 0 0.125em 0 0 #991b1b, 0 0.125em 0 0 #b91c1c,
-    0 0.2em 0 0 #dc2626, 0 0.225em 0 0 #991b1b, 0 0.225em 0.375em 0 #b91c1c;
+.reset-btn::after {
+  background: linear-gradient(-135deg, rgba(40, 5, 5, 0.5), transparent 20%, transparent 100%);
+}
+.reset-btn .rb-outer {
+  box-shadow:
+    0 0.05em 0.05em -0.01em rgba(40, 5, 5, 1),
+    0 0.01em 0.01em -0.01em rgba(30, 5, 5, 0.5),
+    0.15em 0.3em 0.1em -0.01em rgba(30, 5, 5, 0.25);
+}
+.reset-btn:active .rb-outer {
+  box-shadow:
+    0 0 0 0 rgba(40, 5, 5, 1),
+    0 0 0 0 rgba(30, 5, 5, 0.5),
+    0 0 0 0 rgba(30, 5, 5, 0.25);
+}
+.reset-btn .rb-inner {
+  background-image: linear-gradient(135deg, rgba(240, 100, 100, 1), rgba(185, 35, 35, 1));
+  box-shadow:
+    0 0 0 0 inset rgba(50, 5, 5, 0.1),
+    -0.05em -0.05em 0.05em 0 inset rgba(50, 5, 5, 0.25),
+    0 0 0 0 inset rgba(50, 5, 5, 0.1),
+    0 0 0.05em 0.2em inset rgba(255, 150, 150, 0.2),
+    0.025em 0.05em 0.1em 0 inset rgba(255, 170, 170, 0.7),
+    0.12em 0.12em 0.12em inset rgba(255, 150, 150, 0.2),
+    -0.075em -0.25em 0.25em 0.1em inset rgba(50, 5, 5, 0.25);
+}
+.reset-btn:hover .rb-inner {
+  background-image: linear-gradient(135deg, rgba(250, 120, 120, 1), rgba(200, 50, 50, 1));
+}
+.reset-btn:active .rb-inner {
+  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
+  box-shadow:
+    0.1em 0.15em 0.05em 0 inset rgba(50, 5, 5, 0.75),
+    -0.025em -0.03em 0.05em 0.025em inset rgba(50, 5, 5, 0.5),
+    0.25em 0.25em 0.2em 0 inset rgba(50, 5, 5, 0.5),
+    0 0 0.05em 0.5em inset rgba(255, 150, 150, 0.1),
+    0 0 0 0 inset rgba(255, 170, 170, 0.7),
+    0.12em 0.12em 0.12em inset rgba(255, 150, 150, 0.15),
+    -0.075em -0.12em 0.2em 0.1em inset rgba(50, 5, 5, 0.25);
+}
+.reset-btn .rb-inner span {
+  color: #ffffff;
+  text-shadow: 0 0.05em 0.1em rgba(50, 0, 0, 0.3);
 }
 /* Sliding Tabs */
 .tab-header {
@@ -278,6 +372,12 @@ html, body {
     height: 85px;
     border-radius: 44px;
     padding: 10px;
+  }
+}
+@media (min-width: 1024px) {
+  .tab-header {
+    max-width: none;
+    margin: 0;
   }
 }
 .tab-header .tab-label {
@@ -487,12 +587,28 @@ html, body {
   padding-bottom: 10px;
   border-bottom: 1px solid #e6e6e6;
 }
+.col-active .col-card-badge {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2a5b8, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #f5e6c0, #d8b4fe, #fbc4e0, #f2a5b8, #c4b5fd) 1;
+}
 @media (min-width: 768px) {
   .col-card-badge {
     font-size: 17px;
     margin-bottom: 16px;
     padding-bottom: 16px;
   }
+}
+.row-glow {
+  background: linear-gradient(135deg, #f8f5ff, #fff5fa, #f5f8ff, #fff8f5, #f8f5ff);
+  border-color: #d8b4fe !important;
+}
+.row-glow-text {
+  background: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2a5b8, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #f5e6c0, #d8b4fe, #fbc4e0, #f2a5b8, #c4b5fd);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: glowDrift 20s linear infinite;
 }
 .col-card-btn {
   all: unset;
@@ -533,17 +649,11 @@ html, body {
     0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
     0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
 }
-.col-card-btn:active .rb-outer {
-  box-shadow:
-    0 0 0 0 rgba(5, 5, 5, 1),
-    0 0 0 0 rgba(5, 5, 5, 0.5),
-    0 0 0 0 rgba(5, 5, 5, 0.25);
-}
 .col-card-btn .rb-inner {
   position: relative;
   z-index: 1;
   border-radius: inherit;
-  padding: 0.7em 1.4em;
+  padding: 0.7em 1em;
   background-image: linear-gradient(135deg, rgba(245, 245, 245, 1), rgba(210, 210, 210, 1));
   transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
   will-change: box-shadow, clip-path, background-image, transform;
@@ -560,17 +670,6 @@ html, body {
 }
 .col-card-btn:hover .rb-inner {
   background-image: linear-gradient(135deg, rgba(252, 252, 252, 1), rgba(225, 225, 225, 1));
-}
-.col-card-btn:active .rb-inner {
-  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
-  box-shadow:
-    0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
-    -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
-    0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
-    0 0 0.05em 0.5em inset rgba(255, 255, 255, 0.15),
-    0 0 0 0 inset rgba(255, 255, 255, 1),
-    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
-    -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
 }
 .col-card-btn .rb-inner span {
   position: relative;
@@ -592,9 +691,8 @@ html, body {
   -ms-user-select: none;
   user-select: none;
   white-space: nowrap;
-}
-.col-card-btn:active .rb-inner span {
-  transform: scale(0.975);
+  min-width: 12em;
+  text-align: center;
 }
 @media (min-width: 768px) {
   .col-card-btn { font-size: 16px; margin-top: 12px; }
@@ -1212,12 +1310,12 @@ const PaymentPlanSection = ({weddingDate, setWeddingDate, paymentPlan, setPaymen
 
 const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus, onReset, disableMinus, showHrs, includedContent, imgOffset, imgSize}) => {
   const active = qty > 0;
-  const ac = active ? 'text-green-700' : 'text-stone-800';
-  const sc = active ? 'text-green-700' : 'text-stone-500';
+  const ac = active ? 'row-glow-text' : 'text-stone-800';
+  const sc = active ? 'row-glow-text' : 'text-stone-500';
   const fmtQ = (n) => { if (n === 0) return 0; if (Number.isInteger(n)) return n; const w = Math.floor(n); return w > 0 ? w + '½' : '½'; };
   const displayQty = showHrs ? `${fmtQ(qty)} hrs` : fmtQ(qty);
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pb-5 px-5 md:pb-8 md:px-8 overflow-hidden`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'row-glow' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pb-5 px-5 md:pb-8 md:px-8 overflow-hidden`}>
       <img src={imgSrc} alt={label} className="object-contain line-icon" style={{marginTop: '-5px', marginBottom: '-3px', filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))', transform: `${imgSize ? `scale(${imgSize})` : ''} ${imgOffset ? `translateY(${imgOffset})` : ''}`.trim() || 'none'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5`}>{label}</p>
       {sublabel && <p className={`text-xs md:text-base ${sc}`}>{sublabel}</p>}
@@ -1238,10 +1336,10 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
 
 const AddonRow = ({addon, imgSrc, onMinus, onPlus, onReset, maxQty, desc}) => {
   const active = addon.qty > 0;
-  const ac = active ? 'text-green-700' : 'text-stone-800';
+  const ac = active ? 'row-glow-text' : 'text-stone-800';
   const priceStr = `$${addon.price.toLocaleString()}${addon.suffix ? addon.suffix.replace('hour', 'hr') : '.00'}`;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'row-glow' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={addon.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5 whitespace-pre-line`}>{addon.name}</p>
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{priceStr}</p>
@@ -1266,12 +1364,12 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, onReset, maxQty, desc}) => {
 const AlbumRow = ({album, onMinus, onPlus, onReset, desc}) => {
   const active = (album.qty !== undefined ? album.qty : album.state) > 0;
   const qty = album.qty !== undefined ? album.qty : album.state;
-  const ac = active ? 'text-green-700' : 'text-stone-800';
-  const sc = active ? 'text-green-700' : 'text-stone-500';
+  const ac = active ? 'row-glow-text' : 'text-stone-800';
+  const sc = active ? 'row-glow-text' : 'text-stone-500';
   const imgSrc = getAlbumImg(album.id || album.name);
   const priceStr = `$${album.price.toLocaleString ? album.price.toLocaleString() : album.price}.00`;
   return (
-    <div className={`rounded-lg transition-all border-2 ${active ? 'bg-green-100 border-green-300' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
+    <div className={`rounded-lg transition-all border-2 ${active ? 'row-glow' : 'bg-stone-50 border-stone-200'} flex flex-col items-center text-center pt-2 pb-5 px-5 md:pt-3 md:pb-8 md:px-8`}>
       <img src={imgSrc} alt={album.name} className="object-contain mb-1 line-icon" style={{filter: 'drop-shadow(0 8px 14px rgba(0,0,0,0.35))'}} />
       <p className={`text-base md:text-2xl font-bold ${ac} mb-0.5`}>{album.name}</p>
       {album.pages && <p className={`text-xs md:text-lg ${sc}`}>{album.pages}</p>}
@@ -1298,16 +1396,16 @@ signature: {name: 'Signature Collection', price: 5500, badge: 'Includes 2nd Phot
 prestige: {name: 'Prestige Collection', price: 6500, badge: 'Perfect for 200+ Guests', items: [{name: '12 Hours Photo Coverage', value: 0, removable: false}, {name: '1 Hour Engagement Session', value: 600, removable: true, id: 'engagement'}, {name: '12x12 Album (60 Pages)', value: 500, removable: true}, {name: '2nd Photographer (12 Hrs)', value: 1800, removable: true, id: 'second_photographer'}, {name: 'Online Gallery (2)', value: 0, removable: false, id: 'online_gallery'}, {name: 'Printing Rights', value: 0, removable: false}]}
 };
 const collectionSelectedMsg = {
-  essential: '✓ Let\'s Do This!',
-  premium: '✓ Love It!',
-  signature: '✓ Fan Favorite!',
-  prestige: '✓ The Full Dream!'
+  essential: '✓  Let\'s Do This!',
+  premium: '✓  Love It!',
+  signature: '✓  Fan Favorite!',
+  prestige: '✓  The Full Dream!'
 };
 const videoSelectedMsg = {
-  bronze: '✓ Great Start!',
-  silver: '✓ Love It!',
-  gold: '✓ Amazing Choice!',
-  platinum: '✓ The Full Experience!'
+  bronze: '✓  Great Start!',
+  silver: '✓  Love It!',
+  gold: '✓  Amazing Choice!',
+  platinum: '✓  The Full Experience!'
 };
 const videographyCollections = {
 bronze: {name: 'Bronze Collection', hours: 6, price: 1800, badge: 'Perfect for 50-100 Guests', items: ['3-4 Minute Highlight Reel', '1-1.5 Hour Feature Film']},
@@ -1557,7 +1655,12 @@ if (schedule) {
 details.push(`Payment Plan: ${schedule.type}`);
 details.push('');
 details.push('PAYMENT SCHEDULE:');
+if (photoTabExtraVideo > 0) {
+details.push('• Photography Retainer (Due at signing): $1,000.00');
+details.push('• Videography Retainer (Due at signing): $1,000.00');
+} else {
 details.push('• Retainer (Due at signing): $1,000.00');
+}
 if (schedule.isMonthly) {
 details.push(`• ${schedule.payments[0].count} monthly payments of $${schedule.payments[0].amount.toFixed(2)}`);
 } else {
@@ -1637,7 +1740,12 @@ if (schedule) {
 details.push(`Payment Plan: ${schedule.type}`);
 details.push('');
 details.push('PAYMENT SCHEDULE:');
+if (videoTabExtraPhoto > 0) {
+details.push('• Photography Retainer (Due at signing): $1,000.00');
+details.push('• Videography Retainer (Due at signing): $1,000.00');
+} else {
 details.push('• Retainer (Due at signing): $1,000.00');
+}
 if (schedule.isMonthly) {
 details.push(`• ${schedule.payments[0].count} monthly payments of $${schedule.payments[0].amount.toFixed(2)}`);
 } else {
@@ -1720,7 +1828,12 @@ if (schedule) {
 details.push(`Payment Plan: ${schedule.type}`);
 details.push('');
 details.push('PAYMENT SCHEDULE:');
+if (alaCarteHours > 0 && alaCarteVideoHours > 0) {
+details.push('• Photography Retainer (Due at signing): $1,000.00');
+details.push('• Videography Retainer (Due at signing): $1,000.00');
+} else {
 details.push('• Retainer (Due at signing): $1,000.00');
+}
 if (schedule.isMonthly) {
 details.push(`• ${schedule.payments[0].count} monthly payments of $${schedule.payments[0].amount.toFixed(2)}`);
 } else {
@@ -1823,7 +1936,12 @@ const schedule = collectionsPaymentSchedule;
 if (schedule) {
 body += info('Payment Plan', schedule.type);
 body += sectionTitle('Payment Schedule');
+if (photoTabExtraVideo > 0) {
+body += bullet(`Photography Retainer (Due at signing): ${bold('$1,000.00')}`);
+body += bullet(`Videography Retainer (Due at signing): ${bold('$1,000.00')}`);
+} else {
 body += bullet(`Retainer (Due at signing): ${bold('$1,000.00')}`);
+}
 if (schedule.isMonthly) {
 body += bullet(`${schedule.payments[0].count} monthly payments of ${bold('$' + schedule.payments[0].amount.toFixed(2))}`);
 } else {
@@ -1879,7 +1997,12 @@ const schedule = videoPaymentSchedule;
 if (schedule) {
 body += info('Payment Plan', schedule.type);
 body += sectionTitle('Payment Schedule');
+if (videoTabExtraPhoto > 0) {
+body += bullet(`Photography Retainer (Due at signing): ${bold('$1,000.00')}`);
+body += bullet(`Videography Retainer (Due at signing): ${bold('$1,000.00')}`);
+} else {
 body += bullet(`Retainer (Due at signing): ${bold('$1,000.00')}`);
+}
 if (schedule.isMonthly) {
 body += bullet(`${schedule.payments[0].count} monthly payments of ${bold('$' + schedule.payments[0].amount.toFixed(2))}`);
 } else {
@@ -1945,7 +2068,12 @@ const schedule = alaCartePaymentSchedule;
 if (schedule) {
 body += info('Payment Plan', schedule.type);
 body += sectionTitle('Payment Schedule');
+if (alaCarteHours > 0 && alaCarteVideoHours > 0) {
+body += bullet(`Photography Retainer (Due at signing): ${bold('$1,000.00')}`);
+body += bullet(`Videography Retainer (Due at signing): ${bold('$1,000.00')}`);
+} else {
 body += bullet(`Retainer (Due at signing): ${bold('$1,000.00')}`);
+}
 if (schedule.isMonthly) {
 body += bullet(`${schedule.payments[0].count} monthly payments of ${bold('$' + schedule.payments[0].amount.toFixed(2))}`);
 } else {
@@ -2096,8 +2224,8 @@ const collectionsPaymentSchedule = useMemo(() => {
 const retainerAmount = photoTabExtraVideo > 0 ? 2000 : 1000; return calculatePaymentSchedule(calculateCollectionsTotal, weddingDate, paymentPlan, retainerAmount);
 }, [calculateCollectionsTotal, weddingDate, paymentPlan, photoTabExtraVideo]);
 const videoPaymentSchedule = useMemo(() => {
-return calculatePaymentSchedule(calculateVideoTotal, videoWeddingDate, videoPaymentPlan);
-}, [calculateVideoTotal, videoWeddingDate, videoPaymentPlan]);
+const retainerAmount = videoTabExtraPhoto > 0 ? 2000 : 1000; return calculatePaymentSchedule(calculateVideoTotal, videoWeddingDate, videoPaymentPlan, retainerAmount);
+}, [calculateVideoTotal, videoWeddingDate, videoPaymentPlan, videoTabExtraPhoto]);
 const alaCartePaymentSchedule = useMemo(() => {
 const retainerAmount = (alaCarteHours > 0 && alaCarteVideoHours > 0) ? 2000 : 1000; return calculatePaymentSchedule(calculateAlaCarteTotal, alaCarteWeddingDate, alaCartePaymentPlan, retainerAmount);
 }, [calculateAlaCarteTotal, alaCarteWeddingDate, alaCartePaymentPlan, alaCarteHours, alaCarteVideoHours]);
@@ -2226,18 +2354,22 @@ disabled={isSubmitting}
 </div>, document.body
 )}
 <div className="max-w-7xl mx-auto">
-<div className="relative flex justify-center items-center mb-4 md:mb-8 px-2">
-<div className="absolute left-0 flex items-center" style={{right: 'calc(50% + min(24rem, 50%))', justifyContent: 'center'}}><button className={`halfhour-btn ${halfHourMode ? 'hb-pressed' : ''}`} onClick={() => setHalfHourMode(!halfHourMode)}><div className="rb-outer"><div className="rb-inner"><span>{halfHourMode ? '+30 min' : '+1 hr'}</span></div></div></button></div>
+<div className="flex items-center mb-4 md:mb-8 gap-4 md:gap-8">
+<div className="flex-1 lg:flex-initial lg:w-[65%]">
 <div className="tab-header">
 <div className="tab-slider" style={{
-  left: activeTab === 'photography' ? 'var(--tab-pad, 6px)' : activeTab === 'videography' ? '33.333%' : '66.666%',
-  right: activeTab === 'photography' ? '66.666%' : activeTab === 'videography' ? '33.333%' : 'var(--tab-pad, 6px)',
+  left: activeTab === 'photography' ? 'var(--tab-pad, 6px)' : activeTab === 'videography' ? 'calc(33.333% + var(--tab-pad, 6px) / 3)' : 'calc(66.666% - var(--tab-pad, 6px) / 3)',
+  right: activeTab === 'photography' ? 'calc(66.666% - var(--tab-pad, 6px) / 3)' : activeTab === 'videography' ? 'calc(33.333% + var(--tab-pad, 6px) / 3)' : 'var(--tab-pad, 6px)',
 }}></div>
 <button onClick={() => setActiveTab('photography')} className={`tab-label ${activeTab === 'photography' ? 'tab-active' : ''}`}><span className="hidden md:inline">Photography</span><span className="md:hidden">Photo</span></button>
 <button onClick={() => setActiveTab('videography')} className={`tab-label ${activeTab === 'videography' ? 'tab-active' : ''}`}><span className="hidden md:inline">Videography</span><span className="md:hidden">Video</span></button>
 <button onClick={() => setActiveTab('alacarte')} className={`tab-label ${activeTab === 'alacarte' ? 'tab-active' : ''}`}><span className="hidden md:inline">À La Carte</span><span className="md:hidden">Custom</span></button>
 </div>
-<div className="absolute right-0 flex items-center" style={{left: 'calc(50% + min(24rem, 50%))', justifyContent: 'center'}}><button className="refresh-btn" onClick={resetCalculator}><div className="rb-outer"><div className="rb-inner"><span>Refresh</span></div></div></button></div>
+</div>
+<div className="hidden md:flex items-center justify-evenly lg:w-[35%]">
+<button className={`halfhour-btn ${halfHourMode ? 'hb-pressed' : ''}`} onClick={() => setHalfHourMode(!halfHourMode)}><div className="rb-outer"><div className="rb-inner"><span>{halfHourMode ? '+30 min' : '+1 hr'}</span></div></div></button>
+<button className="refresh-btn" onClick={resetCalculator}><div className="rb-outer"><div className="rb-inner"><span>Refresh</span></div></div></button>
+</div>
 </div>
 <div className="flex flex-col lg:flex-row gap-4 md:gap-8">
 <div className="lg:w-[65%] space-y-4 md:space-y-8">
@@ -2380,7 +2512,7 @@ return (<AddonRow key={addon.id} addon={addon} imgSrc={getAddonImg(addon.id)} de
 <ServiceCredits discounts={videoDiscounts} toggleDiscount={toggleVideoDiscount} isDesktop={false} />
 <UnlockCredits hasConsultation={videoHasConsultation} setHasConsultation={setVideoHasConsultation} followsInstagram={videoFollowsInstagram} setFollowsInstagram={setVideoFollowsInstagram} isDesktop={false} />
 <PaymentOptionsSection paymentMethod={videoPaymentMethod} setPaymentMethod={setVideoPaymentMethod} isDesktop={false} />
-<PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan-mobile" isDesktop={false} schedule={videoPaymentSchedule} retainerAmount={1000} />
+<PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan-mobile" isDesktop={false} schedule={videoPaymentSchedule} retainerAmount={videoTabExtraPhoto > 0 ? 2000 : 1000} />
 </>)}
 {activeTab === 'alacarte' && (<>
 <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
@@ -2594,9 +2726,9 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 <p className="text-sm md:text-base text-stone-500 mt-2 italic">Tax included in your collection price</p>
 </div>
 )}
-<div className="flex flex-col items-center gap-4 mt-6">
-<button onMouseUp={handleReadyToBook} className="quote-btn">Get my FREE quote!</button>
-<button onMouseUp={resetCalculator} className="reset-btn">Start Over</button>
+<div className="flex flex-col items-center gap-6 my-16">
+<button onMouseUp={handleReadyToBook} className="quote-btn"><div className="rb-outer"><div className="rb-inner"><span>Get my FREE quote!</span></div></div></button>
+<button onMouseUp={resetCalculator} className="reset-btn"><div className="rb-outer"><div className="rb-inner"><span>Start Over</span></div></div></button>
 </div>
 </div>) : (<p className="text-stone-500 text-center py-8 italic">Select a collection to see your investment</p>)}
 </div>
@@ -2606,7 +2738,7 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 <ServiceCredits discounts={videoDiscounts} toggleDiscount={toggleVideoDiscount} isDesktop={true} />
 <UnlockCredits hasConsultation={videoHasConsultation} setHasConsultation={setVideoHasConsultation} followsInstagram={videoFollowsInstagram} setFollowsInstagram={setVideoFollowsInstagram} isDesktop={true} />
 <PaymentOptionsSection paymentMethod={videoPaymentMethod} setPaymentMethod={setVideoPaymentMethod} isDesktop={true} />
-<PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan" isDesktop={true} schedule={videoPaymentSchedule} retainerAmount={1000} />
+<PaymentPlanSection weddingDate={videoWeddingDate} setWeddingDate={setVideoWeddingDate} paymentPlan={videoPaymentPlan} setPaymentPlan={setVideoPaymentPlan} radioName="video-payment-plan" isDesktop={true} schedule={videoPaymentSchedule} retainerAmount={videoTabExtraPhoto > 0 ? 2000 : 1000} />
 </div>
 <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8 investment-sticky">
 <div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/ueHGE8iMCHrL5egxLgOVLQ/293041/cash.png" alt="cash" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h3 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Your Investment</h3></div>
@@ -2655,10 +2787,23 @@ return (<div key={addon.id} className="flex justify-between items-center text-sm
 <div className="bg-emerald-50 p-4 rounded-lg mt-4 border border-emerald-200">
 <p className="text-xs text-emerald-800 font-semibold mb-3">Payment Schedule: {videoPaymentSchedule.type}</p>
 <div className="space-y-2">
+{videoTabExtraPhoto > 0 ? (
+<>
+<div className="flex justify-between items-center text-sm">
+<p className="text-blue-900 font-medium">Photography Retainer (Due at signing)</p>
+<p className="text-blue-900 font-bold">$1,000.00</p>
+</div>
+<div className="flex justify-between items-center text-sm">
+<p className="text-blue-900 font-medium">Videography Retainer (Due at signing)</p>
+<p className="text-blue-900 font-bold">$1,000.00</p>
+</div>
+</>
+) : (
 <div className="flex justify-between items-center text-sm">
 <p className="text-blue-900 font-medium">Retainer (Due at signing)</p>
 <p className="text-blue-900 font-bold">$1,000.00</p>
 </div>
+)}
 {videoPaymentSchedule.isMonthly ? (
 <div className="flex justify-between items-center text-sm">
 <p className="text-blue-900 font-medium">{videoPaymentSchedule.payments[0].count} months @ ${videoPaymentSchedule.payments[0].amount.toFixed(2)}/month</p>
@@ -2686,6 +2831,12 @@ videoPaymentSchedule.payments.map((payment, idx) => (
 <p className="text-sm md:text-base text-stone-700 mb-1">• Full balance of ${calculateVideoTotal.toFixed(2)} due at signing</p>
 <p className="text-sm md:text-base text-stone-500 mt-1 italic">*Cash payment required for cash discount</p>
 </>
+) : videoTabExtraPhoto > 0 ? (
+<>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 Photography retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 Videography retainer required</p>
+<p className="text-sm md:text-base text-stone-700 mb-1">• Remaining: ${(calculateVideoTotal - 2000).toFixed(2)}</p>
+</>
 ) : (
 <>
 <p className="text-sm md:text-base text-stone-700 mb-1">• $1,000 non-refundable retainer required</p>
@@ -2695,9 +2846,9 @@ videoPaymentSchedule.payments.map((payment, idx) => (
 <p className="text-sm md:text-base text-stone-500 mt-2 italic">Tax included in your collection price</p>
 </div>
 )}
-<div className="flex flex-col items-center gap-4 mt-6">
-<button onMouseUp={handleReadyToBook} className="quote-btn">Get my FREE quote!</button>
-<button onMouseUp={resetCalculator} className="reset-btn">Start Over</button>
+<div className="flex flex-col items-center gap-6 my-16">
+<button onMouseUp={handleReadyToBook} className="quote-btn"><div className="rb-outer"><div className="rb-inner"><span>Get my FREE quote!</span></div></div></button>
+<button onMouseUp={resetCalculator} className="reset-btn"><div className="rb-outer"><div className="rb-inner"><span>Start Over</span></div></div></button>
 </div>
 </div>) : (<p className="text-stone-500 text-center py-8 italic">Select a collection to see your investment</p>)}
 </div>
@@ -2824,9 +2975,9 @@ alaCartePaymentSchedule.payments.map((payment, idx) => (
 <p className="text-sm md:text-base text-stone-500 mt-2 italic">Tax included in your collection price</p>
 </div>
 )}
-<div className="flex flex-col items-center gap-4 mt-6">
-<button onMouseUp={handleReadyToBook} className="quote-btn">Get my FREE quote!</button>
-<button onMouseUp={resetCalculator} className="reset-btn">Start Over</button>
+<div className="flex flex-col items-center gap-6 my-16">
+<button onMouseUp={handleReadyToBook} className="quote-btn"><div className="rb-outer"><div className="rb-inner"><span>Get my FREE quote!</span></div></div></button>
+<button onMouseUp={resetCalculator} className="reset-btn"><div className="rb-outer"><div className="rb-inner"><span>Start Over</span></div></div></button>
 </div>
 </div>
 </div>
