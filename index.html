@@ -116,30 +116,65 @@ html, body {
   100% { box-shadow: 0 0 0 13px #a78bfa30; rotate: 0; }
 }
 /* Plus/Minus Buttons */
+/* Segmented Qty Button Group */
+.qty-group {
+  display: inline-flex;
+  border-radius: 0.5em;
+  overflow: hidden;
+  box-shadow: 0 0.0625em 0 0 #efefef,
+    0 0.125em 0 0 #ececec, 0 0.25em 0 0 #e0e0e0, 0 0.3125em 0 0 #dedede,
+    0 0.375em 0 0 #dcdcdc, 0 0.425em 0 0 #cacaca, 0 0.425em 0.5em 0 #cecece;
+  transition: 0.15s ease;
+}
+.qty-group:active {
+  translate: 0 0.225em;
+  box-shadow: 0 0.03em 0 0 #efefef,
+    0 0.0625em 0 0 #ececec, 0 0.125em 0 0 #e0e0e0, 0 0.125em 0 0 #dedede,
+    0 0.2em 0 0 #dcdcdc, 0 0.225em 0 0 #cacaca, 0 0.225em 0.375em 0 #cecece;
+}
+.row-glow .qty-group {
+  box-shadow: 0 0.0625em 0 0 #a78bfa,
+    0 0.125em 0 0 #8b5cf6, 0 0.25em 0 0 #7c3aed, 0 0.3125em 0 0 #6d28d9,
+    0 0.375em 0 0 #5b21b6, 0 0.425em 0 0 #4c1d95, 0 0.425em 0.5em 0 rgba(76,29,149,0.3);
+}
+.row-glow .qty-group:active {
+  box-shadow: 0 0.03em 0 0 #a78bfa,
+    0 0.0625em 0 0 #8b5cf6, 0 0.125em 0 0 #7c3aed, 0 0.125em 0 0 #6d28d9,
+    0 0.2em 0 0 #5b21b6, 0 0.225em 0 0 #4c1d95, 0 0.225em 0.375em 0 rgba(76,29,149,0.3);
+}
 .te-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.8em;
-  height: 2.8em;
-  border-radius: 50%;
-  background: #e8e8e8;
+  padding: 0.5em 0.75em;
+  background-color: #f0f0f0;
   cursor: pointer;
-  border: 1px solid #e8e8e8;
-  transition: all 0.3s;
-  box-shadow: 0 6px 12px #c5c5c5, 0 -6px 12px #ffffff;
-  color: #090909;
+  border: 0;
+  transition: background 0.15s ease;
+  color: #242424;
   font-weight: bold;
-  font-size: 1.2rem;
+  font-size: 1.44rem;
   flex-shrink: 0;
+  box-shadow: none;
+  border-radius: 0;
 }
 .te-btn:active {
-  color: #666;
-  box-shadow: inset 0 4px 12px #c5c5c5, inset 0 -4px 12px #ffffff;
+  background-color: #e0e0e0;
+}
+.row-glow .te-btn {
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+}
+.row-glow .te-btn:active {
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+}
+.row-glow .te-icon {
+  fill: #fff;
+  stroke: #fff;
 }
 .te-btn:disabled {
   cursor: not-allowed;
   pointer-events: none;
+  opacity: 0.4;
 }
 .te-icon {
   display: block;
@@ -149,115 +184,59 @@ html, body {
   stroke: #242424;
   margin: auto;
 }
-@media (min-width: 768px) {
-  .te-btn { width: 3em; height: 3em; }
-  .te-icon { width: 20px; height: 20px; }
-}
-/* Uiverse-style +/- buttons (Additional Coverage Time) */
-.uiverse-btns .te-btn {
-  border-radius: 50%;
-  background-color: #f0f0f0;
-  border: 0;
-  color: #242424;
-  text-shadow: 0 0.0625em 0 #fff;
-  box-shadow: inset 0 0.0625em 0 0 #f4f4f4, 0 0.0625em 0 0 #efefef,
-    0 0.125em 0 0 #ececec, 0 0.25em 0 0 #e0e0e0, 0 0.3125em 0 0 #dedede,
-    0 0.375em 0 0 #dcdcdc, 0 0.425em 0 0 #cacaca, 0 0.425em 0.5em 0 #cecece;
-  transition: 0.15s ease;
-}
-.uiverse-btns .te-btn:active {
-  translate: 0 0.225em;
-  box-shadow: inset 0 0.03em 0 0 #f4f4f4, 0 0.03em 0 0 #efefef,
-    0 0.0625em 0 0 #ececec, 0 0.125em 0 0 #e0e0e0, 0 0.125em 0 0 #dedede,
-    0 0.2em 0 0 #dcdcdc, 0 0.225em 0 0 #cacaca, 0 0.225em 0.375em 0 #cecece;
-}
-.uiverse-btns .row-glow .te-btn {
-  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
-  box-shadow: inset 0 0.0625em 0 0 #d8b4fe, 0 0.0625em 0 0 #a78bfa,
-    0 0.125em 0 0 #8b5cf6, 0 0.25em 0 0 #7c3aed, 0 0.3125em 0 0 #6d28d9,
-    0 0.375em 0 0 #5b21b6, 0 0.425em 0 0 #4c1d95, 0 0.425em 0.5em 0 rgba(76,29,149,0.3);
-}
-.uiverse-btns .row-glow .te-btn:active {
-  translate: 0 0.225em;
-  box-shadow: inset 0 0.03em 0 0 #d8b4fe, 0 0.03em 0 0 #a78bfa,
-    0 0.0625em 0 0 #8b5cf6, 0 0.125em 0 0 #7c3aed, 0 0.125em 0 0 #6d28d9,
-    0 0.2em 0 0 #5b21b6, 0 0.225em 0 0 #4c1d95, 0 0.225em 0.375em 0 rgba(76,29,149,0.3);
-}
-.uiverse-btns .row-glow .te-icon {
-  fill: #fff;
-  stroke: #fff;
-}
-/* Uiverse coverage row overrides */
-.uiverse-btns .flex.items-center span {
-  font-size: 1.25rem !important;
-}
-@media (min-width: 768px) {
-  .uiverse-btns .flex.items-center span { font-size: 1.5rem !important; }
-}
-.uiverse-btns .row-glow-text.text-center {
-  background: none !important;
-  -webkit-background-clip: unset !important;
-  background-clip: unset !important;
-  -webkit-text-fill-color: #292524 !important;
-  animation: none !important;
-}
-.uiverse-btns .row-glow-text {
-  background: linear-gradient(135deg, #c4b5fd, #6d28d9) !important;
-  background-size: unset !important;
-  -webkit-background-clip: text !important;
-  background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  animation: none !important;
-  opacity: 1;
-}
-.uiverse-btns .te-reset {
-  margin-top: 20px;
-  color: #292524;
-  opacity: 0.45;
-}
-.uiverse-btns .row-glow .te-reset {
-  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
-  color: #fff;
-  opacity: 1;
-  border-color: transparent;
-  box-shadow: inset 0 0.0625em 0 0 #d8b4fe, 0 0.0625em 0 0 #a78bfa,
-    0 0.125em 0 0 #8b5cf6, 0 0.15em 0 0 #7c3aed, 0 0.15em 0.3em 0 rgba(76,29,149,0.3);
-}
-.uiverse-btns p.italic {
-  margin-top: -15px;
-}
-.uiverse-btns .text-xs {
-  font-size: 0.875rem !important;
-}
-@media (min-width: 768px) {
-  .uiverse-btns .text-xs { font-size: 1.125rem !important; }
-}
-/* Reset Button */
-.te-reset {
+.qty-display {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.3em 1.2em;
-  border-radius: 999px;
-  background: #e8e8e8;
-  cursor: pointer;
-  border: 1px solid #e8e8e8;
-  transition: all 0.3s;
-  box-shadow: 0 4px 8px #c5c5c5, 0 -4px 8px #ffffff;
-  color: #dc2626;
-  font-weight: 600;
-  font-size: 0.7rem;
-  letter-spacing: 0.03em;
-  margin-top: 0.5rem;
+  min-width: 3em;
+  padding: 0.5em 0.75em;
+  background-color: #f0f0f0;
+  font-weight: 700;
+  font-size: 1.44rem;
+  color: #292524;
+  border-left: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+  white-space: nowrap;
+  user-select: none;
 }
-.te-reset:active {
-  box-shadow: inset 0 3px 8px #c5c5c5, inset 0 -3px 8px #ffffff;
+.row-glow .qty-display {
+  background: linear-gradient(135deg, #d8b4fe, #a78bfa);
+  color: #fff;
+  border-color: rgba(255,255,255,0.2);
 }
 @media (min-width: 768px) {
-  .te-reset {
-    font-size: 0.8rem;
-    padding: 0.35em 1.4em;
-  }
+  .te-btn { font-size: 1.69rem; }
+  .qty-display { font-size: 1.69rem; }
+  .te-icon { width: 20px; height: 20px; }
+}
+/* Reset text link */
+.te-reset {
+  display: block;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: #57534e;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 25px;
+  padding: 0;
+  box-shadow: none;
+  transition: color 0.15s ease;
+}
+.te-reset:hover {
+  color: #292524;
+}
+/* Line item row overrides */
+p.italic {
+  margin-top: -15px;
+}
+.text-xs.md\:text-base {
+  font-size: 0.875rem !important;
+}
+@media (min-width: 768px) {
+  .text-xs.md\:text-base { font-size: 1.125rem !important; }
 }
 /* Line Item Icons */
 .line-icon {
@@ -578,19 +557,17 @@ html, body {
   border-color: #d8b4fe !important;
 }
 .row-glow-text {
-  background: linear-gradient(90deg, #c4b5fd, #ddd6fe, #f0abfc, #f2a5b8, #fcd5e0, #e0c3fc, #e9d5ff, #c7d2fe, #bae6fd, #f5e6c0, #d8b4fe, #fbc4e0, #f2a5b8, #c4b5fd);
-  background-size: 300% 300%;
+  background: linear-gradient(135deg, #c4b5fd, #6d28d9);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: glowDrift 20s linear infinite;
 }
 .col-card-btn {
   font: inherit;
   border: 0;
   border-radius: 0.5em;
   font-size: 1.15rem;
-  padding: 0.375em 1em;
+  padding: 0.4em 0.6em;
   font-weight: 600;
   color: #242424;
   background-color: #f0f0f0;
@@ -604,7 +581,7 @@ html, body {
   overflow: hidden;
   margin-top: 8px;
   white-space: nowrap;
-  min-width: 14em;
+  min-width: 12em;
   text-align: center;
 }
 .col-card-btn::after {
@@ -1269,12 +1246,12 @@ const CoverageRow = ({imgSrc, label, sublabel, price, desc, qty, onMinus, onPlus
       {desc && <p className="text-sm md:text-lg text-stone-500 italic text-center">{desc}</p>}
       {includedContent && <div className="mt-4">{includedContent}</div>}
       <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="qty-group">
           <button onClick={onMinus} disabled={disableMinus} className="te-btn"><Minus className="te-icon" /></button>
-          <span className={`${showHrs ? 'w-20' : 'w-10'} text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{displayQty}</span>
+          <span className="qty-display">{displayQty}</span>
           <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
         </div>
-        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>reset</button>}
+        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>RESET</button>}
       </div>
     </div>
   );
@@ -1291,12 +1268,12 @@ const AddonRow = ({addon, imgSrc, onMinus, onPlus, onReset, maxQty, desc}) => {
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{priceStr}</p>
       {desc && <p className="text-sm md:text-lg text-stone-500 italic text-center">{desc}</p>}
       <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="qty-group">
           <button onClick={onMinus} disabled={addon.qty === 0} className="te-btn"><Minus className="te-icon" /></button>
-          <span className={`w-8 text-center font-bold text-base md:text-xl whitespace-nowrap ${ac}`}>{addon.qty}</span>
+          <span className="qty-display">{addon.qty}</span>
           <button onClick={onPlus} disabled={addon.qty >= maxQty} className="te-btn"><Plus className="te-icon" /></button>
         </div>
-        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>reset</button>}
+        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>RESET</button>}
       </div>
       {addon.description && (
         <div className="text-xs md:text-base text-stone-600 space-y-1 mt-4 md:mt-8 text-center">
@@ -1323,12 +1300,12 @@ const AlbumRow = ({album, onMinus, onPlus, onReset, desc}) => {
       <p className={`text-lg md:text-2xl ${ac} font-bold mb-3 md:mb-6 mt-2 md:mt-3`}>{priceStr}</p>
       {desc && <p className="text-sm md:text-lg text-stone-500 italic text-center">{desc}</p>}
       <div className="flex flex-col items-center mt-auto pt-3 md:pt-6">
-        <div className="flex items-center gap-2 md:gap-3">
+        <div className="qty-group">
           <button onClick={onMinus} disabled={qty === 0} className="te-btn"><Minus className="te-icon" /></button>
-          <span className={`w-8 text-center font-bold text-base md:text-xl ${ac}`}>{qty}</span>
+          <span className="qty-display">{qty}</span>
           <button onClick={onPlus} className="te-btn"><Plus className="te-icon" /></button>
         </div>
-        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>reset</button>}
+        {onReset && <button onClick={active ? onReset : undefined} className="te-reset" style={{opacity: active ? 1 : 0.35, pointerEvents: active ? 'auto' : 'none'}}>RESET</button>}
       </div>
     </div>
   );
@@ -2341,7 +2318,7 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 </div>
 <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
 <div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/Q86uOG_Zc1KRe2oQdXaRXA/293041/clock.png" alt="clock" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h4 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Additional Coverage Time</h4></div>
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 uiverse-btns">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
 <CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
