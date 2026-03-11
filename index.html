@@ -153,6 +153,85 @@ html, body {
   .te-btn { width: 3em; height: 3em; }
   .te-icon { width: 20px; height: 20px; }
 }
+/* Uiverse-style +/- buttons (Additional Coverage Time) */
+.uiverse-btns .te-btn {
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  border: 0;
+  color: #242424;
+  text-shadow: 0 0.0625em 0 #fff;
+  box-shadow: inset 0 0.0625em 0 0 #f4f4f4, 0 0.0625em 0 0 #efefef,
+    0 0.125em 0 0 #ececec, 0 0.25em 0 0 #e0e0e0, 0 0.3125em 0 0 #dedede,
+    0 0.375em 0 0 #dcdcdc, 0 0.425em 0 0 #cacaca, 0 0.425em 0.5em 0 #cecece;
+  transition: 0.15s ease;
+}
+.uiverse-btns .te-btn:active {
+  translate: 0 0.225em;
+  box-shadow: inset 0 0.03em 0 0 #f4f4f4, 0 0.03em 0 0 #efefef,
+    0 0.0625em 0 0 #ececec, 0 0.125em 0 0 #e0e0e0, 0 0.125em 0 0 #dedede,
+    0 0.2em 0 0 #dcdcdc, 0 0.225em 0 0 #cacaca, 0 0.225em 0.375em 0 #cecece;
+}
+.uiverse-btns .row-glow .te-btn {
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+  box-shadow: inset 0 0.0625em 0 0 #d8b4fe, 0 0.0625em 0 0 #a78bfa,
+    0 0.125em 0 0 #8b5cf6, 0 0.25em 0 0 #7c3aed, 0 0.3125em 0 0 #6d28d9,
+    0 0.375em 0 0 #5b21b6, 0 0.425em 0 0 #4c1d95, 0 0.425em 0.5em 0 rgba(76,29,149,0.3);
+}
+.uiverse-btns .row-glow .te-btn:active {
+  translate: 0 0.225em;
+  box-shadow: inset 0 0.03em 0 0 #d8b4fe, 0 0.03em 0 0 #a78bfa,
+    0 0.0625em 0 0 #8b5cf6, 0 0.125em 0 0 #7c3aed, 0 0.125em 0 0 #6d28d9,
+    0 0.2em 0 0 #5b21b6, 0 0.225em 0 0 #4c1d95, 0 0.225em 0.375em 0 rgba(76,29,149,0.3);
+}
+.uiverse-btns .row-glow .te-icon {
+  fill: #fff;
+  stroke: #fff;
+}
+/* Uiverse coverage row overrides */
+.uiverse-btns .flex.items-center span {
+  font-size: 1.25rem !important;
+}
+@media (min-width: 768px) {
+  .uiverse-btns .flex.items-center span { font-size: 1.5rem !important; }
+}
+.uiverse-btns .row-glow-text.text-center {
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: #292524 !important;
+  animation: none !important;
+}
+.uiverse-btns .row-glow-text {
+  background: linear-gradient(135deg, #c4b5fd, #6d28d9) !important;
+  background-size: unset !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  animation: none !important;
+  opacity: 1;
+}
+.uiverse-btns .te-reset {
+  margin-top: 20px;
+  color: #292524;
+  opacity: 0.45;
+}
+.uiverse-btns .row-glow .te-reset {
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+  color: #fff;
+  opacity: 1;
+  border-color: transparent;
+  box-shadow: inset 0 0.0625em 0 0 #d8b4fe, 0 0.0625em 0 0 #a78bfa,
+    0 0.125em 0 0 #8b5cf6, 0 0.15em 0 0 #7c3aed, 0 0.15em 0.3em 0 rgba(76,29,149,0.3);
+}
+.uiverse-btns p.italic {
+  margin-top: -15px;
+}
+.uiverse-btns .text-xs {
+  font-size: 0.875rem !important;
+}
+@media (min-width: 768px) {
+  .uiverse-btns .text-xs { font-size: 1.125rem !important; }
+}
 /* Reset Button */
 .te-reset {
   display: inline-flex;
@@ -510,7 +589,7 @@ html, body {
   font: inherit;
   border: 0;
   border-radius: 0.5em;
-  font-size: 0.85rem;
+  font-size: 1.15rem;
   padding: 0.375em 1em;
   font-weight: 600;
   color: #242424;
@@ -525,6 +604,8 @@ html, body {
   overflow: hidden;
   margin-top: 8px;
   white-space: nowrap;
+  min-width: 14em;
+  text-align: center;
 }
 .col-card-btn::after {
   content: "";
@@ -547,7 +628,7 @@ html, body {
     0 0.2em 0 0 #dcdcdc, 0 0.225em 0 0 #cacaca, 0 0.225em 0.375em 0 #cecece;
 }
 @media (min-width: 768px) {
-  .col-card-btn { font-size: 1rem; margin-top: 12px; }
+  .col-card-btn { font-size: 1.35rem; margin-top: 12px; }
 }
 /* Selected collection button */
 .col-active .col-card-btn {
@@ -2260,7 +2341,7 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 </div>
 <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
 <div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/Q86uOG_Zc1KRe2oQdXaRXA/293041/clock.png" alt="clock" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h4 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Additional Coverage Time</h4></div>
-<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
+<div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8 uiverse-btns">
 <CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
 <CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
