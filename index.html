@@ -191,165 +191,61 @@ html, body {
     height: 14rem;
   }
 }
-/* Quote & Reset Buttons */
+/* Quote & Reset Buttons – shared base */
 .quote-btn, .reset-btn {
-  all: unset;
-  display: inline-block;
+  font: inherit;
+  border: 0;
+  border-radius: 0.5em;
+  font-size: 1.35rem;
+  padding: 0.375em 1em;
+  font-weight: 600;
+  color: #fff;
+  transition: 0.15s ease;
   cursor: pointer;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   position: relative;
-  border-radius: 100em;
-  font-size: 28px;
+  overflow: hidden;
 }
 .quote-btn::after, .reset-btn::after {
   content: "";
   position: absolute;
-  z-index: 0;
-  width: calc(100% + 0.3em);
-  height: calc(100% + 0.3em);
-  top: -0.15em;
-  left: -0.15em;
-  border-radius: inherit;
-  filter: blur(0.0125em);
-  opacity: 0.25;
-  mix-blend-mode: multiply;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: none;
 }
-.quote-btn .rb-outer, .reset-btn .rb-outer {
-  position: relative;
-  z-index: 1;
-  border-radius: inherit;
-  transition: box-shadow 300ms ease;
-  will-change: box-shadow;
-}
-.quote-btn .rb-inner, .reset-btn .rb-inner {
-  position: relative;
-  z-index: 1;
-  border-radius: inherit;
-  padding: 0.7em 1.4em;
-  transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
-  will-change: box-shadow, clip-path, background-image, transform;
-  overflow: clip;
-  clip-path: inset(0 0 0 0 round 100em);
-}
-.quote-btn .rb-inner span, .reset-btn .rb-inner span {
-  position: relative;
-  z-index: 4;
-  font-family: "Inter", sans-serif;
-  letter-spacing: -0.02em;
-  font-weight: 700;
-  font-size: 18px;
-  display: block;
-  text-align: center;
-  min-width: 12em;
-  will-change: transform;
-  transition: transform 250ms ease;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  white-space: nowrap;
+.quote-btn:hover::after, .reset-btn:hover::after {
+  left: 120%;
+  transition: left 0.75s ease;
 }
 /* ===== GREEN QUOTE BUTTON ===== */
 .quote-btn {
-  background-color: rgba(20, 110, 50, 0.65);
-  box-shadow:
-    -0.15em -0.15em 0.15em -0.075em rgba(5, 30, 5, 0.25),
-    0.0375em 0.0375em 0.0675em 0 rgba(5, 30, 5, 0.1);
+  background: linear-gradient(135deg, #10b981, #065f46);
+  text-shadow: 0 0.0625em 0 #064e3b;
+  box-shadow: inset 0 0.0625em 0 0 #34d399, 0 0.0625em 0 0 #059669,
+    0 0.125em 0 0 #047857, 0 0.25em 0 0 #065f46, 0 0.3125em 0 0 #064e3b,
+    0 0.375em 0 0 #053f35, 0 0.425em 0 0 #022c22, 0 0.425em 0.5em 0 #022c22;
 }
-.quote-btn::after {
-  background: linear-gradient(-135deg, rgba(5, 40, 5, 0.5), transparent 20%, transparent 100%);
-}
-.quote-btn .rb-outer {
-  box-shadow:
-    0 0.05em 0.05em -0.01em rgba(5, 40, 5, 1),
-    0 0.01em 0.01em -0.01em rgba(5, 30, 5, 0.5),
-    0.15em 0.3em 0.1em -0.01em rgba(5, 30, 5, 0.25);
-}
-.quote-btn:active .rb-outer {
-  box-shadow:
-    0 0 0 0 rgba(5, 40, 5, 1),
-    0 0 0 0 rgba(5, 30, 5, 0.5),
-    0 0 0 0 rgba(5, 30, 5, 0.25);
-}
-.quote-btn .rb-inner {
-  background-image: linear-gradient(135deg, rgba(60, 190, 100, 1), rgba(22, 140, 60, 1));
-  box-shadow:
-    0 0 0 0 inset rgba(5, 50, 15, 0.1),
-    -0.05em -0.05em 0.05em 0 inset rgba(5, 50, 15, 0.25),
-    0 0 0 0 inset rgba(5, 50, 15, 0.1),
-    0 0 0.05em 0.2em inset rgba(130, 255, 160, 0.2),
-    0.025em 0.05em 0.1em 0 inset rgba(150, 255, 180, 0.7),
-    0.12em 0.12em 0.12em inset rgba(130, 255, 160, 0.2),
-    -0.075em -0.25em 0.25em 0.1em inset rgba(5, 50, 15, 0.25);
-}
-.quote-btn:hover .rb-inner {
-  background-image: linear-gradient(135deg, rgba(80, 210, 120, 1), rgba(34, 160, 74, 1));
-}
-.quote-btn:active .rb-inner {
-  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
-  box-shadow:
-    0.1em 0.15em 0.05em 0 inset rgba(5, 50, 15, 0.75),
-    -0.025em -0.03em 0.05em 0.025em inset rgba(5, 50, 15, 0.5),
-    0.25em 0.25em 0.2em 0 inset rgba(5, 50, 15, 0.5),
-    0 0 0.05em 0.5em inset rgba(130, 255, 160, 0.1),
-    0 0 0 0 inset rgba(150, 255, 180, 0.7),
-    0.12em 0.12em 0.12em inset rgba(130, 255, 160, 0.15),
-    -0.075em -0.12em 0.2em 0.1em inset rgba(5, 50, 15, 0.25);
-}
-.quote-btn .rb-inner span {
-  color: #ffffff;
-  text-shadow: 0 0.05em 0.1em rgba(0, 50, 0, 0.3);
+.quote-btn:active {
+  translate: 0 0.225em;
+  box-shadow: inset 0 0.03em 0 0 #6ee7b7, 0 0.03em 0 0 #059669,
+    0 0.0625em 0 0 #047857, 0 0.125em 0 0 #065f46, 0 0.125em 0 0 #064e3b,
+    0 0.2em 0 0 #053f35, 0 0.225em 0 0 #022c22, 0 0.225em 0.375em 0 #022c22;
 }
 /* ===== RED RESET BUTTON ===== */
 .reset-btn {
-  background-color: rgba(140, 25, 25, 0.65);
-  box-shadow:
-    -0.15em -0.15em 0.15em -0.075em rgba(30, 5, 5, 0.25),
-    0.0375em 0.0375em 0.0675em 0 rgba(30, 5, 5, 0.1);
+  background: linear-gradient(135deg, #f87171, #881337);
+  text-shadow: 0 0.0625em 0 #4c0519;
+  box-shadow: inset 0 0.0625em 0 0 #fca5a5, 0 0.0625em 0 0 #be123c,
+    0 0.125em 0 0 #9f1239, 0 0.25em 0 0 #881337, 0 0.3125em 0 0 #6b0d2b,
+    0 0.375em 0 0 #5c0a24, 0 0.425em 0 0 #4c0519, 0 0.425em 0.5em 0 #4c0519;
 }
-.reset-btn::after {
-  background: linear-gradient(-135deg, rgba(40, 5, 5, 0.5), transparent 20%, transparent 100%);
-}
-.reset-btn .rb-outer {
-  box-shadow:
-    0 0.05em 0.05em -0.01em rgba(40, 5, 5, 1),
-    0 0.01em 0.01em -0.01em rgba(30, 5, 5, 0.5),
-    0.15em 0.3em 0.1em -0.01em rgba(30, 5, 5, 0.25);
-}
-.reset-btn:active .rb-outer {
-  box-shadow:
-    0 0 0 0 rgba(40, 5, 5, 1),
-    0 0 0 0 rgba(30, 5, 5, 0.5),
-    0 0 0 0 rgba(30, 5, 5, 0.25);
-}
-.reset-btn .rb-inner {
-  background-image: linear-gradient(135deg, rgba(240, 100, 100, 1), rgba(185, 35, 35, 1));
-  box-shadow:
-    0 0 0 0 inset rgba(50, 5, 5, 0.1),
-    -0.05em -0.05em 0.05em 0 inset rgba(50, 5, 5, 0.25),
-    0 0 0 0 inset rgba(50, 5, 5, 0.1),
-    0 0 0.05em 0.2em inset rgba(255, 150, 150, 0.2),
-    0.025em 0.05em 0.1em 0 inset rgba(255, 170, 170, 0.7),
-    0.12em 0.12em 0.12em inset rgba(255, 150, 150, 0.2),
-    -0.075em -0.25em 0.25em 0.1em inset rgba(50, 5, 5, 0.25);
-}
-.reset-btn:hover .rb-inner {
-  background-image: linear-gradient(135deg, rgba(250, 120, 120, 1), rgba(200, 50, 50, 1));
-}
-.reset-btn:active .rb-inner {
-  clip-path: inset(clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) clamp(1px, 0.0625em, 2px) round 100em);
-  box-shadow:
-    0.1em 0.15em 0.05em 0 inset rgba(50, 5, 5, 0.75),
-    -0.025em -0.03em 0.05em 0.025em inset rgba(50, 5, 5, 0.5),
-    0.25em 0.25em 0.2em 0 inset rgba(50, 5, 5, 0.5),
-    0 0 0.05em 0.5em inset rgba(255, 150, 150, 0.1),
-    0 0 0 0 inset rgba(255, 170, 170, 0.7),
-    0.12em 0.12em 0.12em inset rgba(255, 150, 150, 0.15),
-    -0.075em -0.12em 0.2em 0.1em inset rgba(50, 5, 5, 0.25);
-}
-.reset-btn .rb-inner span {
-  color: #ffffff;
-  text-shadow: 0 0.05em 0.1em rgba(50, 0, 0, 0.3);
+.reset-btn:active {
+  translate: 0 0.225em;
+  box-shadow: inset 0 0.03em 0 0 #fca5a5, 0 0.03em 0 0 #be123c,
+    0 0.0625em 0 0 #9f1239, 0 0.125em 0 0 #881337, 0 0.125em 0 0 #6b0d2b,
+    0 0.2em 0 0 #5c0a24, 0 0.225em 0 0 #4c0519, 0 0.225em 0.375em 0 #4c0519;
 }
 /* Sliding Tabs */
 .tab-header {
@@ -611,92 +507,61 @@ html, body {
   animation: glowDrift 20s linear infinite;
 }
 .col-card-btn {
-  all: unset;
-  display: inline-block;
+  font: inherit;
+  border: 0;
+  border-radius: 0.5em;
+  font-size: 0.85rem;
+  padding: 0.375em 1em;
+  font-weight: 600;
+  color: #242424;
+  background-color: #f0f0f0;
+  text-shadow: 0 0.0625em 0 #fff;
+  box-shadow: inset 0 0.0625em 0 0 #f4f4f4, 0 0.0625em 0 0 #efefef,
+    0 0.125em 0 0 #ececec, 0 0.25em 0 0 #e0e0e0, 0 0.3125em 0 0 #dedede,
+    0 0.375em 0 0 #dcdcdc, 0 0.425em 0 0 #cacaca, 0 0.425em 0.5em 0 #cecece;
+  transition: 0.15s ease;
   cursor: pointer;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   position: relative;
-  border-radius: 100em;
-  background-color: rgba(120, 120, 130, 0.55);
-  font-size: 12px;
+  overflow: hidden;
   margin-top: 8px;
-  box-shadow:
-    -0.15em -0.15em 0.15em -0.075em rgba(5, 5, 5, 0.25),
-    0.0375em 0.0375em 0.0675em 0 rgba(5, 5, 5, 0.1);
+  white-space: nowrap;
 }
 .col-card-btn::after {
   content: "";
   position: absolute;
-  z-index: 0;
-  width: calc(100% + 0.3em);
-  height: calc(100% + 0.3em);
-  top: -0.15em;
-  left: -0.15em;
-  border-radius: inherit;
-  background: linear-gradient(-135deg, rgba(5, 5, 5, 0.5), transparent 20%, transparent 100%);
-  filter: blur(0.0125em);
-  opacity: 0.25;
-  mix-blend-mode: multiply;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+  transition: none;
 }
-.col-card-btn .rb-outer {
-  position: relative;
-  z-index: 1;
-  border-radius: inherit;
-  transition: box-shadow 300ms ease;
-  will-change: box-shadow;
-  box-shadow:
-    0 0.05em 0.05em -0.01em rgba(5, 5, 5, 1),
-    0 0.01em 0.01em -0.01em rgba(5, 5, 5, 0.5),
-    0.15em 0.3em 0.1em -0.01em rgba(5, 5, 5, 0.25);
+.col-card-btn:hover::after {
+  left: 120%;
+  transition: left 0.75s ease;
 }
-.col-card-btn .rb-inner {
-  position: relative;
-  z-index: 1;
-  border-radius: inherit;
-  padding: 0.7em 1em;
-  background-image: linear-gradient(135deg, rgba(245, 245, 245, 1), rgba(210, 210, 210, 1));
-  transition: box-shadow 300ms ease, clip-path 250ms ease, background-image 250ms ease, transform 250ms ease;
-  will-change: box-shadow, clip-path, background-image, transform;
-  overflow: clip;
-  clip-path: inset(0 0 0 0 round 100em);
-  box-shadow:
-    0 0 0 0 inset rgba(5, 5, 5, 0.1),
-    -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
-    0 0 0 0 inset rgba(5, 5, 5, 0.1),
-    0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
-    0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
-    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
-    -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
-}
-.col-card-btn:hover .rb-inner {
-  background-image: linear-gradient(135deg, rgba(252, 252, 252, 1), rgba(225, 225, 225, 1));
-}
-.col-card-btn .rb-inner span {
-  position: relative;
-  z-index: 4;
-  font-family: "Inter", sans-serif;
-  letter-spacing: -0.05em;
-  font-weight: 500;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0);
-  background-image: linear-gradient(135deg, rgba(25, 25, 25, 1), rgba(75, 75, 75, 1));
-  -webkit-background-clip: text;
-  background-clip: text;
-  transition: transform 250ms ease;
-  display: block;
-  will-change: transform;
-  text-shadow: rgba(0, 0, 0, 0.1) 0 0 0.1em;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  white-space: nowrap;
-  min-width: 12em;
-  text-align: center;
+.col-card-btn:active {
+  translate: 0 0.225em;
+  box-shadow: inset 0 0.03em 0 0 #f4f4f4, 0 0.03em 0 0 #efefef,
+    0 0.0625em 0 0 #ececec, 0 0.125em 0 0 #e0e0e0, 0 0.125em 0 0 #dedede,
+    0 0.2em 0 0 #dcdcdc, 0 0.225em 0 0 #cacaca, 0 0.225em 0.375em 0 #cecece;
 }
 @media (min-width: 768px) {
-  .col-card-btn { font-size: 16px; margin-top: 12px; }
-  .col-card-btn .rb-inner span { font-size: 16px; }
+  .col-card-btn { font-size: 1rem; margin-top: 12px; }
+}
+/* Selected collection button */
+.col-active .col-card-btn {
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+  color: #fff;
+  text-shadow: 0 0.0625em 0 rgba(88,28,135,0.4);
+  box-shadow: inset 0 0.0625em 0 0 #d8b4fe, 0 0.0625em 0 0 #a78bfa,
+    0 0.125em 0 0 #8b5cf6, 0 0.25em 0 0 #7c3aed, 0 0.3125em 0 0 #6d28d9,
+    0 0.375em 0 0 #5b21b6, 0 0.425em 0 0 #4c1d95, 0 0.425em 0.5em 0 rgba(76,29,149,0.3);
+}
+.col-active .col-card-btn:active {
+  box-shadow: inset 0 0.03em 0 0 #d8b4fe, 0 0.03em 0 0 #a78bfa,
+    0 0.0625em 0 0 #8b5cf6, 0 0.125em 0 0 #7c3aed, 0 0.125em 0 0 #6d28d9,
+    0 0.2em 0 0 #5b21b6, 0 0.225em 0 0 #4c1d95, 0 0.225em 0.375em 0 rgba(76,29,149,0.3);
 }
 .col-card-features {
   list-style: none;
@@ -2388,7 +2253,7 @@ const displayName = item.id === 'online_gallery' ? 'Online Gallery (2)' : item.n
 return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayName}</span></li>);
 })}
 </ul>
-<button className="col-card-btn"><div className="rb-outer"><div className="rb-inner"><span>{selectedCollection === key ? collectionSelectedMsg[key] : 'Choose This Collection'}</span></div></div></button>
+<button className="col-card-btn">{selectedCollection === key ? collectionSelectedMsg[key] : 'Choose This Collection'}</button>
 </div>
 ))}
 </div>
@@ -2475,7 +2340,7 @@ return (
 <li><span className="col-check">&#10003;</span><span>{collection.hours} Hours Video Coverage</span></li>
 {collection.items.map((item, idx) => (<li key={idx}><span className="col-check">&#10003;</span><span>{item}</span></li>))}
 </ul>
-<button className="col-card-btn"><div className="rb-outer"><div className="rb-inner"><span>{selectedVideoCollection === key ? videoSelectedMsg[key] : 'Choose This Collection'}</span></div></div></button>
+<button className="col-card-btn">{selectedVideoCollection === key ? videoSelectedMsg[key] : 'Choose This Collection'}</button>
 </div>
 ))}
 </div>
@@ -2727,8 +2592,8 @@ collectionsPaymentSchedule.payments.map((payment, idx) => (
 </div>
 )}
 <div className="flex flex-col items-center gap-6 my-16">
-<button onMouseUp={handleReadyToBook} className="quote-btn"><div className="rb-outer"><div className="rb-inner"><span>Get my FREE quote!</span></div></div></button>
-<button onMouseUp={resetCalculator} className="reset-btn"><div className="rb-outer"><div className="rb-inner"><span>Start Over</span></div></div></button>
+<button onMouseUp={handleReadyToBook} className="quote-btn">Get my FREE quote!</button>
+<button onMouseUp={resetCalculator} className="reset-btn">Start Over</button>
 </div>
 </div>) : (<p className="text-stone-500 text-center py-8 italic">Select a collection to see your investment</p>)}
 </div>
@@ -2847,8 +2712,8 @@ videoPaymentSchedule.payments.map((payment, idx) => (
 </div>
 )}
 <div className="flex flex-col items-center gap-6 my-16">
-<button onMouseUp={handleReadyToBook} className="quote-btn"><div className="rb-outer"><div className="rb-inner"><span>Get my FREE quote!</span></div></div></button>
-<button onMouseUp={resetCalculator} className="reset-btn"><div className="rb-outer"><div className="rb-inner"><span>Start Over</span></div></div></button>
+<button onMouseUp={handleReadyToBook} className="quote-btn">Get my FREE quote!</button>
+<button onMouseUp={resetCalculator} className="reset-btn">Start Over</button>
 </div>
 </div>) : (<p className="text-stone-500 text-center py-8 italic">Select a collection to see your investment</p>)}
 </div>
@@ -2976,8 +2841,8 @@ alaCartePaymentSchedule.payments.map((payment, idx) => (
 </div>
 )}
 <div className="flex flex-col items-center gap-6 my-16">
-<button onMouseUp={handleReadyToBook} className="quote-btn"><div className="rb-outer"><div className="rb-inner"><span>Get my FREE quote!</span></div></div></button>
-<button onMouseUp={resetCalculator} className="reset-btn"><div className="rb-outer"><div className="rb-inner"><span>Start Over</span></div></div></button>
+<button onMouseUp={handleReadyToBook} className="quote-btn">Get my FREE quote!</button>
+<button onMouseUp={resetCalculator} className="reset-btn">Start Over</button>
 </div>
 </div>
 </div>
