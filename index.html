@@ -133,6 +133,7 @@ html, body {
     0 0.2em 0 0 #dcdcdc, 0 0.225em 0 0 #cacaca, 0 0.225em 0.375em 0 #cecece;
 }
 .row-glow .qty-group {
+  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
   box-shadow: 0 0.0625em 0 0 #a78bfa,
     0 0.125em 0 0 #8b5cf6, 0 0.25em 0 0 #7c3aed, 0 0.3125em 0 0 #6d28d9,
     0 0.375em 0 0 #5b21b6, 0 0.425em 0 0 #4c1d95, 0 0.425em 0.5em 0 rgba(76,29,149,0.3);
@@ -162,10 +163,10 @@ html, body {
   background-color: #e0e0e0;
 }
 .row-glow .te-btn {
-  background: linear-gradient(135deg, #c4b5fd, #8b5cf6);
+  background: transparent;
 }
 .row-glow .te-btn:active {
-  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  background: rgba(0,0,0,0.1);
 }
 .row-glow .te-icon {
   fill: #fff;
@@ -200,9 +201,9 @@ html, body {
   user-select: none;
 }
 .row-glow .qty-display {
-  background: linear-gradient(135deg, #d8b4fe, #a78bfa);
+  background: transparent;
   color: #fff;
-  border-color: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.25);
 }
 @media (min-width: 768px) {
   .te-btn { font-size: 1.69rem; }
@@ -2319,12 +2320,12 @@ return (<li key={idx}><span className="col-check">&#10003;</span><span>{displayN
 <div className="bg-white rounded-2xl md:rounded-3xl shadow-lg p-5 md:p-8">
 <div className="flex items-center gap-3 mb-4"><img src="https://static.showit.co/file/Q86uOG_Zc1KRe2oQdXaRXA/293041/clock.png" alt="clock" style={{width: '3.25rem', height: '3.25rem', objectFit: 'contain'}} /><h4 className="text-xl md:text-2xl font-sans font-bold text-stone-800" style={{margin: 0}}>Additional Coverage Time</h4></div>
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" showHrs qty={photoTabExtraPhoto} onMinus={() => setPhotoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraPhoto(0)} disableMinus={photoTabExtraPhoto === 0} />
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" showHrs qty={photoTabExtraVideo} onMinus={() => setPhotoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabExtraVideo(0)} disableMinus={photoTabExtraVideo === 0} />
 {photoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', halfHourMode ? -0.5 : -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', halfHourMode ? 0.5 : 1)} onReset={() => handlePhotographyAddOnChange('second_photographer', -photoSecondPhotog.qty)} disableMinus={photoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" showHrs qty={photoSecondPhotog.qty} onMinus={() => handlePhotographyAddOnChange('second_photographer', halfHourMode ? -0.5 : -1)} onPlus={() => handlePhotographyAddOnChange('second_photographer', halfHourMode ? 0.5 : 1)} onReset={() => handlePhotographyAddOnChange('second_photographer', -photoSecondPhotog.qty)} disableMinus={photoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabContentCreator(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" showHrs qty={photoTabContentCreator} onMinus={() => setPhotoTabContentCreator(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setPhotoTabContentCreator(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setPhotoTabContentCreator(0)} disableMinus={photoTabContentCreator === 0} />
 </div>
 </div>
 <div className="mt-6">
@@ -2413,12 +2414,12 @@ return (
 <div className="bg-white rounded-b-2xl md:rounded-b-3xl shadow-lg p-5 md:p-8">
 {videoExtrasTab === 'coverage' && (
 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-8">
-<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabExtraPhoto(0)} disableMinus={videoTabExtraPhoto === 0} />
-<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
+<CoverageRow imgSrc={IMG.photo} label="Photography Coverage" sublabel="w/Ryan Sands" desc="Professional photography to preserve every moment of your wedding day." price="$300/hr" showHrs qty={videoTabExtraPhoto} onMinus={() => setVideoTabExtraPhoto(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabExtraPhoto(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabExtraPhoto(0)} disableMinus={videoTabExtraPhoto === 0} />
+<CoverageRow imgSrc={IMG.video} imgOffset="10px" label="Videography Coverage" sublabel="w/Scott Montague" desc="Additional filming time to capture every meaningful chapter of your love story." price="$300/hr" showHrs qty={videoTabExtraVideo} onMinus={() => setVideoTabExtraVideo(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabExtraVideo(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabExtraVideo(0)} disableMinus={videoTabExtraVideo === 0} />
 {videoSecondPhotog && (
-<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', halfHourMode ? -0.5 : -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', halfHourMode ? 0.5 : 1)} onReset={() => handleVideographyAddOnChange('second_photographer', -videoSecondPhotog.qty)} disableMinus={videoSecondPhotog.qty === 0} />
+<CoverageRow imgSrc={IMG.second} label="2nd Photographer" desc="Extra angles, simultaneous coverage in two locations, and significantly more images captured throughout your day." price="$150/hr" showHrs qty={videoSecondPhotog.qty} onMinus={() => handleVideographyAddOnChange('second_photographer', halfHourMode ? -0.5 : -1)} onPlus={() => handleVideographyAddOnChange('second_photographer', halfHourMode ? 0.5 : 1)} onReset={() => handleVideographyAddOnChange('second_photographer', -videoSecondPhotog.qty)} disableMinus={videoSecondPhotog.qty === 0} />
 )}
-<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabContentCreator(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
+<CoverageRow imgSrc={IMG.content} imgOffset="19px" label="Content Creator" desc="Behind-the-scenes content, Instagram reels &amp; stories plus live streaming key moments from your day." price="$150/hr" showHrs qty={videoTabContentCreator} onMinus={() => setVideoTabContentCreator(prev => Math.max(0, prev - (halfHourMode ? 0.5 : 1)))} onPlus={() => setVideoTabContentCreator(prev => prev + (halfHourMode ? 0.5 : 1))} onReset={() => setVideoTabContentCreator(0)} disableMinus={videoTabContentCreator === 0} />
 </div>
 )}
 {videoExtrasTab === 'other' && (
