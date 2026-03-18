@@ -3396,17 +3396,23 @@ function initWizardDots() {
 
 function initMobileWizard() {
   if (window.innerWidth >= 768) {
-    wizardActive = false;
-    document.getElementById('wizardBottomBar').style.display = 'none';
-    // Show all steps on desktop
-    document.querySelectorAll('.wizard-step').forEach(function(s) {
-      s.classList.remove('wizard-active');
-    });
+    if (wizardActive) {
+      // Crossing from mobile to desktop — tear down wizard
+      wizardActive = false;
+      document.getElementById('wizardBottomBar').style.display = 'none';
+      document.querySelectorAll('.wizard-step').forEach(function(s) {
+        s.classList.remove('wizard-active');
+      });
+    }
     return;
   }
+  if (wizardActive) {
+    // Already active on mobile — do NOT reset steps (iOS resize events)
+    return;
+  }
+  // First time entering mobile — initialize
   wizardActive = true;
   initWizardDots();
-  // Activate step 0 for each tab
   ['photography', 'videography', 'alacarte'].forEach(function(tabKey) {
     var panel = document.getElementById('tabContent-' + tabKey);
     var steps = panel.querySelectorAll('.wizard-step');
